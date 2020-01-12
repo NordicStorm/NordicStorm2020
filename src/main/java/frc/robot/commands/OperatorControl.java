@@ -12,6 +12,7 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.Util;
 
 /**
  *
@@ -46,7 +47,7 @@ public class OperatorControl extends Command {
         double forwardPower=Robot.oi.rightJoystick.getY();
         double turnPower=Robot.oi.rightJoystick.getZ();
         double throttle=Robot.oi.rightJoystick.getThrottle();
-        throttle=1-(throttle+1)/2;
+        throttle=Util.map(throttle, 1, -1, 0.37, 1);//TODO remove when encoders
         System.out.println(throttle);
         forwardPower*=throttle;
         turnPower*=throttle;
