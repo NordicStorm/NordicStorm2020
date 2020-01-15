@@ -55,6 +55,7 @@ public class Drivetrain extends Subsystem {
         frontRightDrive = new WPI_TalonSRX(10);
         backLeftDrive = new WPI_TalonSRX(11);
         backRightDrive = new WPI_TalonSRX(12);
+        
         leftSide=new SpeedControllerGroup(frontLeftDrive, backLeftDrive);
         rightSide=new SpeedControllerGroup(frontRightDrive, backRightDrive);
 

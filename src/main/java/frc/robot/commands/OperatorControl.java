@@ -45,14 +45,14 @@ public class OperatorControl extends Command {
     @Override
     protected void execute() {
         double forwardPower=Robot.oi.rightJoystick.getY();
-        double turnPower=Robot.oi.rightJoystick.getZ();
+        double turnPower=-Robot.oi.rightJoystick.getZ();
         double throttle=Robot.oi.rightJoystick.getThrottle();
-        throttle=Util.map(throttle, 1, -1, 0.37, 1);//TODO remove when encoders
+        throttle=Util.map(throttle, 1, -1, 0.37, 1);//TODO remove/tweak when encoders
         System.out.println(throttle);
         forwardPower*=throttle;
         turnPower*=throttle;
         Robot.drivetrain.drive(forwardPower, turnPower);
-        
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
