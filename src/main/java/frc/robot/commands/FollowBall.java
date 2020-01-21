@@ -11,7 +11,12 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.util.List;
+
 import frc.robot.Robot;
+import frc.robot.subsystems.PixyObject;
 
 /**
  *
@@ -35,24 +40,69 @@ public class FollowBall extends Command {
     }
 
     // Called just before this Command runs the first time
+    DriveToObject targetTracker;
     @Override
     protected void initialize() {
+
+        targetTracker=new DriveToObject(pVal, forwardMod, maxTurn, stopWidth,proxPVal);
+        targetTracker.setOffset(7);
+
     }
 
+
+    
+
+    final static int camWidth=315;
+    final static int camHeight=207;
+    
+    double turnValue=0;
+    double forwardValue=0;
+    double maxTurn=0.5;
+    double pVal=0.5;
+    double proxPVal=0.07*0;
+    double stopWidth=40*0;
+    double forwardMod=0.25;
+    boolean fullAuto=true;
+    boolean shouldStop=false;
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        List<PixyObject> objects=Robot.pixy.readObjects();
+
+        if(objects.size()>=1){
+            PixyObject object=objects.get(0);
+            
+            double[] speeds=targetTracker.execute(object.x,object.width);
+            turnValue=speeds[0];
+            forwardValue=speeds[1];
+        }else{
+            if(turnValue<0){
+                turnValue=-maxTurn*0.75;
+            }else if(turnValue>0){
+                turnValue=maxTurn*0.75;
+            }
+            forwardValue=0;
+            if(!fullAuto)turnValue=-Robot.oi.getRightJoystick().getTwist();
+        }
+        if(!fullAuto)forwardValue=-Robot.oi.getRightJoystick().getY();
+
+        Robot.drivetrain.drive(forwardValue, turnValue);
+
+        //Robot.joystickControl.updateAllButWheels();
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        
+        return shouldStop || !Robot.oi.getRightJoystick().getRawButton(3);
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end() {
+
     }
 
     // Called when another command which requires one or more of the same
