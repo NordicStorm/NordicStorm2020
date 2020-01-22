@@ -121,13 +121,14 @@ public class Pixy extends Subsystem {
         if (readBalls) {
             sigmap += 1;
         }
+        sigmap=1;
 
         byte[] request = { (byte) 174, (byte) 193, 32, 2, (byte) sigmap, (byte) 255 };
         // request=new byte[]{ (byte) 174, (byte) 193, 22, 2,0,0 };
         pixyPort.write(request, 6);
 
         pixyPort.read(true, rawData, 100);
-
+System.out.println(Arrays.toString(rawData));
         // System.out.println(Arrays.toString(rawData));
         for (int i = 0; i <= 20; i++) {
 

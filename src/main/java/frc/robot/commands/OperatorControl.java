@@ -48,7 +48,6 @@ public class OperatorControl extends Command {
         double turnPower=-Robot.oi.rightJoystick.getZ();
         double throttle=Robot.oi.rightJoystick.getThrottle();
         throttle=Util.map(throttle, 1, -1, 0.37, 1);//TODO remove/tweak when encoders
-        System.out.println(throttle);
         forwardPower*=throttle;
         turnPower*=throttle;
         Robot.drivetrain.drive(forwardPower, turnPower);

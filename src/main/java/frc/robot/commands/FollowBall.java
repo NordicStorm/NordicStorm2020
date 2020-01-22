@@ -46,6 +46,7 @@ public class FollowBall extends Command {
 
         targetTracker=new DriveToObject(pVal, forwardMod, maxTurn, stopWidth,proxPVal);
         targetTracker.setOffset(7);
+        Robot.pixy.setObjectsToSee(true);
 
     }
 
@@ -70,6 +71,7 @@ public class FollowBall extends Command {
         List<PixyObject> objects=Robot.pixy.readObjects();
 
         if(objects.size()>=1){
+            System.out.println("y");
             PixyObject object=objects.get(0);
             
             double[] speeds=targetTracker.execute(object.x,object.width);
