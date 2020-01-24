@@ -10,6 +10,7 @@
 
 
 package frc.robot.commands;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.Util;
@@ -41,16 +42,29 @@ public class OperatorControl extends Command {
     protected void initialize() {
     }
 
+    boolean shiftWasPressed=false;
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        double forwardPower=Robot.oi.rightJoystick.getY();
-        double turnPower=-Robot.oi.rightJoystick.getZ();
-        double throttle=Robot.oi.rightJoystick.getThrottle();
+        Joystick rightJoystick = Robot.oi.getRightJoystick();
+        Joystick leftJoystick = Robot.oi.getLeftJoystick();
+        double forwardPower= -rightJoystick.getY();
+        double turnPower= -rightJoystick.getZ();
+        double throttle=rightJoystick.getThrottle();
         throttle=Util.map(throttle, 1, -1, 0.37, 1);//TODO remove/tweak when encoders
         forwardPower*=throttle;
         turnPower*=throttle;
         Robot.drivetrain.drive(forwardPower, turnPower);
+
+        if(rightJoystick.getRawButton(4)){
+            if(!shiftWasPressed){
+                Robot.drivetrain.shiftToggle();
+                System.out.println("shift");
+            }
+            shiftWasPressed=true;
+        }else{
+            shiftWasPressed=false;
+        }
 
     }
 

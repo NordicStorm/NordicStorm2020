@@ -90,9 +90,11 @@ pixy = new Pixy();
     @Override
     public void autonomousInit() {
         autonomousCommand = chooser.getSelected();
+        drivetrain.shift(true);
         // schedule the autonomous command (example)
-        if (autonomousCommand != null)
+        if (autonomousCommand != null){
             autonomousCommand.start();
+        }
     }
 
     /**

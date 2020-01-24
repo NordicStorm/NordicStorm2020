@@ -112,23 +112,24 @@ public class Pixy extends Subsystem {
     }
 
     boolean readBalls = true;
-
+    int numBlocksToRead=5;
+    int readSize=numBlocksToRead*20;
+    byte[] rawData = new byte[readSize];
     private PixyResult getPixyData() {
+
         int checksum;
         List<PixyObject> packets = new ArrayList<PixyObject>();
-        byte[] rawData = new byte[100];
         int sigmap = 0;
         if (readBalls) {
             sigmap += 1;
         }
         sigmap=1;
 
-        byte[] request = { (byte) 174, (byte) 193, 32, 2, (byte) sigmap, (byte) 255 };
+        byte[] request = { (byte) 174, (byte) 193, 32, 2, (byte) sigmap, (byte) numBlocksToRead };
         // request=new byte[]{ (byte) 174, (byte) 193, 22, 2,0,0 };
         pixyPort.write(request, 6);
 
-        pixyPort.read(true, rawData, 100);
-System.out.println(Arrays.toString(rawData));
+        pixyPort.read(true, rawData, readSize);
         // System.out.println(Arrays.toString(rawData));
         for (int i = 0; i <= 20; i++) {
 
@@ -156,10 +157,11 @@ System.out.println(Arrays.toString(rawData));
                     sum += object.getSum();
                 }
                 // Checks whether the data is valid using the checksum *This if block should
-                // never be entered*
+                // never be entered* 
                 if (checksum != sum) {
-                    if (checksum - sum != -255) {// weird thing were pixy sends wrong checksum if one byte is more than
-                                                 // 255
+                    int diff=sum-checksum;
+                    if (diff%255 != 0) {// weird thing were pixy sends wrong checksum, diff is always mult of 255. Therefore, don't log it.
+                                                 
                         System.out.println("checkfail:");
                         System.out.println(checksum);
                         System.out.println(sum);
@@ -167,8 +169,7 @@ System.out.println(Arrays.toString(rawData));
                         System.out.println(packets);
                         System.out.println(Arrays.toString(rawData));
 
-                        // throw new PixyException("Checksum Failed. Check that all wires to Pixy are
-                        // connected.");
+                        //throw new PixyException("Checksum Failed. Check that all wires to Pixy are connected.");
 
                     }
 
@@ -195,6 +196,7 @@ System.out.println(Arrays.toString(rawData));
         PixyResult result = getPixyData();
         if (result.result == ResultType.NORMAL) {
             knownObjects = result.blocks;
+            //System.out.println(knownObjects);
         }
     }
 
@@ -210,7 +212,7 @@ System.out.println(Arrays.toString(rawData));
 
     public void setObjectsToSee(boolean balls) {
         readBalls = balls;
-        knownObjects.clear();//clear so we don't return stale objects
+        //knownObjects.clear();//clear so we don't return stale objects
 
     }
 

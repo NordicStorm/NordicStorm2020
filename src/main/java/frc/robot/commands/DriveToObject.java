@@ -55,7 +55,11 @@ public class DriveToObject{
             proximitySlow=1;
         }
 
+        System.out.println(asPercent);
+        System.out.println(pVal);
+        System.out.println(maxTurn);
         double turnValue=Math.min(Math.max(asPercent*pVal,-maxTurn),maxTurn);
+        
         double forwardValue=(1-Math.abs(asPercent))*forwardMod*proximitySlow;
 
         /*if(forwardControl)Robot.driveTrain.setForward(forwardValue);
