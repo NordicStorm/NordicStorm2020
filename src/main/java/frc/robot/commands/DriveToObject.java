@@ -55,16 +55,29 @@ public class DriveToObject{
             proximitySlow=1;
         }
 
-        System.out.println(asPercent);
+        /*System.out.println(asPercent);
         System.out.println(pVal);
-        System.out.println(maxTurn);
+        System.out.println(maxTurn);*/
+
+      
+
+
         double turnValue=Math.min(Math.max(asPercent*pVal,-maxTurn),maxTurn);
+        /*10x20
+        7x20*/
         
         double forwardValue=(1-Math.abs(asPercent))*forwardMod*proximitySlow;
 
-        /*if(forwardControl)Robot.driveTrain.setForward(forwardValue);
-        Robot.driveTrain.setRotate(turnValue);*/
         //System.out.println(proximitySlow);
+
+        if(Math.abs(turnValue)>0.1 && Math.abs(turnValue)<0.4){
+            if(turnValue<0){
+                turnValue=-0.4;
+            }else{
+                turnValue=0.4;
+            }
+        }
+        System.out.println(turnValue);
 
         return new double[]{turnValue,forwardValue};
         

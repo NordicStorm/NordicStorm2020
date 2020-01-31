@@ -70,14 +70,6 @@
               "Layout/Label position": "BOTTOM",
               "_children": [
                 {
-                  "_type": "Differential Drivebase",
-                  "_source0": "network_table:///LiveWindow/Ungrouped/DifferentialDrive[1]",
-                  "_title": "DifferentialDrive[1]",
-                  "Wheels/Number of wheels": 4,
-                  "Wheels/Wheel diameter": 80.0,
-                  "Visuals/Show velocity vectors": true
-                },
-                {
                   "_type": "Speed Controller",
                   "_source0": "network_table:///LiveWindow/Ungrouped/Talon SRX [11]",
                   "_title": "Talon SRX [11]",
@@ -88,8 +80,40 @@
                   "_source0": "network_table:///LiveWindow/Ungrouped/Talon SRX [12]",
                   "_title": "Talon SRX [12]",
                   "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "Differential Drivebase",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DifferentialDrive[1]",
+                  "_title": "DifferentialDrive[1]",
+                  "Wheels/Number of wheels": 4,
+                  "Wheels/Wheel diameter": 80.0,
+                  "Visuals/Show velocity vectors": true
                 }
               ]
+            }
+          },
+          "6,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Pixy",
+              "_title": "Pixy",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/Drivetrain/shiftingServo/Value",
+              "_title": "shiftingServo/Value"
             }
           },
           "4,0": {
@@ -109,19 +133,6 @@
                   "_title": "shiftingServo/Value"
                 }
               ]
-            }
-          },
-          "6,0": {
-            "size": [
-              2,
-              4
-            ],
-            "content": {
-              "_type": "Subsystem Layout",
-              "_source0": "network_table:///LiveWindow/Pixy",
-              "_title": "Pixy",
-              "Layout/Label position": "BOTTOM",
-              "_children": []
             }
           }
         }
