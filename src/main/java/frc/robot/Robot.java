@@ -74,6 +74,8 @@ pneumatics = new Pneumatics();
         SmartDashboard.putData("Auto mode", chooser);
         pixy.startUpdatingPixy();
         pneumatics.startCompressor();
+        drivetrain.shift(true);
+
     }
 
     /**
@@ -93,7 +95,6 @@ pneumatics = new Pneumatics();
     @Override
     public void autonomousInit() {
         autonomousCommand = chooser.getSelected();
-        drivetrain.shift(true);
         // schedule the autonomous command (example)
         if (autonomousCommand != null){
             autonomousCommand.start();
