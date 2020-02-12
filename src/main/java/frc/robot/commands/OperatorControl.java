@@ -66,6 +66,8 @@ public class OperatorControl extends Command {
             shiftWasPressed=false;
         }
 
+        Robot.shooter.setPower(leftJoystick.getY());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()

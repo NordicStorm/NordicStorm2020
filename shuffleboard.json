@@ -31,6 +31,25 @@
               "_source0": "network_table:///SmartDashboard/Autonomous Command",
               "_title": "Autonomous Command"
             }
+          },
+          "3,0": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://VisOut",
+              "_title": "VisOut",
+              "Crosshair/Show crosshair": true,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": true,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
+              "imageWidth": -1,
+              "imageHeight": -1
+            }
           }
         }
       }
@@ -131,6 +150,13 @@
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Drivetrain/shiftingServo/Value",
                   "_title": "shiftingServo/Value"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Drivetrain/ShiftingPiston/Value",
+                  "_title": "ShiftingPiston/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
                 }
               ]
             }
