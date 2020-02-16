@@ -46,14 +46,13 @@ public class FollowBall extends Command {
     @Override
     protected void initialize() {
 
-        targetTracker = new DriveToObject(pVal, forwardMod, maxTurn, stopWidth, proxPVal);
+        targetTracker = new DriveToObject(pVal, forwardMod, maxTurn, stopWidth, proxPVal, camWidth, camHeight);
         targetTracker.setOffset(0);
-        Robot.pixy.setObjectsToSee(true);
         
     }
 
-    final static int camWidth = 315;
-    final static int camHeight = 207;
+    int camWidth = 315;
+    int camHeight = 207;
 
     double turnValue = 0;
     double forwardValue = 0;
@@ -82,8 +81,8 @@ public class FollowBall extends Command {
         }else{// not locked on
             for(PixyObject possible : possibleTargets){
                 double aspect=possible.width/possible.height;
-                System.out.println(aspect);
-                if(!(aspect>=minAspect && aspect<=maxAspect)){continue;}//skip if it is too far from square
+                //System.out.println(aspect);
+                //if(!(aspect>=minAspect && aspect<=maxAspect)){continue;}//skip if it is too far from square
                 currentFollowingID=possible.trackingIndex;
                 return possible;
             }
@@ -112,6 +111,7 @@ public class FollowBall extends Command {
         }
 
         Robot.drivetrain.drive(forwardValue, turnValue);
+        Robot.ballIntake.setIntakeRunning(true);
 
     }
 
@@ -119,7 +119,7 @@ public class FollowBall extends Command {
     @Override
     protected boolean isFinished() {
 
-        return shouldStop || !Robot.oi.getRightJoystick().getRawButton(3);
+        return shouldStop;
     }
 
     // Called once after isFinished returns true

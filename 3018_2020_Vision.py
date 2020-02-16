@@ -321,15 +321,15 @@ if __name__ == "__main__":
 
             correctedHeight=h*0.696 # since we know the angle we are looking at, we can just make this multiplier for perspective be a constant
             focalLength=289.09
-            if debug:print(h)
+            if debug or 1:print(h)
             if debug:print(correctedHeight)
             dist = (trueHeight*focalLength) / correctedHeight
             dist= dist/39.37 # convert inches to meters
             if debug:print(dist)
             
             rpm, angle = getRPMAndAngle(dist)
-            netOut.putNumber("width", w)
-            netOut.putNumber("height", h)
+            netOut.putNumber("rpm", rpm)
+            netOut.putNumber("angle", angle)
 
 
         start = time()

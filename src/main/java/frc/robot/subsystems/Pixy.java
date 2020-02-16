@@ -111,7 +111,6 @@ public class Pixy extends Subsystem {
 
     }
 
-    boolean readBalls = true;
     int numBlocksToRead=5;
     int readSize=numBlocksToRead*20;
     byte[] rawData = new byte[readSize];
@@ -119,11 +118,8 @@ public class Pixy extends Subsystem {
 
         int checksum;
         List<PixyObject> packets = new ArrayList<PixyObject>();
-        int sigmap = 0;
-        if (readBalls) {
-            sigmap += 1;
-        }
-        sigmap=1;
+        int sigmap = 255;
+        
 
         byte[] request = { (byte) 174, (byte) 193, 32, 2, (byte) sigmap, (byte) numBlocksToRead };
         // request=new byte[]{ (byte) 174, (byte) 193, 22, 2,0,0 };
@@ -210,11 +206,7 @@ public class Pixy extends Subsystem {
         return knownObjects;
     }
 
-    public void setObjectsToSee(boolean balls) {
-        readBalls = balls;
-        //knownObjects.clear();//clear so we don't return stale objects
-
-    }
+ 
 
     public boolean canSeeObject() {
         return knownObjects.size() >= 1;

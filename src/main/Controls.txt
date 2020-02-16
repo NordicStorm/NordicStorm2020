@@ -1,0 +1,9 @@
+Controls:
+    Right:
+        Forward/Twist: driving
+        Throttle: drive throttle
+        Trigger (hold): follow ball
+        Right thumb button (btn 4): shift
+    Left:
+        Trigger (hold): shoot
+        Left thumb button (btn 4): manually run intake

@@ -1,0 +1,32 @@
+CAN IDs:
+    drive (odds on left)
+        left1 =  1
+        right1 = 2
+        left2 =  3
+        right2 = 4
+    intake stages
+        stage1 = 5
+        stage2 = 6
+        stage3 = 7
+        stage4 = 8
+        stage5 = 9
+    shooter
+        flywheel= 13 (spark max)
+        pivot=10
+        kicker=11
+    control panel spinner
+        spinner = 12
+
+DIO:
+    intake stages:
+        sensor1=0
+        sensor2=1
+        sensor3=2
+        sensor4=3
+        sensor5=4
+Analog Inputs:
+    Pneumatics:
+        pressure sensor = 0
+PWM:
+    Shooter:
+        Hood Servo=0

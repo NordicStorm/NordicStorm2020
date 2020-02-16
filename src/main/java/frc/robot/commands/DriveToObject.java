@@ -24,17 +24,20 @@ public class DriveToObject{
     double proxPVal;
     double offset=0;
     boolean proxAdjust;
-    public DriveToObject(double pVal, double forwardMod, double maxTurn, double stopProximity, double proxPVal) {
+    double camWidth=315;
+    double camHeight=207;
+    public DriveToObject(double pVal, double forwardMod, double maxTurn, double stopProximity, double proxPVal, double camWidth, double camHeight) {
         this.pVal=-pVal;//negative so it goes the right way
         this.forwardMod=forwardMod;
         this.maxTurn=maxTurn;
         this.stopProximity=stopProximity;
         this.proxAdjust=stopProximity>0;
         this.proxPVal=proxPVal;
+        this.camHeight=camHeight;
+        this.camWidth=camWidth;
     }    
 
-    final static int camWidth=315;
-    final static int camHeight=207;
+    
 
     /**
      * 
@@ -63,8 +66,7 @@ public class DriveToObject{
 
 
         double turnValue=Math.min(Math.max(asPercent*pVal,-maxTurn),maxTurn);
-        /*10x20
-        7x20*/
+ 
         
         double forwardValue=(1-Math.abs(asPercent))*forwardMod*proximitySlow;
 
@@ -77,7 +79,7 @@ public class DriveToObject{
                 turnValue=0.4;
             }
         }
-        System.out.println(turnValue);
+        //System.out.println(turnValue);
 
         return new double[]{turnValue,forwardValue};
         
