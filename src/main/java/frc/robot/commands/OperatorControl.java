@@ -65,17 +65,25 @@ public class OperatorControl extends Command {
             shiftWasPressed=false;
         }
         double leftY=leftJoystick.getY();
-        Robot.shooter.setPower(leftJoystick.getX());
-        //Robot.shooter.rawSet(Util.map(leftJoystick.getZ(), 1, -1, 0, 1));
-        Robot.shooter.rawSet(Util.map(leftJoystick.getZ(), 1, -1, 0, 0.34645669162273407));
-        //Robot.ballIntake.setRawMotors(leftY, leftY, leftY, leftY, leftY ,leftY*0.5*0);
+        //Robot.shooter.setPower(leftJoystick.getX());
+        //Robot.shooter.rawSet(Util.map(leftJoystick.getZ(), 1, -1, 0, 0.34645669162273407));
+        double kick=0;
+        if(leftJoystick.getRawButton(11)){
+            kick=1;
+        }
+        if(Math.abs(leftY)>0.7){
+            Robot.ballIntake.setRawMotors(leftY, leftY, leftY, leftY, leftY ,kick);
+        }
+        if(Math.abs(leftJoystick.getX())>0.7){
+            //Robot.shooter.setPower(leftJoystick.getX());
+        }
 
 
-        /*if(leftJoystick.getTrigger()){
+        if(leftJoystick.getTrigger()){
             if(Robot.shooter.isReadyToShoot()){
                 Robot.ballIntake.feedBallToShooter();
             }
-        }*/
+        }
         Robot.ballIntake.setIntakeRunning(leftJoystick.getRawButton(4));
 
     }

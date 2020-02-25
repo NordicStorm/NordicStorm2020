@@ -64,6 +64,33 @@
               "Range/Max": 120.0,
               "Visuals/Show value": true
             }
+          },
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Should be",
+              "_title": "Should be"
+            }
+          },
+          "0,2": {
+            "size": [
+              6,
+              2
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///SmartDashboard/RPM",
+              "_title": "RPM",
+              "Graph/Visible time": 30.0,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Visible data/SmartDashboard/RPM": true
+            }
           }
         }
       }

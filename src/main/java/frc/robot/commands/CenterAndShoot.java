@@ -38,12 +38,15 @@ public class CenterAndShoot extends Command {
     @Override
     protected void initialize() {
         targetTracker=new DriveToObject(pVal, 0, maxTurn, 0, 0, camWidth, camHeight);
+        targetTracker.setOffset(10);
     }
+
+
 
     DriveToObject targetTracker;
     double turnValue = 0.01;
     double maxTurn = 0.75;
-    double pVal = 1.25;
+    double pVal = 10.25;
     double camWidth=320;
     double camHeight=240;
     // Called repeatedly when this Command is scheduled to run
@@ -65,13 +68,13 @@ public class CenterAndShoot extends Command {
             }            
         }
 
-        Robot.drivetrain.drive(0, turnValue);
+        Robot.shooter.setPivotPower(turnValue);
 
-        if(xError<10){
+        /*if(xError<10){
             if(Robot.shooter.isReadyToShoot()){
                 Robot.ballIntake.feedBallToShooter();
             }
-        }
+        }*/
         
         
     }

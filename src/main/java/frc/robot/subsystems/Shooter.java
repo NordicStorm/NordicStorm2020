@@ -10,11 +10,15 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Robot;
 import frc.robot.Util;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
@@ -46,7 +50,8 @@ private Servo hoodServo;
     CANPIDController flywheelVelocityControl;
     CANSparkMax flywheel;
 
-    int rpmTolerance = 20;
+    WPI_TalonSRX pivot;
+    int rpmTolerance = 5;
     double hoodAngle = 20;
     int servoMaxTimeDelay = 1000;// note: this is scaled based on how far the servo moves
     int timeLeftToMoveServo = 0;
@@ -69,13 +74,14 @@ addChild("HoodServo",hoodServo);
 
         flywheel = new CANSparkMax(13, MotorType.kBrushless);
         flywheelVelocityControl = flywheel.getPIDController();
+        flywheelVelocityControl.setP(0.0005);
+        flywheelVelocityControl.setI(0.00000037);
+        flywheelVelocityControl.setD(0.00);
+        flywheelVelocityControl.setIZone(200);
+        flywheelVelocityControl.setFF(0.0002);
 
-        flywheelVelocityControl.setP(1);
-        flywheelVelocityControl.setI(0.0001);
-        flywheelVelocityControl.setD(0);
-        flywheelVelocityControl.setIZone(1000);
-        flywheelVelocityControl.setFF(0);
-
+        pivot=new WPI_TalonSRX(10);
+        flywheel.burnFlash();
         lastTime = System.currentTimeMillis();
 
         setAngle(25);
@@ -94,6 +100,7 @@ addChild("HoodServo",hoodServo);
     // 4300
     @Override
     public void periodic() {
+        //setAngle(34);
         long currTime = System.currentTimeMillis();
         if (timeLeftToMoveServo > 0) {
             long elapsed = currTime - lastTime;
@@ -110,11 +117,22 @@ addChild("HoodServo",hoodServo);
         double visAngle=getVisionAngleValue();
         if(visAngle!=-1){
             setAngle(visAngle);
+            
         }
-        // System.out.println(flywheel.getEncoder().getVelocity());
-        // flywheelVelocityControl.setReference(targetRPM, ControlType.kVelocity);
+        //System.out.println(flywheel.getEncoder().getVelocity());
+        //System.out.println("Should be "+targetRPM);
+        SmartDashboard.putNumber("Should be", targetRPM);
+        SmartDashboard.putNumber("RPM", flywheel.getEncoder().getVelocity());
+        hoodServo.set(Util.map(hoodAngle, 25, 45, 0.34645669162273407, 0));
+        //hoodServo.set(Util.map(hoodAngle, 25, 45, 0.44645669162273407, 0));
+        SmartDashboard.putNumber("Temp", flywheel.getMotorTemperature());
+        System.out.println(hoodAngle);
+        //targetRPM=2500;
+        setPivotPower(Robot.oi.getLeftJoystick().getX());
+        flywheelVelocityControl.setReference(-targetRPM, ControlType.kVelocity);
+        //setPower(1);
 
-        // setVelocity(3000);
+        //setVelocity(3400);
         // Put code here to be run every loop
 
     }
@@ -124,19 +142,24 @@ addChild("HoodServo",hoodServo);
 
     }
 
+    public void setPivotPower(double power){
+        flywheel.set(power);
+    }
     public void setVelocity(double rpm) {
         // flywheelVelocityControl.setReference(rpm, ControlType.kVelocity);
         targetRPM = rpm;
     }
 
     public void setAngle(double angle) {
+        System.out.println("ang"+angle);
         angle = Math.min(Math.max(angle, 25), 45); // constrain from 25-45
-        if (hoodAngle == angle) {
+        hoodAngle = angle;
+
+        if (Math.abs(hoodAngle - angle)<5) {
             return;
         }
         double difference = Math.abs(angle - hoodAngle);
         timeLeftToMoveServo += servoMaxTimeDelay * (difference / 20.0);
-        hoodAngle = angle;
     }
 
     public void rawSet(double angle) {
@@ -145,11 +168,15 @@ addChild("HoodServo",hoodServo);
     }
 
     public boolean isReadyToShoot() {
-        return getFlywheelVelocityAbsoluteError() <= rpmTolerance && timeLeftToMoveServo == 0;
+        //return getVelocity()>2000;
+        System.out.println(timeLeftToMoveServo);
+        return getFlywheelVelocityAbsoluteError() <= rpmTolerance && timeLeftToMoveServo <= 30;
     }
-
+    public double getVelocity(){
+        return -flywheel.getEncoder().getVelocity();
+    }
     public double getFlywheelVelocityError() {
-        return flywheel.getEncoder().getVelocity() - targetRPM;
+        return getVelocity() - targetRPM;
     }
 
     public double getFlywheelVelocityAbsoluteError() {
