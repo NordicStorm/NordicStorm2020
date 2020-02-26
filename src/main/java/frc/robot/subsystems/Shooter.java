@@ -51,7 +51,7 @@ private Servo hoodServo;
     CANSparkMax flywheel;
 
     WPI_TalonSRX pivot;
-    int rpmTolerance = 5;
+    int rpmTolerance = 10;
     double hoodAngle = 20;
     int servoMaxTimeDelay = 1000;// note: this is scaled based on how far the servo moves
     int timeLeftToMoveServo = 0;
@@ -74,14 +74,14 @@ addChild("HoodServo",hoodServo);
 
         flywheel = new CANSparkMax(13, MotorType.kBrushless);
         flywheelVelocityControl = flywheel.getPIDController();
-        flywheelVelocityControl.setP(0.0005);
-        flywheelVelocityControl.setI(0.00000037);
+        flywheelVelocityControl.setP(0.0007);
+        flywheelVelocityControl.setI(0.0000009);
         flywheelVelocityControl.setD(0.00);
         flywheelVelocityControl.setIZone(200);
-        flywheelVelocityControl.setFF(0.0002);
+        flywheelVelocityControl.setFF(0.00021);
 
         pivot=new WPI_TalonSRX(10);
-        flywheel.burnFlash();
+        //flywheel.burnFlash();
         lastTime = System.currentTimeMillis();
 
         setAngle(25);
@@ -111,6 +111,7 @@ addChild("HoodServo",hoodServo);
         }
 
         double visRPM=getVisionRPMValue();
+        //System.out.println(visRPM);
         if(visRPM!=-1){
             targetRPM=visRPM;
         }
@@ -126,7 +127,7 @@ addChild("HoodServo",hoodServo);
         hoodServo.set(Util.map(hoodAngle, 25, 45, 0.34645669162273407, 0));
         //hoodServo.set(Util.map(hoodAngle, 25, 45, 0.44645669162273407, 0));
         SmartDashboard.putNumber("Temp", flywheel.getMotorTemperature());
-        System.out.println(hoodAngle);
+        //System.out.println(hoodAngle);
         //targetRPM=2500;
         setPivotPower(Robot.oi.getLeftJoystick().getX());
         flywheelVelocityControl.setReference(-targetRPM, ControlType.kVelocity);
@@ -151,7 +152,7 @@ addChild("HoodServo",hoodServo);
     }
 
     public void setAngle(double angle) {
-        System.out.println("ang"+angle);
+        //System.out.println("ang"+angle);
         angle = Math.min(Math.max(angle, 25), 45); // constrain from 25-45
         hoodAngle = angle;
 
@@ -169,7 +170,8 @@ addChild("HoodServo",hoodServo);
 
     public boolean isReadyToShoot() {
         //return getVelocity()>2000;
-        System.out.println(timeLeftToMoveServo);
+        //System.out.println(timeLeftToMoveServo);
+        if(getVelocity()<400){return false;}
         return getFlywheelVelocityAbsoluteError() <= rpmTolerance && timeLeftToMoveServo <= 30;
     }
     public double getVelocity(){

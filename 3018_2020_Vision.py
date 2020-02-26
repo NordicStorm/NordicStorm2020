@@ -252,15 +252,20 @@ def getRPMAndAngle(distance):
 
     rpm = rpm*ratioMultiplier # the gears increase the flywheel rpm, so to go back to the motor rpm we need to take 20/42 of it
     #print("rpm2", rpm)
-    print("orig", rpm)
     rpm=rpm*60 # convert from rpsecond to rpminute
     #print("rpm3", rpm)
-    fudge=2.145
-    angle-=1
-    rpm*=fudge # fudge factor for losing power
-    print("fudge: ", fudge)
+    
+    print("orig ", rpm)
+    print ("origang ", angle)
 
-    print (angle)
+    fudge=2.28
+    angleFudge=-1.5
+    angle+=angleFudge
+    rpm*=fudge # fudge factor for losing power
+    print("rpmfudge: ", fudge)
+
+    print("anglefudge: ", angleFudge)
+
     if debug:print("vel", velocity)
     if debug:print("rpm", rpm)
     if debug:print("angle", angle)
@@ -357,8 +362,10 @@ if __name__ == "__main__":
             h=getAverageOverRecent()
             dist = heightToDistance(h)
             if debug:print(dist)
+            print (dist)
+            dist+= 3.75 #shooter is behind cam
             dist= dist/39.37 # convert inches to meters
-            
+            #print(previousSeenHeights)
             rpm, angle = getRPMAndAngle(dist)
             if 0 not in previousSeenHeights:
                 netOut.putNumber("rpm", rpm)
