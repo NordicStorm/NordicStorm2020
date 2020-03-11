@@ -72,13 +72,7 @@ public class DriveToObject{
 
         //System.out.println(proximitySlow);
 
-        if(Math.abs(turnValue)>0.1 && Math.abs(turnValue)<0.4){
-            if(turnValue<0){
-                turnValue=-0.4;
-            }else{
-                turnValue=0.4;
-            }
-        }
+        
         //System.out.println(turnValue);
 
         return new double[]{turnValue,forwardValue};

@@ -109,7 +109,13 @@ public class FollowBall extends Command {
             forwardValue = 0;
             
         }
-
+        if(Math.abs(turnValue)>0.1 && Math.abs(turnValue)<0.4){
+            if(turnValue<0){
+                turnValue=-0.4;
+            }else{
+                turnValue=0.4;
+            }
+        }
         Robot.drivetrain.drive(forwardValue, turnValue);
         Robot.ballIntake.setIntakeRunning(true);
 

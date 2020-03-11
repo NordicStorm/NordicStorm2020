@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import json
-from time import time as time # only use the function that gives the current time
+from time import time, sleep # only use the function that gives the current time
 import random
 import sys
 
@@ -235,43 +235,103 @@ def processFrame(frame):
     pipeline.process(frame)
     res=pipeline.filter_contours_output
     if len(res)!=0:
+        
         return  cv2.boundingRect(res[0])
 
     else:
         return False
-def getRPMAndAngle(distance):
+
+def getRPMAndAngle(distance, origInchesDist):
+    distance+=0.74 # account for distance to back hole from target
+
     velocity, angle = getVelocityAndAngle(distance)
-    flywheelCircumference=0.319186 # meters
-
-    #print("vel", velocity)
-    #print("ang", angle)
-    rpm=velocity/flywheelCircumference
-    #print("rpm1", rpm)
-
-    ratioMultiplier=0.47619
-
-    rpm = rpm*ratioMultiplier # the gears increase the flywheel rpm, so to go back to the motor rpm we need to take 20/42 of it
-    #print("rpm2", rpm)
-    rpm=rpm*60 # convert from rpsecond to rpminute
-    #print("rpm3", rpm)
     
-    print("orig ", rpm)
-    print ("origang ", angle)
+    #print("rpm3", rpm)
+    rpm=convertVelocityToRPM(velocity)
+    #print("orig ", rpm)
+    #print ("origang ", angle)
 
-    fudge=2.28
-    angleFudge=-1.5
-    angle+=angleFudge
-    rpm*=fudge # fudge factor for losing power
-    print("rpmfudge: ", fudge)
 
-    print("anglefudge: ", angleFudge)
 
+    rpm=applyRPMFudge(rpm)
+    angle=applyAngleFudge(angle, rpm)
+    #print("rpmfudge: ", fudge)
+
+    #print("anglefudge: ", angleFudge)
+
+    if angle<25:# mechanism can only go to 25 degrees
+        print("long")
+
+        angle=25
+        x=distance
+        y=1.47955 # vertical distance the ball needs to travel
+        velocity=getLongshotVelocity(distance, x, y)
+        rpm=convertVelocityToRPM(velocity)
+        rpm=applyRPMFudgeForLongshot(rpm)
+        rpm=1.5114219115073779e+003 +  3.8121729360648424e+000 * origInchesDist
+        #rpm=
+        if origInchesDist>178.47031876854825:
+            print("reallylong")
+            x=distance-0.74 # aim for the middle of the big outer target, so move target 0.74m closer
+            velocity=getLongshotVelocity(distance, x, y)
+            rpm=convertVelocityToRPM(velocity)
+            rpm=applyRPMFudgeForVeryLongshot(rpm)
+
+
+            rpm=2.3973463633773163e+003 + -3.9206380581987790e+000 * origInchesDist +  1.5232575217969729e-002 * origInchesDist*origInchesDist
+        #rpm=applyRPMFudge(rpm)
+        
+        
     if debug:print("vel", velocity)
     if debug:print("rpm", rpm)
-    if debug:print("angle", angle)
+    #print("newang", angle)
     return [rpm, angle]
+def convertVelocityToRPM(velocity):
+    flywheelCircumference=0.319186 # meters
+
+
+    rpm=velocity/flywheelCircumference
+    ratioMultiplier=0.47619
+    rpm = rpm*ratioMultiplier # the gears increase the flywheel rpm, so to go back to the motor rpm we need to take 20/42 of it
+    rpm=rpm*60 # convert from rpsecond to rpminute
+
+    return rpm
+def getLongshotVelocity(distance, x, y):
+    radians25 = 0.436332
+    c=math.cos(radians25)
+    s=math.sin(radians25)
+    
+    g=9.81
+    
+    #print("long"),
+    v=math.sqrt(((g*x*x)/(2*c*c))*((-1)/(y-((s*x)/c))))
+
+    return v
+
+def applyRPMFudge(rpm):
+    return rpm * (3.0541393921880791e+000 - 7.2487484146391550e-004 * rpm)
+def applyRPMFudgeForLongshot(rpm):
+    #fudge=7.4412442850755873e+000 + -4.7755445685672233e-003 * rpm
+    fudge=1.90
+    #print("orig:"+str(rpm))
+
+    #print("fudge:"+str(fudge))
+
+    #print("new:"+str(rpm*fudge))
+    return rpm * fudge
+def applyRPMFudgeForVeryLongshot(rpm):
+    fudge=1.8
+    #fudge=-4.4268244278918143e+000 +  5.6807972678785852e-003 * rpm
+
+
+    print("orig:"+str(rpm))
+    print("fudge:"+str(fudge))
+    print("new:"+str(rpm*fudge))
+    return rpm * fudge
+def applyAngleFudge(origAngle, rpm):
+    angFudge= -1.1306745180644164e+001 +  2.1768502008778193e-003 * rpm
+    return origAngle+angFudge
 def getVelocityAndAngle(distance):
-    distance+=0.74
     g=9.81
     x=distance
     y=1.47955 # vertical distance the ball needs to travel
@@ -282,6 +342,7 @@ def getVelocityAndAngle(distance):
     velocity=math.sqrt(vyInitial**2+vxInitial**2)# pythagorean theorem
     angle=math.degrees(math.atan(vyInitial/vxInitial))
     return [velocity, angle]
+
 def heightToDistance(h):
     return 5.7349476148636040e+002 +( -1.5554292862671193e+001 * h) +  (1.2522754639035663e-001 * h*h)
 def addToRollingAverage(h):
@@ -296,6 +357,7 @@ def clearAverage():
     previousSeenHeights=[0 for i in range(windowSize)]
 def getAverageOverRecent():
     return statistics.mean(previousSeenHeights)
+averageIndex=0
 windowSize=50
 previousSeenHeights=[0 for i in range(windowSize)]
 if __name__ == "__main__":
@@ -311,6 +373,7 @@ if __name__ == "__main__":
     camera = UsbCamera("rPi Camera 0", "/dev/video0")
 
     camServer = inst.startAutomaticCapture(camera=camera, return_server=True)
+    camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen)
     vidSource=inst.getVideo()
     width=320
     height=240
@@ -340,9 +403,10 @@ if __name__ == "__main__":
         if debug:output.putFrame(frame)
 
         if debug:print("FPS: {:.1f}".format(1 / (time() - start)))
-
+        #print(camera.isConnected())
         if result:
             x, y, w, h = result
+            #h=40
             cx = x+w/2
             cy = y+h/2
             netOut.putNumber("width", w)
@@ -350,9 +414,9 @@ if __name__ == "__main__":
             netOut.putNumber("x", cx)
             netOut.putNumber("y", cy)
 
-            #rem
+            
             trueHeight=17# height of target
-
+            
             #correctedHeight=h*0.696 # since we know the angle we are looking at, we can just make this multiplier for perspective be a constant
             #focalLength=289.09
             if debug:print(h)
@@ -361,12 +425,15 @@ if __name__ == "__main__":
             addToRollingAverage(h)
             h=getAverageOverRecent()
             dist = heightToDistance(h)
-            if debug:print(dist)
+            origDist=dist
             print (dist)
+            #dist=131
             dist+= 3.75 #shooter is behind cam
             dist= dist/39.37 # convert inches to meters
             #print(previousSeenHeights)
-            rpm, angle = getRPMAndAngle(dist)
+            rpm, angle = getRPMAndAngle(dist, origDist)
+
+
             if 0 not in previousSeenHeights:
                 netOut.putNumber("rpm", rpm)
                 netOut.putNumber("angle", angle)
