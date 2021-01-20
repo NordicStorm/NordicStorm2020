@@ -112,7 +112,7 @@ public class Drivetrain extends Subsystem {
         shiftingServo.set(target);
         
         // System.out.println("target:" + target);
-
+        
         // Put code here to be run every loop
 
     }
