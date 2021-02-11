@@ -147,9 +147,11 @@ public class Shooter extends Subsystem {
         SmartDashboard.putNumber("Temp", flywheel.getMotorTemperature());
         // System.out.println(hoodAngle);
         // targetRPM=2500;
-
-        flywheelVelocityControl.setReference(-targetRPM, ControlType.kVelocity);
-        // setPower(1);
+        if(Robot.oi.leftJoystick.getZ()<0.5){
+            flywheelVelocityControl.setReference(-targetRPM, ControlType.kVelocity);
+        }else{
+           setPower(0);
+        }
         flywheel.enableVoltageCompensation(11.5);
 
         

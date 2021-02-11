@@ -374,6 +374,10 @@ if __name__ == "__main__":
 
     camServer = inst.startAutomaticCapture(camera=camera, return_server=True)
     camera.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen)
+    camera2 = UsbCamera("rPi Camera 1", "/dev/video1")
+
+    camServer2 = inst.startAutomaticCapture(camera=camera2, return_server=True)
+    camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen)
     vidSource=inst.getVideo()
     width=320
     height=240
