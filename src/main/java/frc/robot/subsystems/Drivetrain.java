@@ -110,6 +110,10 @@ public class Drivetrain extends Subsystem {
         SmartDashboard.putNumber("leftMasterPower",  leftMasterTalon.getMotorOutputPercent());
         SmartDashboard.putNumber("rightMasterPower",  rightMasterTalon.getMotorOutputPercent());
 
+        SmartDashboard.putNumber("LeftEncPos", leftMasterTalon.getSelectedSensorPosition());
+        if(Robot.oi.getRightJoystick().getRawButton(6)){
+            leftMasterTalon.setSelectedSensorPosition(0);
+        }
         robotDrive.arcadeDrive(-currentForwardSpeed, currentTurnSpeed);
         shiftingPiston.set(!shiftPosIsFast);// true means slow
         // double target = Util.map(Robot.oi.leftJoystick.getZ(), 1, -1, 0, 1);

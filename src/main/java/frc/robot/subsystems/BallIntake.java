@@ -58,7 +58,7 @@ public class BallIntake extends Subsystem {
     long timeToStopKicker = 0;
     double moveSpeed = 1;
     int moveTime = 500;
-    int sensorMoveTime = moveTime * 99 - 300;// 200;
+    int sensorMoveTime = moveTime - 300;// 200;
     int timeToKick = 200;
 
     int shooterFeedTime = 800;
@@ -164,13 +164,14 @@ public class BallIntake extends Subsystem {
 
             boolean kickerReady = true;
             if (i == 4 && approxKickerSpeed < 1000) {
-                kickerReady = false;
+                //kickerReady = false;
             }
             if ((timeStopFrom > now || timeStopTo > now) && kickerReady) {// if we should run because we are moving a
                                                                           // ball from or to
                 runStageMotor = true;
-                // System.out.println("run" + i + "keep");
+                System.out.println("run" + i + "keep. MovingFrom:"+(timeStopFrom > now)+" MovingTo:"+(timeStopTo > now));
 
+                //If we are moving to this stage and the
                 if (timeLeftToMoveTo <= sensorMoveTime || i == 4) {// if we have gotten beyond the dead time
                     if (isOccupied || timeLeftToMoveTo < 0) { // and if the ball has gotten here, tell the previous
                                                               // stage
@@ -179,6 +180,10 @@ public class BallIntake extends Subsystem {
                             timeToStopStageBeingMovedFrom[i - 1] = 0;
                         }
                         timeToStopStageBeingMovedTo[i] = 0;
+                        System.out.println("stop " + i + ". Sensor:"+isOccupied);
+                        if(!isOccupied){
+                            double qqq=0;
+                        }
 
                     }
                 }
@@ -190,14 +195,12 @@ public class BallIntake extends Subsystem {
                                                                // open
                         isAvailable = true; // this is now available since it is clearing out
 
-                        if (timeToStopStageBeingMovedFrom[i] < now) {
+                        if (timeLeftToMoveTo<0){// timeToStopStageBeingMovedFrom[i] < now) {
                             // set both this stage and the next stage moving, as the ball transfers
 
                             timeToStopStageBeingMovedFrom[i] = now + moveTime;
-                            int toStageMoveTime = moveTime * 99;
-                            if (i == 3) {
-                                toStageMoveTime = moveTime * 99;
-                            }
+                            int toStageMoveTime = moveTime;
+
                             timeToStopStageBeingMovedTo[i + 1] = now + toStageMoveTime;
                             runStageMotor = true;
                             // System.out.println("run" + i + "start");
