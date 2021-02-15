@@ -48,6 +48,6 @@ public class Autonomous extends CommandGroup {
 
     public void initializeCommands(){
         addSequential(new WaitTime(1));
-        addSequential(new TurnToAngle(430));
+        addSequential(new TurnToAngle(270));
     }
 }

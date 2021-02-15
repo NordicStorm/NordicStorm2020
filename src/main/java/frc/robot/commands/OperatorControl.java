@@ -52,14 +52,15 @@ public class OperatorControl extends Command {
         Joystick leftJoystick = Robot.oi.getLeftJoystick();
         double forwardPower= -rightJoystick.getY();
         double turnPower= -rightJoystick.getZ();
-        
+        //turnPower=Math.copySign(turnPower*turnPower, turnPower); //square the input
+
         //System.out.println(Robot.drivetrain.getRotationalSpeed());
 
-        if(forwardPower<0.008 && turnPower>0 && turnPower<=0.18){//weird thing with joystick
+        /*if(forwardPower<0.008 && turnPower>0 && turnPower<=0.18){//weird thing with joystick
             turnPower=0;
-        }
-        System.out.println(turnPower);
-        System.out.println(forwardPower);
+        }*/
+        //System.out.println(turnPower);
+        //System.out.println(forwardPower);
         if(Math.abs(forwardPower)<0.05){
             forwardPower=0;
         }
@@ -72,11 +73,11 @@ public class OperatorControl extends Command {
         SmartDashboard.putNumber("Throttle",throttle);
         forwardPower*=throttle;
         turnPower*=throttle;
-        if(rightJoystick.getX()<=-0.5){
+        if(rightJoystick.getX()<=-0.75){
             forwardPower=tightTurnForwardval;
             turnPower=tightTurnTurnVal;
         }
-        if(rightJoystick.getX()>=0.5){
+        if(rightJoystick.getX()>=0.75){
             forwardPower=tightTurnForwardval;
             turnPower=-tightTurnTurnVal;
         }

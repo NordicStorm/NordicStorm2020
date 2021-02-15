@@ -65,7 +65,7 @@ public class DriveForDistance extends Command {
         double rightPos=Robot.drivetrain.getRightEncoderDistance();
         Robot.drivetrain.tankDriveDirect(calcSpeedNeeded(leftPos, distance), calcSpeedNeeded(rightPos, distance));
     }
-    private void calcSpeedNeeded(double currentPos, double targetPos){
+    private double calcSpeedNeeded(double currentPos, double targetPos){
         if(currentPos<targetPos){
             return speed;
         }else{
