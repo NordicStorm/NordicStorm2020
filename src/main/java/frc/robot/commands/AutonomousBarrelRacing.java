@@ -48,7 +48,7 @@ public class AutonomousBarrelRacing extends CommandGroup {
 
     public void initializeCommands(){
         addSequential(new WaitTime(1));
-        addSequential(new TurnToAngle(90));
+        addSequential(new TurnToAngle(180));
         addSequential(new DriveForDistance(921, 0.5));
     }
 }

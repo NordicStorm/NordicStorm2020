@@ -169,7 +169,7 @@ public class BallIntake extends Subsystem {
             if ((timeStopFrom > now || timeStopTo > now) && kickerReady) {// if we should run because we are moving a
                                                                           // ball from or to
                 runStageMotor = true;
-                System.out.println("run" + i + "keep. MovingFrom:"+(timeStopFrom > now)+" MovingTo:"+(timeStopTo > now));
+                //System.out.println("run" + i + "keep. MovingFrom:"+(timeStopFrom > now)+" MovingTo:"+(timeStopTo > now));
 
                 //If we are moving to this stage and the
                 if (timeLeftToMoveTo <= sensorMoveTime || i == 4) {// if we have gotten beyond the dead time
@@ -180,7 +180,7 @@ public class BallIntake extends Subsystem {
                             timeToStopStageBeingMovedFrom[i - 1] = 0;
                         }
                         timeToStopStageBeingMovedTo[i] = 0;
-                        System.out.println("stop " + i + ". Sensor:"+isOccupied);
+                        //System.out.println("stop " + i + ". Sensor:"+isOccupied);
                         if(!isOccupied){
                             double qqq=0;
                         }
