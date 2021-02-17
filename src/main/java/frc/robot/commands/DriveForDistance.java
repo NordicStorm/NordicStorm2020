@@ -26,8 +26,8 @@ public class DriveForDistance extends Command {
     
     double distance;
     double targetSpeed;
-    double rightTargetPos;
     double leftTargetPos;
+    double rightTargetPos;
     /**
      * 
      * @param distance distance in encoder units. 913=1 ft
@@ -50,9 +50,9 @@ public class DriveForDistance extends Command {
     @Override
     protected void initialize() {
         Robot.drivetrain.setEncMode(true);
+        //Robot.drivetrain.resetEncoderPositions();
         leftTargetPos=Robot.drivetrain.getLeftEncoderDistance()-distance;
-        rightTargetPos=Robot.drivetrain.getLeftEncoderDistance()+distance;
-
+        rightTargetPos=Robot.drivetrain.getRightEncoderDistance()+distance;
         Robot.drivetrain.setOutsideControl(true);
         done=false;
     }
@@ -68,7 +68,7 @@ public class DriveForDistance extends Command {
     protected void execute() {
         double leftPos=Robot.drivetrain.getLeftEncoderDistance();
         double rightPos=Robot.drivetrain.getRightEncoderDistance();
-        double leftSpeed=calcSpeedNeeded(leftPos, -leftTargetPos, -targetSpeed);
+        double leftSpeed=calcSpeedNeeded(leftPos, leftTargetPos, -targetSpeed);
         double rightSpeed=calcSpeedNeeded(rightPos, rightTargetPos, targetSpeed);
         Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
         if(getDistanceAway(leftPos, leftTargetPos, true)<=0
