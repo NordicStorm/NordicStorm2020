@@ -50,6 +50,7 @@ public class DriveForDistance extends Command {
         Robot.drivetrain.setEncMode(true);
         Robot.drivetrain.resetEncoderPositions();
         Robot.drivetrain.setOutsideControl(true);
+        done=false;
     }
 
     boolean done=false;
@@ -74,6 +75,7 @@ public class DriveForDistance extends Command {
         }
     }
     private double getDistanceAway(double currentPos, double targetPos, boolean reversed){
+        System.out.println(currentPos);
         double distance;
         if(reversed){
             distance=currentPos-targetPos;
