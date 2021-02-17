@@ -33,7 +33,7 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
 
-    Command autonomousCommand;
+    AutonomousSlalom autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
 
     public static OI oi;
@@ -103,8 +103,8 @@ climber = new Climber();
     public void autonomousInit() {
         Robot.drivetrain.resetHeading();
         Robot.shooter.resetHeading();
-        autonomousCommand=new Autonomous();
-        ((Autonomous) autonomousCommand).initializeCommands();
+        autonomousCommand=new AutonomousSlalom();
+        autonomousCommand.initializeCommands();
         autonomousCommand.start();
         
     }
