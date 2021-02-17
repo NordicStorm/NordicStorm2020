@@ -64,11 +64,10 @@ public class TurnToAngle extends Command {
         double diff = Drivetrain.angleDiff(currAngle, targetAngle);
         double turnVal = diff * pVal;
         double error = diff;
-        double rotationRate=Robot.drivetrain.getRotationalSpeed();
+        double rotationRate=Robot.drivetrain.getRotationalVelocity();
         double absError = Math.abs(error);
-        System.out.println(diff);
         //boolean moving=Robot.drivetrain.getRotationalSpeed();
-        if(absError>10 || Math.abs(rotationRate)<1){//3
+        if(absError>10 || Math.abs(rotationRate)<absError*0.75){//0.75
             if (Math.abs(turnVal) > maxTurn) {
                 turnVal = Math.copySign(maxTurn, turnVal);
             }

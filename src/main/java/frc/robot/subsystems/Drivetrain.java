@@ -113,6 +113,7 @@ public class Drivetrain extends Subsystem {
         if (Robot.oi.getRightJoystick().getRawButton(6)) {
             leftMasterTalon.setSelectedSensorPosition(0);
         }
+
         if (!isControlledOutside) {
             robotDrive.arcadeDrive(-currentForwardSpeed, currentTurnSpeed, false);
         }
@@ -158,6 +159,7 @@ public class Drivetrain extends Subsystem {
     }
 
     public void tankDriveDirect(double left, double right) {
+        robotDrive.feedWatchdog();
         leftMasterTalon.set(left);
         rightMasterTalon.set(right);
     }
@@ -199,8 +201,16 @@ public class Drivetrain extends Subsystem {
         return navx.getAngle();
     }
 
-    public double getRotationalSpeed() {
+    public double getRotationalVelocity() {
         return navx.getRate() * navx.getActualUpdateRate();
+    }
+
+    public double getLeftEncoderVelocity(){
+        return leftMasterTalon.getSelectedSensorVelocity();
+    }
+
+    public double getRightEncoderVelocity(){
+        return rightMasterTalon.getSelectedSensorVelocity();
     }
 
     public double getLeftEncoderDistance() {
