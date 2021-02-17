@@ -48,6 +48,13 @@ public class Autonomous extends CommandGroup {
 
     public void initializeCommands(){
         addSequential(new WaitTime(1));
+        addSequential(new TurnToAngle(270));
+        addSequential(new DriveForDistance(913*6, 0.5));
         addSequential(new TurnToAngle(90));
+        addSequential(new DriveForDistance(913*6, 0.5));
+        addSequential(new TurnToAngle(0));
+
+
+
     }
 }
