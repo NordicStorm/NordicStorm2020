@@ -72,7 +72,11 @@ public class DriveForDistance extends Command {
     protected void execute() {
         double leftPos=Robot.drivetrain.getLeftEncoderDistance();
         double rightPos=Robot.drivetrain.getRightEncoderDistance();
+        System.out.println("left");
+
         double leftSpeed=calcSpeedNeeded(leftPos, leftTargetPos, -targetSpeed);
+        System.out.println("right");
+
         double rightSpeed=calcSpeedNeeded(rightPos, rightTargetPos, targetSpeed);
         Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
         if(getDistanceAway(leftPos, leftTargetPos, !reversed)<=0
@@ -83,7 +87,6 @@ public class DriveForDistance extends Command {
         }
     }
     private double getDistanceAway(double currentPos, double targetPos, boolean reversed){
-        //System.out.println(currentPos);
         double distance;
         if(reversed){
             distance=currentPos-targetPos;
@@ -92,20 +95,36 @@ public class DriveForDistance extends Command {
             distance=targetPos-currentPos;
 
         }
-        System.out.println(distance);
+        System.out.println("getDistAway:"+distance);
+
         return distance;
     }
     private double calcSpeedNeeded(double currentPos, double targetPos, double speed){
         double distance=0;
         //System.out.println("next");
-        if(speed>0){
-            distance=targetPos-currentPos;
+        boolean normalDirectionDistance=speed>0;
+        if(reversed){
+            if(speed>0){
+                distance=targetPos-currentPos;
+            }else{
+                distance=currentPos-targetPos;
+            }
         }else{
-            distance=currentPos-targetPos;
+            if(speed>0){
+                distance=targetPos-currentPos;
+            }else{
+                distance=currentPos-targetPos;
+            }
         }
+        
+        System.out.println("dist:"+distance);
+        System.out.println("current:"+currentPos);
+        System.out.println("target:"+targetPos);
+        System.out.println("speed:"+speed);
+
         if(distance>0){
             double driveSpeed=speed*distance*pVal;
-            //System.out.println(driveSpeed);
+            System.out.println("drivespeed:"+driveSpeed);
             if (Math.abs(driveSpeed) > targetSpeed) {
                 driveSpeed = Math.copySign(speed, driveSpeed);
             }
