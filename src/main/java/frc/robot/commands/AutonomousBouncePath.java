@@ -48,23 +48,26 @@ public class AutonomousBouncePath extends CommandGroup {
 
     public void initializeCommands(){
         
-        addSequential(new DriveForDistance(5.5*913, .5));
-        addSequential(new TurnToAngle(270));
+        addSequential(new DriveForDistance(5.5*913, 0.5));
+        addSequential(new TurnToAngle(-120.6));
         addSequential(new DriveForDistance(3.5*913, 0.5));
-        addSequential(new TurnToAngle(45)); 
-        addSequential(new DriveForDistance(14*913, 0.5));
-        addSequential(new TurnToAngle(295));
-        addSequential(new DriveForDistance(10*913, 0.5));
-        addSequential(new TurnToAngle(65));
-        addSequential(new DriveForDistance(10*913, 0.5));
+    
+        addSequential(new DriveForDistance(9*913, -0.3));
+        addSequential(new TurnToAngle(-34));
+        addSequential(new DriveForDistance(3.5*913, 0.5));
+        addSequential(new TurnToAngle(-90));
+        addSequential(new DriveForDistance(6.9*913, 0.5));
+        
+        addSequential(new DriveForDistance(6.9*913, -0.3));
         addSequential(new TurnToAngle(0));
-        addSequential(new DriveForDistance(6.5*913, 0.5));
-        addSequential(new TurnToAngle(270));
+        addSequential(new DriveForDistance(7.5*913, 0.5));
+        addSequential(new TurnToAngle(-90));
         addSequential(new DriveForDistance(9*913, 0.5));
-        addSequential(new TurnToAngle(45));
-        addSequential(new DriveForDistance(2.1*913, 0.5));
-        addSequential(new TurnToAngle(0));
-        addSequential(new DriveForDistance(3*913, 0.5));
+        addSequential(new DriveForDistance(2*913, -0.3));
+        addSequential(new TurnToAngle(215));
+         
+        addSequential(new DriveForDistance(2*913, -0.3));
+       
        
 
        
