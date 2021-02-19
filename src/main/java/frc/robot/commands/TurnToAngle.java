@@ -28,7 +28,7 @@ public class TurnToAngle extends Command {
     double pVal = 0.023;
     double maxTurn = 0.2;
     double minTurn = 0.15;
-
+    double tolerance=2;
     double targetAngle;
     boolean done=false;
 
@@ -75,7 +75,7 @@ public class TurnToAngle extends Command {
                 turnVal = Math.copySign(minTurn, turnVal);
             }
         }
-        if(absError<0.5){
+        if(absError<tolerance){
             turnVal=0;
         }
         
@@ -96,7 +96,7 @@ public class TurnToAngle extends Command {
         if (Math.abs(currentAccummulator) > maxAccum ) {
             currentAccummulator = Math.copySign(maxAccum, currentAccummulator);
         }*/
-        if(absError<0.5 && Math.abs(rotationRate)<0.1){
+        if(absError<tolerance && Math.abs(rotationRate)<0.1){
             done=true;
         }
 
