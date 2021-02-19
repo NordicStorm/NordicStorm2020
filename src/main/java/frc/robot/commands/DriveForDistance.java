@@ -58,10 +58,10 @@ public class DriveForDistance extends Command {
     }
 
     boolean done=false;
-    double pVal = 0.0001;
+    double pVal = 0.00015;
 
     double maxSpeed = 0.5;
-    double minSpeed = 0.25;
+    double minSpeed = 0.1;//0.25
 
     // Called repeatedly when this Command is scheduled to run
     @Override

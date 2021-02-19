@@ -49,27 +49,27 @@ public class AutonomousSlalom extends CommandGroup {
     public void initializeCommands(){
         //addSequential(new WaitTime(1));
        // addSequential(new TurnToAngle(90));
-       addSequential(new DriveForDistance(3196, 0.5));
+       addSequential(new DriveForDistance(4*913, 0.5));
        
        addSequential(new TurnToAngle(270));
-       addSequential(new DriveForDistance(3652, 0.5));
+       addSequential(new DriveForDistance(5*913, 0.5));
        addSequential(new TurnToAngle(0));
-       addSequential(new DriveForDistance(12326, 0.5));
+       addSequential(new DriveForDistance(15*913, 1));
        addSequential(new TurnToAngle(90)); 
-       addSequential(new DriveForDistance(2283, 0.5));
+       addSequential(new DriveForDistance(5*913, 0.5));
        addSequential(new TurnToAngle(0));
-       addSequential(new DriveForDistance(3652, 0.5));
+       addSequential(new DriveForDistance(5*913, 0.5));
        addSequential(new TurnToAngle(270));
-       addSequential(new DriveForDistance(3652, 0.5));
+       addSequential(new DriveForDistance(5*913, 0.5));
        addSequential(new TurnToAngle(180));
-       addSequential(new DriveForDistance(3652, 0.5));
+       addSequential(new DriveForDistance(5*913, 0.5));
        addSequential(new TurnToAngle(90));
-       addSequential(new DriveForDistance(3652, 0.5));
+       addSequential(new DriveForDistance(5*913, 0.5));
        addSequential(new TurnToAngle(180));
-       addSequential(new DriveForDistance(12325, 0.5));
+       addSequential(new DriveForDistance(15*913, 1));
        addSequential(new TurnToAngle(270));
-       addSequential(new DriveForDistance(3652, 0.5));
+       addSequential(new DriveForDistance(5*913, 0.5));
        addSequential(new TurnToAngle(180));
-       addSequential(new DriveForDistance(4565, 0.5));
+       addSequential(new DriveForDistance(5*913, 0.5));
     }
 }
