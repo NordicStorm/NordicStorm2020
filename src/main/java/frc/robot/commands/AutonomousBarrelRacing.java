@@ -50,29 +50,28 @@ public class AutonomousBarrelRacing extends CommandGroup {
         //addSequential(new WaitTime(1));
         //addSequential(new TurnToAngle(90));
         //addSequential(new DriveForDistance(921, 0.5));
-        addSequential(new DriveForDistance(9587, 0.5));
+        addSequential(new DriveForDistance(10.5*913, 0.5));
         addSequential(new TurnToAngle(90));
-        addSequential(new DriveForDistance(2739, 0.5));
+        addSequential(new DriveForDistance(3*913, 0.5));
         addSequential(new TurnToAngle(180));
-        addSequential(new DriveForDistance(2739, 0.5));
+        addSequential(new DriveForDistance(3*913, 0.5));
         addSequential(new TurnToAngle(270));
-        addSequential(new DriveForDistance(2739, 0.5));
+        addSequential(new DriveForDistance(3*913, 0.5));
         addSequential(new TurnToAngle(0));
-        addSequential(new DriveForDistance(8674, 0.5));
+        addSequential(new DriveForDistance(9.5*913, 0.5));
         addSequential(new TurnToAngle(270));
-        addSequential(new DriveForDistance(2739, 0.5));
+        addSequential(new DriveForDistance(3*913, 0.5));
         addSequential(new TurnToAngle(180));
-        addSequential(new DriveForDistance(2739, 0.5));
+        addSequential(new DriveForDistance(3*913, 0.5));
         addSequential(new TurnToAngle(90));
-        addSequential(new DriveForDistance(3652, 0.5));
+        addSequential(new DriveForDistance(4*913, 0.5));
         addSequential(new TurnToAngle(45));
-        addSequential(new DriveForDistance(9130, 0.5));
+        addSequential(new DriveForDistance(10*913, 0.5));
         addSequential(new TurnToAngle(0));
-        addSequential(new DriveForDistance(4565, 0.5));
+        addSequential(new DriveForDistance(5*913, 0.5));
         addSequential(new TurnToAngle(315));
-        addSequential(new DriveForDistance(2283, 0.5));
+        addSequential(new DriveForDistance(2.5*913, 0.5));
         addSequential(new TurnToAngle(180));
-        addSequential(new DriveForDistance(20086, 0.5));
-
+        addSequential(new DriveForDistance(22*913, 0.5));
     }
 }
