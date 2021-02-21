@@ -10,11 +10,11 @@ public class EncoderTalon extends WPI_TalonSRX{
         configVoltageCompSaturation(12);
         enableVoltageCompensation(true);
         //Fast gear:
-        config_kP(0, 1);
         config_kI(0, 0.0);
         //config_IntegralZone(0, 200);
         config_kD(0, 0);
         config_kF(0, 0.66);
+        setSuperPMode(false);
         selectProfileSlot(0, 0);
         configClosedloopRamp(0);
     }
@@ -33,5 +33,16 @@ public class EncoderTalon extends WPI_TalonSRX{
 
     public void setEncMode(boolean newEncMode){
         encMode=newEncMode;
+    }
+    /**
+     * 
+     * @param superP if should set to super responsive P mode, mainly for autonomous
+     */
+    public void setSuperPMode(boolean superP){
+        if(superP){
+            config_kP(0, 2);
+        }else{
+            config_kP(0, 1);
+        }
     }
 }

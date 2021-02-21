@@ -27,7 +27,7 @@ public class TurnToAngle extends Command {
 
     double pVal = 0.023;
     double maxTurn = 0.2;
-    double minTurn = 0.15;
+    double minTurn = 0.15;//0.15
     double tolerance=2;
     double targetAngle;
     boolean done=false;

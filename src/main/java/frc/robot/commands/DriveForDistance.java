@@ -55,6 +55,7 @@ public class DriveForDistance extends Command {
     @Override
     protected void initialize() {
         Robot.drivetrain.setEncMode(true);
+        Robot.drivetrain.setSuperPMode(true);
         //Robot.drivetrain.resetEncoderPositions();
         leftTargetPos=Robot.drivetrain.getLeftEncoderDistance()-distance;
         rightTargetPos=Robot.drivetrain.getRightEncoderDistance()+distance;
@@ -63,7 +64,7 @@ public class DriveForDistance extends Command {
     }
     boolean reversed;
     boolean done=false;
-    double pVal = 0.00015;
+    double pVal = 0.0002; //0.00015
 
     double maxSpeed = 0.5;
     double minSpeed = 0.1;//0.25
@@ -73,15 +74,15 @@ public class DriveForDistance extends Command {
     protected void execute() {
         double leftPos=Robot.drivetrain.getLeftEncoderDistance();
         double rightPos=Robot.drivetrain.getRightEncoderDistance();
-        System.out.println("left");
+        //System.out.println("left");
 
         double leftSpeed=calcSpeedNeeded(leftPos, leftTargetPos, -targetSpeed);
-        System.out.println("right");
+        //System.out.println("right");
 
         double rightSpeed=calcSpeedNeeded(rightPos, rightTargetPos, targetSpeed);
         Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
-        if(getDistanceAway(leftPos, leftTargetPos, !reversed)<=0
-         && getDistanceAway(rightPos, rightTargetPos, reversed)<=0
+        double avgDist=(getDistanceAway(leftPos, leftTargetPos, !reversed) + getDistanceAway(rightPos, rightTargetPos, reversed))/2;
+        if(avgDist<0
          && Math.abs(Robot.drivetrain.getLeftEncoderVelocity())<12
          && Math.abs(Robot.drivetrain.getRightEncoderVelocity())<12){
             done=true;
@@ -96,7 +97,7 @@ public class DriveForDistance extends Command {
             distance=targetPos-currentPos;
 
         }
-        System.out.println("getDistAway:"+distance);
+        //System.out.println("getDistAway:"+distance);
 
         return distance;
     }
@@ -111,14 +112,14 @@ public class DriveForDistance extends Command {
         }
         
         
-        System.out.println("dist:"+distance);
+        /*System.out.println("dist:"+distance);
         System.out.println("current:"+currentPos);
         System.out.println("target:"+targetPos);
-        System.out.println("speed:"+speed);
+        System.out.println("speed:"+speed);*/
 
         if(distance>0){
             double driveSpeed=speed*distance*pVal;
-            System.out.println("drivespeed:"+driveSpeed);
+            //System.out.println("drivespeed:"+driveSpeed);
             if (Math.abs(driveSpeed) > targetSpeed) {
                 driveSpeed = Math.copySign(speed, driveSpeed);
             }
@@ -141,6 +142,7 @@ public class DriveForDistance extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
+        Robot.drivetrain.setSuperPMode(false);
         Robot.drivetrain.setOutsideControl(false);
         Robot.drivetrain.drive(0, 0);
     }
