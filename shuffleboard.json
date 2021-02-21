@@ -155,9 +155,9 @@
               "_title": "DriveForTime"
             }
           },
-          "10,0": {
+          "4,3": {
             "size": [
-              1,
+              2,
               1
             ],
             "content": {
@@ -227,9 +227,16 @@
               1
             ],
             "content": {
-              "_type": "Text View",
+              "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/leftMasterPower",
-              "_title": "leftMasterPower"
+              "_title": "leftMasterPower",
+              "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul",
+              "Visible data/SmartDashboard/leftMasterPower": true
             }
           },
           "0,2": {
@@ -243,7 +250,7 @@
               "_title": "Throttle"
             }
           },
-          "12,1": {
+          "13,2": {
             "size": [
               2,
               1
@@ -276,7 +283,7 @@
               "_title": "accum"
             }
           },
-          "15,1": {
+          "13,4": {
             "size": [
               2,
               2
@@ -896,9 +903,9 @@
     }
   ],
   "windowGeometry": {
-    "x": 0.0,
-    "y": 0.0,
-    "width": 1366.0,
-    "height": 728.0
+    "x": -7.333333492279053,
+    "y": -7.333333492279053,
+    "width": 1294.6666259765625,
+    "height": 694.6666870117188
   }
 }
