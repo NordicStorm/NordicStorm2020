@@ -55,9 +55,9 @@ public class OperatorControl extends Command {
         //turnPower=Math.copySign(turnPower*turnPower, turnPower); //square the input
 
         //System.out.println(Robot.drivetrain.getRotationalSpeed());
-        System.out.println(turnPower);
-        System.out.println(forwardPower);
-        if(forwardPower<0.008 && turnPower>0 && turnPower<=0.18){//weird thing with joystick
+        //System.out.println(turnPower);
+        //System.out.println(forwardPower);
+        if(forwardPower<0.008 && turnPower>0 && turnPower<=0.10){//weird thing with joystick
             turnPower=0;
         }
 

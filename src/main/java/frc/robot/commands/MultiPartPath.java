@@ -9,8 +9,10 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package frc.robot.commands;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -21,7 +23,7 @@ import frc.robot.Robot;
 public class MultiPartPath extends Command {
 
     
-    
+    List<PathSection> sections = new ArrayList<>();
     public MultiPartPath() {
         
         requires(Robot.drivetrain);
