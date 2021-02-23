@@ -148,7 +148,14 @@ public class Drivetrain extends Subsystem {
         }
         encMode = newEncMode;
     }
-
+    /**
+     * 
+     * @param superP set if super-P mode should be enabled, mainly for autonomous
+     */
+    public void setSuperPMode(boolean superP){
+        leftMasterTalon.setSuperPMode(superP);
+        rightMasterTalon.setSuperPMode(superP);
+    }
     public void directSet(double forwardSpeed, double turnLeftSpeed) {
         drive(forwardSpeed, turnLeftSpeed);
         robotDrive.arcadeDrive(-forwardSpeed, turnLeftSpeed, false);
