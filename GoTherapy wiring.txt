@@ -1,0 +1,30 @@
+
+Right Spark:
+Reading with Spark correct way: 
+	Plug in a PWM cable with white on top, creating Control Right
+	
+Left Spark:
+Reading with Spark correct way: 
+	Plug in a PWM cable with white on top, creating Control Left
+	
+RC antenna control:
+Reading correctly:
+    Plug in PWM to CH1 with white on left, creating RC A
+	Plug in single wire on left, creating RC B
+	
+Out of arduino:
+2 -> RC A white
+3 -> RC B
+4 -> Control Right white (
+5 -> Control Left white (
+
+Ground Wire comes out of a 30amp PDP slot.
+5v wire comes from Arduino 5v pin.
+Arduino power wire goes from 12v slot on PDP to barrel connector on Arduino
+Black of Control Right and Left goes to Ground Wire, as does RC A black.
+RC A, Controls Right and Left red goes to 5v wire.
+
+Spark power wires connect to 40amp PDP slots
+Motors connect to their respective Spark controllers.
+Battery goes through Main Breaker into PDP.
+
