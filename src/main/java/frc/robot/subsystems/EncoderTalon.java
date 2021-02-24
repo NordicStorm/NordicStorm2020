@@ -40,7 +40,7 @@ public class EncoderTalon extends WPI_TalonSRX{
      */
     public void setSuperPMode(boolean superP){
         if(superP){
-            config_kP(0, 2);
+            config_kP(0, 3);//2
         }else{
             config_kP(0, 1);
         }

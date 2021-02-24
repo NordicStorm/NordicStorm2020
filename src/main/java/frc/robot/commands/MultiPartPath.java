@@ -15,26 +15,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 
 /**
  *
  */
-public class MultiPartPath extends Command {
+public class MultiPartPath extends CommandGroup {
 
-    
+    boolean hasFinalized=false;
     List<PathSection> sections = new ArrayList<>();
     public MultiPartPath() {
-        
+        sections.add(new StopMovement());//start path stopped
         requires(Robot.drivetrain);
 
     }
-    public MultiPartPath addStraight(){
+     /**
+     * Add a straight segment to the path
+     * @param distance distance in encoder units. 913=1 ft
+     * @param speed speed%. Between -1-1. Negative means backward
+     * @param partOfPath If false, use normal p-val based on given speed. If true, use p-val while targeting surrounding segments.
+     */
+    public MultiPartPath addStraight(double distance, double speed){
+        sections.add(new DriveDistancePath(distance, speed, true));
         return this;
     }
-
+    /**
+     * Drive in an arc to an angle. 
+     * @param targetAngle target angle
+     * @param turnRadius turn radius in feet. Measured from the inside wheel towards the center of the arc.
+     * @param speed speed. -1 to 1. 
+     * @param arcRight Affects to which side the robot will arc.
+     * If true, will arc to the right, if false it will go left.
+     */
+    public MultiPartPath addArc(double targetAngle, double turnRadius, double speed, boolean arcRight){
+        sections.add(new DriveArcPath(targetAngle, turnRadius, speed, arcRight));
+        return this;
+    }
+    /**
+     * Finalize and calculate speeds for path segments. Must be called before execution.
+     * @return this same path for chaining
+     */
+    public MultiPartPath finalizePath(){
+        sections.add(new StopMovement()); // add stop at end for calculations of speed
+        for(int i=1; i<sections.size()-1; i++){//iterate over all except first and last (the stops)
+            sections.get(i).finalizeForPath(sections.get(i-1), sections.get(i+1));
+        }
+        for(PathSection section : sections){
+            addSequential(section);
+        }
+        this.hasFinalized=true;
+        return this;
+    }
     @Override
     protected void initialize() {
+        if(!hasFinalized){
+            throw new IllegalStateException("Path has not been finalized!");
+        }
         Robot.drivetrain.setSuperPMode(false);
     }
     

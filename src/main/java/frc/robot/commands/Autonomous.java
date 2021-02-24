@@ -11,6 +11,7 @@
 
 package frc.robot.commands;
 
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.subsystems.*;
 
@@ -48,11 +49,9 @@ public class Autonomous extends AutoWithInit {
     @Override
     public void initializeCommands(){
         addSequential(new WaitTime(1));
-        addSequential(new TurnToAngle(270));
-        addSequential(new DriveForDistance(913*6, 0.5));
-        addSequential(new TurnToAngle(90));
-        addSequential(new DriveForDistance(913*6, 0.5));
-        addSequential(new TurnToAngle(0));
+        MultiPartPath path= new MultiPartPath();
+        path.addArc(90, 1, 0.5, true);
+        addSequential(path.finalizePath());
 
 
 

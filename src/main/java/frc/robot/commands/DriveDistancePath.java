@@ -20,28 +20,36 @@ import frc.robot.Robot;
 public class DriveDistancePath extends PathSection {
 
    
-    double distance;
-    //double targetSpeed;
     double leftTargetPos;
     double rightTargetPos;
 
-    boolean interpolateSpeed;
+    boolean partOfPath;
+    double distance;
+    boolean reversed;
+    double startSpeed;
+    double mainSpeed;
+    double endSpeed;
+
+    boolean done=false;
+    double pVal = 0.0002; //0.00015
+    double minSpeed = 0.1;//0.25
+
+
     /**
      * 
      * @param distance distance in encoder units. 913=1 ft
      * @param speed speed%. Between -1-1. Negative means backward
-     * @param interpolateSpeed If false, use normal p-val based on given speed. If true, use p-val while targeting finalSpeed.
+     * @param partOfPath If false, use normal p-val based on given speed. If true, use p-val while targeting surrounding segments.
      */
-    public DriveDistancePath(double distance, double startSpeed, double finalSpeed, boolean interpolateSpeed) {
-        if(startSpeed<0){
+    public DriveDistancePath(double distance, double speed, boolean partOfPath) {
+        if(speed<0){
             distance*=-1;
         }
-        this.interpolateSpeed=interpolateSpeed;
-        reversed=startSpeed<0;
+        this.partOfPath=partOfPath;
+        reversed=speed<0;
 
         this.distance=distance;
-        this.startSpeed=startSpeed;
-        this.endSpeed=endSpeed;
+        this.mainSpeed=speed;
         requires(Robot.drivetrain);
 
     }
@@ -56,15 +64,7 @@ public class DriveDistancePath extends PathSection {
         Robot.drivetrain.setOutsideControl(true);
         done=false;
     }
-    boolean reversed;
-    boolean done=false;
-    double pVal = 0.0002; //0.00015
 
-    double maxSpeed = 0.5;
-    double minSpeed = 0.1;//0.25
-
-    double startSpeed=0.5;
-    double endSpeed=0.1;
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
@@ -96,33 +96,35 @@ public class DriveDistancePath extends PathSection {
         return distance;
     }
     private double calcSpeedNeeded(double currentPos, double targetPos, boolean thisSideReversed){
-        double correctStartSpeed=thisSideReversed ? -startSpeed:startSpeed;
-        double correntEndSpeed=thisSideReversed ? -endSpeed:endSpeed;
-        double distance=getDistanceAway(currentPos, targetPos, correctStartSpeed<0); //can't just use reversed, depends on if left side and speed backward
+        int reverseCorrection=thisSideReversed ? -1 : 1;
+        double correctStartSpeed=startSpeed*reverseCorrection;
+        double correntEndSpeed=endSpeed*reverseCorrection;
+        double correctMainSpeed=mainSpeed*reverseCorrection;
+        double distance=getDistanceAway(currentPos, targetPos, correctMainSpeed<0); //can't just use reversed, depends on if left side and speed backward
 
         //System.out.println("next");
         
         
-        /*System.out.println("dist:"+distance);
+        System.out.println("dist:"+distance);
         System.out.println("current:"+currentPos);
         System.out.println("target:"+targetPos);
-        System.out.println("correctSpeed:"+correctStartSpeed);
-        System.out.println("rev:"+reversed);*/
+        System.out.println("correctSpeed:"+correctMainSpeed);
+        System.out.println("rev:"+reversed);
 
         if(distance>0){
             double driveSpeed;
-            if(interpolateSpeed){
+            if(partOfPath && false){
                 driveSpeed=0;
             }else{
-                driveSpeed=correctStartSpeed*distance*pVal;
-                if (Math.abs(driveSpeed) > startSpeed) {
-                    driveSpeed = Math.copySign(startSpeed, driveSpeed);
+                driveSpeed=correctMainSpeed*distance*pVal;
+                if (Math.abs(driveSpeed) > mainSpeed) {
+                    driveSpeed = Math.copySign(mainSpeed, driveSpeed);
                 }
                 if (Math.abs(driveSpeed) < minSpeed ) {
                     driveSpeed = Math.copySign(minSpeed, driveSpeed);
                 }
             }
-            //System.out.println("drivespeed:"+driveSpeed);
+            System.out.println("drivespeed:"+driveSpeed);
            
             return driveSpeed; 
         }else{
@@ -154,5 +156,10 @@ public class DriveDistancePath extends PathSection {
     @Override
     public double getNeededStartSpeed() {
         return startSpeed;
+    }
+
+    @Override
+    public void finalizeForPath(PathSection previous, PathSection next) {
+
     }
 }

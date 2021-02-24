@@ -233,6 +233,12 @@ public class Drivetrain extends Subsystem {
         rightMasterTalon.setSelectedSensorPosition(0);
     }
 
+    /**
+     * Get degrees difference, wrapped around so you just follow the sign of the return value to turn.
+     * @param current
+     * @param target
+     * @return
+     */
     public static double angleDiff(double current, double target) {
         current = current % 360 - 180;
         target = target % 360 - 180;
@@ -243,11 +249,30 @@ public class Drivetrain extends Subsystem {
         if (diff < -180) {
             diff = 360 + diff;
         }
-        // diff=diff%180;
         return diff;
-        // return (target - current + 180) % 360 - 180;
     }
 
+    /**
+     * Angle difference not wrapped. Will give number -360 to 360, depending if {@code goingRight}
+     * @param current
+     * @param target
+     * @param goingRight
+     * @return
+     */
+    public static double fullAngleDiff(double current, double target, boolean goingRight){
+      
+        double diff = angleDiff(current, target);
+        if(goingRight){
+          if(diff<0){
+            diff+=360;
+          }
+        }else{
+          if(diff>0){
+            diff-=360;
+          }
+        }
+        return diff;
+      }
     public void resetHeading() {
         navx.zeroYaw();
     }
