@@ -25,6 +25,9 @@ public class MultiPartPath extends CommandGroup {
 
     boolean hasFinalized=false;
     List<PathSection> sections = new ArrayList<>();
+    /**
+     * Used for multi step movements, keeping speeds good.
+     */
     public MultiPartPath() {
         sections.add(new StopMovement());//start path stopped
         requires(Robot.drivetrain);
@@ -32,12 +35,12 @@ public class MultiPartPath extends CommandGroup {
     }
      /**
      * Add a straight segment to the path
-     * @param distance distance in encoder units. 913=1 ft
+     * @param distance distance in feet
      * @param speed speed%. Between -1-1. Negative means backward
      * @param partOfPath If false, use normal p-val based on given speed. If true, use p-val while targeting surrounding segments.
      */
     public MultiPartPath addStraight(double distance, double speed){
-        sections.add(new DriveDistancePath(distance, speed, true));
+        sections.add(new DriveDistancePath(distance*913, speed, true));
         return this;
     }
     /**

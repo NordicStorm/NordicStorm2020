@@ -157,9 +157,14 @@ public class DriveDistancePath extends PathSection {
     public double getNeededStartSpeed() {
         return startSpeed;
     }
-
+    
     @Override
     public void finalizeForPath(PathSection previous, PathSection next) {
 
+    }
+
+    @Override
+    public double getProvidedEndSpeed() {
+        return 0;
     }
 }

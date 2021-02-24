@@ -105,7 +105,7 @@ climber = new Climber();
 
         Robot.drivetrain.resetHeading();
         Robot.shooter.resetHeading();
-        autonomousCommand=new AutonomousBouncePath();
+        autonomousCommand=new Autonomous();
         autonomousCommand.initializeCommands();
         autonomousCommand.start();
         
@@ -131,7 +131,6 @@ climber = new Climber();
         Robot.drivetrain.setSuperPMode(false);
         Robot.drivetrain.resetHeading();
         Robot.shooter.resetHeading();
-
             
     }
 

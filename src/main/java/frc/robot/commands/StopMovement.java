@@ -69,6 +69,10 @@ public class StopMovement extends PathSection {
     public double getNeededStartSpeed() {
         return 0;
     }
+    @Override
+    public double getProvidedEndSpeed() {
+        return 0;
+    }
 
     @Override
     public void finalizeForPath(PathSection previous, PathSection next) {

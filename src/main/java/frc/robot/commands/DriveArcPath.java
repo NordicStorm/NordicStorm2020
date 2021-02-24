@@ -133,11 +133,18 @@ public class DriveArcPath extends PathSection {
 
     @Override
     public double getNeededStartSpeed() {
-        return startSpeed;
+        
+        return Math.max(leftSpeedProportion, rightSpeedProportion)*mainSpeed;
     }
 
     @Override
     public void finalizeForPath(PathSection previous, PathSection next) {
-
+        double lastSpeed=previous.getProvidedEndSpeed();
+        
+        //if(previous.getNeededStartSpeed)
+    }
+    @Override
+    public double getProvidedEndSpeed() {
+        return 0;
     }
 }
