@@ -9,47 +9,44 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package frc.robot.commands;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.Util;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  *
  */
 public class DriveDistancePath extends PathSection {
 
-   
     double leftTargetPos;
     double rightTargetPos;
 
-    boolean partOfPath;
-    double distance;
+    double totalDistance;
     boolean reversed;
     double startSpeed;
     double mainSpeed;
     double endSpeed;
 
-    boolean done=false;
-    double pVal = 0.0002; //0.00015
-    double minSpeed = 0.1;//0.25
-
+    boolean done = false;
+    double minSpeed = 0.1;// 0.25
+    double keepStraightAngle=0;
 
     /**
      * 
      * @param distance distance in encoder units. 913=1 ft
-     * @param speed speed%. Between -1-1. Negative means backward
-     * @param partOfPath If false, use normal p-val based on given speed. If true, use p-val while targeting surrounding segments.
+     * @param speed    speed%. Between -1-1. Negative means backward
      */
-    public DriveDistancePath(double distance, double speed, boolean partOfPath) {
-        if(speed<0){
-            distance*=-1;
+    public DriveDistancePath(double distance, double speed) {
+        if (speed < 0) {
+            distance *= -1;
         }
-        this.partOfPath=partOfPath;
-        reversed=speed<0;
+        reversed = speed < 0;
 
-        this.distance=distance;
-        this.mainSpeed=speed;
+        this.totalDistance = distance;
+        this.mainSpeed = speed;
         requires(Robot.drivetrain);
 
     }
@@ -58,80 +55,64 @@ public class DriveDistancePath extends PathSection {
     protected void initialize() {
         Robot.drivetrain.setEncMode(true);
         Robot.drivetrain.setSuperPMode(true);
-        //Robot.drivetrain.resetEncoderPositions();
-        leftTargetPos=Robot.drivetrain.getLeftEncoderDistance()-distance;
-        rightTargetPos=Robot.drivetrain.getRightEncoderDistance()+distance;
+        // Robot.drivetrain.resetEncoderPositions();
+        leftTargetPos = Robot.drivetrain.getLeftEncoderDistance() - totalDistance;
+        rightTargetPos = Robot.drivetrain.getRightEncoderDistance() + totalDistance;
         Robot.drivetrain.setOutsideControl(true);
-        done=false;
+        done = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        double leftPos=Robot.drivetrain.getLeftEncoderDistance();
-        double rightPos=Robot.drivetrain.getRightEncoderDistance();
-        //System.out.println("left");
-        double leftSpeed=calcSpeedNeeded(leftPos, leftTargetPos, true);
-        //System.out.println("right");
-        double rightSpeed=calcSpeedNeeded(rightPos, rightTargetPos, false);
-        Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
-        double avgDist=(getDistanceAway(leftPos, leftTargetPos, !reversed) + getDistanceAway(rightPos, rightTargetPos, reversed))/2;
-        if(avgDist<0
-         && Math.abs(Robot.drivetrain.getLeftEncoderVelocity())<12
-         && Math.abs(Robot.drivetrain.getRightEncoderVelocity())<12){
-            done=true;
+        double leftPos = Robot.drivetrain.getLeftEncoderDistance();
+        double rightPos = Robot.drivetrain.getRightEncoderDistance();
+        double distanceAway=Math.min(getDistanceAway(leftPos, leftTargetPos, !reversed), getDistanceAway(rightPos, rightTargetPos, reversed));
+        double percentDone=1-(distanceAway/Math.abs(totalDistance));
+        double leftSpeed = calcSpeedNeeded(percentDone);
+        // System.out.println("right");
+        double rightSpeed = calcSpeedNeeded(percentDone);
+
+        double currentAngle=Robot.drivetrain.getAngle();
+        double angleDiff=Drivetrain.angleDiff(currentAngle, keepStraightAngle);
+        double adjustment=Util.absClamp(angleDiff*0.01, leftSpeed);//left and right are the same at this point
+        leftSpeed+=adjustment;
+        rightSpeed-=adjustment;
+        System.out.println("err:"+angleDiff);
+
+        System.out.println("adj:"+adjustment);
+
+        System.out.println("left:"+leftSpeed);
+        System.out.println("right:"+rightSpeed);
+
+        Robot.drivetrain.tankDriveDirect(-leftSpeed, rightSpeed);
+        if (distanceAway < 0) {
+            done = true;
         }
     }
-    private double getDistanceAway(double currentPos, double targetPos, boolean reversed){
-        double distance;
-        if(reversed){
-            distance=currentPos-targetPos;
 
-        }else{
-            distance=targetPos-currentPos;
+    private double getDistanceAway(double currentPos, double targetPos, boolean reversed) {
+        double distance;
+        if (reversed) {
+            distance = currentPos - targetPos;
+
+        } else {
+            distance = targetPos - currentPos;
 
         }
-        //System.out.println("getDistAway:"+distance);
+        // System.out.println("getDistAway:"+distance);
 
         return distance;
     }
-    private double calcSpeedNeeded(double currentPos, double targetPos, boolean thisSideReversed){
-        int reverseCorrection=thisSideReversed ? -1 : 1;
-        double correctStartSpeed=startSpeed*reverseCorrection;
-        double correntEndSpeed=endSpeed*reverseCorrection;
-        double correctMainSpeed=mainSpeed*reverseCorrection;
-        double distance=getDistanceAway(currentPos, targetPos, correctMainSpeed<0); //can't just use reversed, depends on if left side and speed backward
-
-        //System.out.println("next");
-        
-        
-        System.out.println("dist:"+distance);
-        System.out.println("current:"+currentPos);
-        System.out.println("target:"+targetPos);
-        System.out.println("correctSpeed:"+correctMainSpeed);
-        System.out.println("rev:"+reversed);
-
-        if(distance>0){
-            double driveSpeed;
-            if(partOfPath && false){
-                driveSpeed=0;
-            }else{
-                driveSpeed=correctMainSpeed*distance*pVal;
-                if (Math.abs(driveSpeed) > mainSpeed) {
-                    driveSpeed = Math.copySign(mainSpeed, driveSpeed);
-                }
-                if (Math.abs(driveSpeed) < minSpeed ) {
-                    driveSpeed = Math.copySign(minSpeed, driveSpeed);
-                }
-            }
-            System.out.println("drivespeed:"+driveSpeed);
-           
-            return driveSpeed; 
-        }else{
-            return 0;
+    private double calcSpeedNeeded(double currentPercentdone){
+        double driveSpeed = currentPercentdone * endSpeed;
+        if (Math.abs(driveSpeed) < minSpeed) {
+            driveSpeed = Math.copySign(minSpeed, driveSpeed);
         }
+        return driveSpeed;
     }
     
+
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
@@ -141,9 +122,9 @@ public class DriveDistancePath extends PathSection {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.drivetrain.setSuperPMode(false);
-        Robot.drivetrain.setOutsideControl(false);
-        Robot.drivetrain.drive(0, 0);
+        // Robot.drivetrain.setSuperPMode(false);
+        // Robot.drivetrain.setOutsideControl(false);
+        // Robot.drivetrain.drive(0, 0);
     }
 
     // Called when another command which requires one or more of the same
@@ -154,13 +135,18 @@ public class DriveDistancePath extends PathSection {
     }
 
     @Override
-    public double getNeededStartSpeed() {
-        return startSpeed;
+    public double modifyAngle(double oldAngle) {
+        keepStraightAngle=oldAngle;
+        return oldAngle;
+    }
+    @Override
+    public double getRequestedStartSpeed() {
+        return mainSpeed;
     }
     
     @Override
     public void finalizeForPath(PathSection previous, PathSection next) {
-
+        endSpeed = next.getRequestedStartSpeed();
     }
 
     @Override

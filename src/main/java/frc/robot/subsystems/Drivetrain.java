@@ -156,6 +156,10 @@ public class Drivetrain extends Subsystem {
         leftMasterTalon.setSuperPMode(superP);
         rightMasterTalon.setSuperPMode(superP);
     }
+    public void setDirectP(double p){
+        leftMasterTalon.setP(p);
+        rightMasterTalon.setP(p);
+    }
     public void directSet(double forwardSpeed, double turnLeftSpeed) {
         drive(forwardSpeed, turnLeftSpeed);
         robotDrive.arcadeDrive(-forwardSpeed, turnLeftSpeed, false);
@@ -215,10 +219,16 @@ public class Drivetrain extends Subsystem {
     public double getLeftEncoderVelocity(){
         return leftMasterTalon.getSelectedSensorVelocity();
     }
-
     public double getRightEncoderVelocity(){
         return rightMasterTalon.getSelectedSensorVelocity();
     }
+    public double getLeftEncoderVelocityPercent(){
+        return getLeftEncoderVelocity()/1550;
+    }
+    public double getRightEncoderVelocityPercent(){
+        return getRightEncoderVelocity()/1550;
+    }
+
 
     public double getLeftEncoderDistance() {
         return leftMasterTalon.getSelectedSensorPosition();

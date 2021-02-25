@@ -38,17 +38,29 @@ public class DriveArcPath extends PathSection {
 
     double leftSpeedProportion;
     double rightSpeedProportion;
+
+    double targetLeftSpeed=0;
+    double targetRightSpeed=0;
     boolean done=false;
+
+    boolean lastTickWasClose=false;
+    int timesLeftToPass;
 
     /**
      * Drive in an arc to an angle. 
      * @param targetAngle target angle
-     * @param turnRadius turn radius in feet. Measured from the inside wheel towards the center of the arc.
+     * @param turnRadius turn radius in feet. Measured from the center of the robot towards the center of the arc.
      * @param speed speed. -1 to 1. 
      * @param arcRight Affects to which side the robot will arc.
      * If true, will arc to the right, if false it will go left.
+     * @also If a turn over 360 degrees is needed, add a {@code true} as another parameter.
+     * 
      */
-    public DriveArcPath(double targetAngle, double turnRadius, double speed, boolean arcRight) {
+    public DriveArcPath(double targetAngle, double turnRadius, double speed, boolean arcRight){
+        this(targetAngle, turnRadius, speed, arcRight, false);
+    }
+    
+    public DriveArcPath(double targetAngle, double turnRadius, double speed, boolean arcRight, boolean is360) {
         this.targetAngle=targetAngle;
         this.turnRadius=turnRadius;
         this.mainSpeed=speed;
@@ -56,9 +68,17 @@ public class DriveArcPath extends PathSection {
 
         requires(Robot.drivetrain);
 
+        if(is360){
+            timesLeftToPass=2;//todo think more
+        }else{
+            timesLeftToPass=1;
+        }
         double radLeft;
         double radRight;
 
+
+        double gridTurnInner=0.051;//0.041
+        double gridTurnOuter=0.4025;//0.4025
         if(arcRight){
             radLeft=turnRadius+robotWidth;
             radRight=turnRadius;
@@ -67,6 +87,10 @@ public class DriveArcPath extends PathSection {
             double circRight=2*Math.PI*radRight;
             leftSpeedProportion=1;
             rightSpeedProportion=circRight/circLeft;
+            if(turnRadius==2.5){
+                targetLeftSpeed= -gridTurnOuter;
+                targetRightSpeed= gridTurnInner;
+            }
         }else{
             radLeft=turnRadius;
             radRight=turnRadius+robotWidth;
@@ -75,6 +99,10 @@ public class DriveArcPath extends PathSection {
             double circRight=2*Math.PI*radRight;
             leftSpeedProportion=circLeft/circRight;
             rightSpeedProportion=1;
+            if(turnRadius==2.5){
+                targetLeftSpeed= -gridTurnInner;
+                targetRightSpeed= gridTurnOuter;
+            }
         }
         
         
@@ -84,7 +112,8 @@ public class DriveArcPath extends PathSection {
     @Override
     protected void initialize() {
         Robot.drivetrain.setEncMode(true);
-        Robot.drivetrain.setSuperPMode(true);
+        Robot.drivetrain.setDirectP(1);
+        //Robot.drivetrain.setSuperPMode(true);
         //leftTargetPos=Robot.drivetrain.getLeftEncoderDistance()-distance;
         //rightTargetPos=Robot.drivetrain.getRightEncoderDistance()+distance;
         Robot.drivetrain.setOutsideControl(true);
@@ -94,19 +123,35 @@ public class DriveArcPath extends PathSection {
     @Override
     protected void execute() {
         double currentAngle = Robot.drivetrain.getAngle();
+        
         double angDiff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
-        double driveSpeed=0.5;//Math.min(Math.max(angDiff*0.02, 0), 1);
-        System.out.println("drivespeed"+driveSpeed);
-        System.out.println("leftProp"+ leftSpeedProportion);
-        System.out.println("rightProp"+ rightSpeedProportion);
-        double leftSpeed= -driveSpeed*leftSpeedProportion;
-        double rightSpeed = driveSpeed*rightSpeedProportion;
-        Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
-        if(angDiff<0
-         && Math.abs(Robot.drivetrain.getLeftEncoderVelocity())<12
-         && Math.abs(Robot.drivetrain.getRightEncoderVelocity())<12){
+        if(Math.abs(angDiff)<90){
+            lastTickWasClose=true;
+        }else if(Math.abs(angDiff)>270){//it made a loop
+            if(lastTickWasClose){
+                lastTickWasClose=false;
+                timesLeftToPass-=1;
+            }
+        }
+        if(timesLeftToPass==0){
+            angDiff=0;
             done=true;
         }
+        //System.out.println("leftProp"+ leftSpeedProportion);
+        //System.out.println("rightProp"+ rightSpeedProportion);
+
+        
+        double currentLeft=Robot.drivetrain.getLeftEncoderVelocityPercent()/leftSpeedProportion;
+        double currentRight=Robot.drivetrain.getRightEncoderVelocityPercent()/rightSpeedProportion;
+        double driveSpeed=0;
+        
+        driveSpeed=Math.max(1, Math.min(1, angDiff*0.01));
+        double leftSpeed=targetLeftSpeed*driveSpeed; //-driveSpeed*leftSpeedProportion;
+        double rightSpeed = targetRightSpeed*driveSpeed;//driveSpeed*rightSpeedProportion;
+        Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
+        //System.out.println("leftspeed"+leftSpeed);
+        System.out.println("arc");
+        
     }
 
     
@@ -119,9 +164,7 @@ public class DriveArcPath extends PathSection {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-        Robot.drivetrain.setSuperPMode(false);
-        Robot.drivetrain.setOutsideControl(false);
-        Robot.drivetrain.drive(0, 0);
+        
     }
 
     // Called when another command which requires one or more of the same
@@ -132,19 +175,25 @@ public class DriveArcPath extends PathSection {
     }
 
     @Override
-    public double getNeededStartSpeed() {
-        
-        return Math.max(leftSpeedProportion, rightSpeedProportion)*mainSpeed;
+    public double modifyAngle(double oldAngle) {
+        return targetAngle;
     }
 
     @Override
+    public double getRequestedStartSpeed() {
+        return Math.abs(targetLeftSpeed);
+        //return Math.max(leftSpeedProportion, rightSpeedProportion)*mainSpeed;
+    }
+    
+    @Override
     public void finalizeForPath(PathSection previous, PathSection next) {
         double lastSpeed=previous.getProvidedEndSpeed();
-        
+        startSpeed=lastSpeed;
         //if(previous.getNeededStartSpeed)
     }
     @Override
     public double getProvidedEndSpeed() {
         return 0;
     }
+    
 }

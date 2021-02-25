@@ -24,11 +24,15 @@ import frc.robot.Robot;
 public class MultiPartPath extends CommandGroup {
 
     boolean hasFinalized=false;
+    double startingAngle;
     List<PathSection> sections = new ArrayList<>();
     /**
      * Used for multi step movements, keeping speeds good.
+     * @param startingAngle what angle the robot is at at the start of the path.
+     * It does not turn to there, it is just used for information.
      */
-    public MultiPartPath() {
+    public MultiPartPath(double startingAngle) {
+        this.startingAngle=startingAngle;
         sections.add(new StopMovement());//start path stopped
         requires(Robot.drivetrain);
 
@@ -40,13 +44,13 @@ public class MultiPartPath extends CommandGroup {
      * @param partOfPath If false, use normal p-val based on given speed. If true, use p-val while targeting surrounding segments.
      */
     public MultiPartPath addStraight(double distance, double speed){
-        sections.add(new DriveDistancePath(distance*913, speed, true));
+        sections.add(new DriveDistancePath(distance*913, speed));
         return this;
     }
     /**
      * Drive in an arc to an angle. 
      * @param targetAngle target angle
-     * @param turnRadius turn radius in feet. Measured from the inside wheel towards the center of the arc.
+     * @param turnRadius turn radius in feet. Measured from the center of the robot towards the center of the arc.
      * @param speed speed. -1 to 1. 
      * @param arcRight Affects to which side the robot will arc.
      * If true, will arc to the right, if false it will go left.
@@ -60,7 +64,11 @@ public class MultiPartPath extends CommandGroup {
      * @return this same path for chaining
      */
     public MultiPartPath finalizePath(){
+        double currentAngle=startingAngle;
         sections.add(new StopMovement()); // add stop at end for calculations of speed
+        for(PathSection section : sections){
+            currentAngle=section.modifyAngle(currentAngle);
+        }
         for(int i=1; i<sections.size()-1; i++){//iterate over all except first and last (the stops)
             sections.get(i).finalizeForPath(sections.get(i-1), sections.get(i+1));
         }
@@ -75,7 +83,6 @@ public class MultiPartPath extends CommandGroup {
         if(!hasFinalized){
             throw new IllegalStateException("Path has not been finalized!");
         }
-        Robot.drivetrain.setSuperPMode(false);
     }
     
     // Called repeatedly when this Command is scheduled to run
@@ -85,11 +92,7 @@ public class MultiPartPath extends CommandGroup {
     }
     
     
-    // Make this return true when this Command no longer needs to run execute()
-    @Override
-    protected boolean isFinished() {
-        return false;
-    }
+    
 
     // Called once after isFinished returns true
     @Override
