@@ -59,6 +59,11 @@ public class MultiPartPath extends CommandGroup {
         sections.add(new DriveArcPath(targetAngle, turnRadius, speed, arcRight));
         return this;
     }
+
+    public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
+        sections.add(new DriveArcPath(targetAngle, 2.5, 1, arcRight));
+        return this;
+    } 
     /**
      * Finalize and calculate speeds for path segments. Must be called before execution.
      * @return this same path for chaining
@@ -99,6 +104,7 @@ public class MultiPartPath extends CommandGroup {
     protected void end() {
         
     }
+
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

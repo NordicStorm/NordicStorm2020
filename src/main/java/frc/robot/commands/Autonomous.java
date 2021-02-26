@@ -51,9 +51,9 @@ public class Autonomous extends AutoWithInit {
         addSequential(new WaitTime(1));
         MultiPartPath path = new MultiPartPath(0);
         path.addStraight(10, 0.5);
-        path.addArc(180, 2.5, 0.5, true);
-        path.addStraight(10, 0.5);
-        path.addArc(0, 2.5, 0.5, true);
+        path.addArc(359, 2.5, 0.5, true);
+        //path.addStraight(10, 0.5);
+        //path.addArc(0, 2.5, 0.5, true);
         //path.addStraight(5, 0.5);
         addSequential(path.finalizePath());
         addSequential(new TurnToAngle(0));
