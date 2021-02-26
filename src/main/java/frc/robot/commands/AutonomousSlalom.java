@@ -49,23 +49,24 @@ public class AutonomousSlalom extends AutoWithInit {
 
         // addSequential(new WaitTime(1));
         // addSequential(new TurnToAngle(90));
-        MultiPartPath path = new MultiPartPath();
-        path.addArc(90, 1, 0.5, true);
-        path.addStraight(4, 0.5);
+        MultiPartPath path = new MultiPartPath(0);
         
-        addSequential(path.finalizePath());
 
-        path.addStraight(1.5, 0.5);
+        path.addStraight(1.65, 0.5);
 
-        path.addArc(270, 2.5, 0.5, false);
-        path.addArc(0, 2.5, 0.5, true);
-        path.addStraight(10 , 1);
-        path.addArc(90, 2.5, 0.5, true);
-        path.addArc(180, 2.5, 0.5, false);
+        path.addGridArc(270, false);
+        path.addGridArc(0, true);
+        path.addStraight(10.3 , 1);
+
+        path.addGridArc(90, true);
+
+        path.addGridArc(359, false);
         path.addArc(90, 2.5, 0.5, false);
         path.addArc(180, 2.5, 0.5,true);
-        path.addStraight(10 , 1);
+        path.addStraight(10.3 , 1);
         path.addArc(270, 2.5, 0.5,true);
         path.addArc(180, 2.5, 0.5,false);
+        
+        addSequential(path.finalizePath());
     }
 }

@@ -145,7 +145,7 @@ public class DriveArcPath extends PathSection {
         double currentRight=Robot.drivetrain.getRightEncoderVelocityPercent()/rightSpeedProportion;
         double driveSpeed=0;
         
-        driveSpeed=Math.max(0.8, Math.min(1, angDiff*0.01));
+        driveSpeed=Math.max(1, Math.min(1, angDiff*0.01));
         double leftSpeed=targetLeftSpeed*driveSpeed; //-driveSpeed*leftSpeedProportion;
         double rightSpeed = targetRightSpeed*driveSpeed;//driveSpeed*rightSpeedProportion;
         Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
