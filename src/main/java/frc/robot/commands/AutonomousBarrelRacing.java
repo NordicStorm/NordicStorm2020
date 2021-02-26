@@ -50,28 +50,40 @@ public class AutonomousBarrelRacing extends AutoWithInit {
         //addSequential(new WaitTime(1));
         //addSequential(new TurnToAngle(90));
         //addSequential(new DriveForDistance(921, 0.5));
-        addSequential(new DriveForDistance(11.5*913, 0.5));
-        addSequential(new TurnToAngle(90));
-        addSequential(new DriveForDistance(5*913, 0.5));
-        addSequential(new TurnToAngle(180));
-        addSequential(new DriveForDistance(5*913, 0.5));
-        addSequential(new TurnToAngle(270));
-        addSequential(new DriveForDistance(4*913, 0.5));
-        addSequential(new TurnToAngle(0));
-        addSequential(new DriveForDistance(12.5*913, 0.5));
-        addSequential(new TurnToAngle(270));
-        addSequential(new DriveForDistance(5*913, 0.5));
-        addSequential(new TurnToAngle(180));
-        addSequential(new DriveForDistance(5*913, 0.5));
-        addSequential(new TurnToAngle(90));
-        addSequential(new DriveForDistance(4.5*913, 0.5));
-        addSequential(new TurnToAngle(45));
-        addSequential(new DriveForDistance(10.5*913, 0.5));
-        addSequential(new TurnToAngle(315));
-        addSequential(new DriveForDistance(4*913, 0.5));
-        addSequential(new TurnToAngle(270));
-        addSequential(new DriveForDistance(4.5*913, 0.5));
-        addSequential(new TurnToAngle(180));
-        addSequential(new DriveForDistance(23*913, 0.5));
+       
+        MultiPartPath path = new MultiPartPath(0);
+        
+
+        path.addStraight(9, 0.5);
+
+        //path.addGridArc(270, false);
+        path.addRawArc(359, 0.051, 0.48, true);
+        path.addStraight(7.5, 1);
+        path.addRawArc(90, 0.051, 0.48, false);
+
+       addSequential(path.finalizePath());
+       // addSequential(new DriveForDistance(11.5*913, 0.5));
+       // addSequential(new TurnToAngle(90));
+       // addSequential(new DriveForDistance(5*913, 0.5));
+       // addSequential(new TurnToAngle(180));
+        //addSequential(new DriveForDistance(5*913, 0.5));
+      //  addSequential(new TurnToAngle(270));
+       // addSequential(new DriveForDistance(4*913, 0.5));
+        //addSequential(new TurnToAngle(0));
+       // addSequential(new DriveForDistance(12.5*913, 0.5));
+       // addSequential(new TurnToAngle(270));
+       // addSequential(new DriveForDistance(5*913, 0.5));
+      //  addSequential(new TurnToAngle(180));
+       // addSequential(new DriveForDistance(5*913, 0.5));
+       // addSequential(new TurnToAngle(90));
+       // addSequential(new DriveForDistance(4.5*913, 0.5));
+       // addSequential(new TurnToAngle(45));
+       // addSequential(new DriveForDistance(10.5*913, 0.5));
+       // addSequential(new TurnToAngle(315));
+       // addSequential(new DriveForDistance(4*913, 0.5));
+       // addSequential(new TurnToAngle(270));
+       // addSequential(new DriveForDistance(4.5*913, 0.5));
+       // addSequential(new TurnToAngle(180));
+       // addSequential(new DriveForDistance(23*913, 0.5));
     }
 }

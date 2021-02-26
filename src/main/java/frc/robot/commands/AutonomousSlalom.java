@@ -52,20 +52,21 @@ public class AutonomousSlalom extends AutoWithInit {
         MultiPartPath path = new MultiPartPath(0);
         
 
-        path.addStraight(1.65, 0.5);
+        path.addStraight(1.3, 0.5);
 
-        path.addGridArc(270, false);
+        //path.addGridArc(270, false);
+        path.addRawArc(290, 0.051, 0.48, false);
         path.addGridArc(0, true);
-        path.addStraight(10.3 , 1);
+        path.addStraight(10.5 , 1);
 
-        path.addGridArc(90, true);
+        path.addGridArc(73, true);
 
         path.addGridArc(359, false);
-        path.addArc(90, 2.5, 0.5, false);
-        path.addArc(180, 2.5, 0.5,true);
-        path.addStraight(10.3 , 1);
-        path.addArc(270, 2.5, 0.5,true);
-        path.addArc(180, 2.5, 0.5,false);
+        path.addGridArc(90, false);
+        path.addGridArc(180,true);
+        path.addStraight(10.2 , 1);
+        path.addGridArc(270,true);
+        path.addGridArc(180,false);
         
         addSequential(path.finalizePath());
     }

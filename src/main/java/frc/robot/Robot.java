@@ -105,7 +105,7 @@ climber = new Climber();
 
         Robot.drivetrain.resetHeading();
         Robot.shooter.resetHeading();
-        autonomousCommand=new AutonomousSlalom();
+        autonomousCommand=new AutonomousBarrelRacing();
         autonomousCommand.initializeCommands();
         autonomousCommand.start();
         
