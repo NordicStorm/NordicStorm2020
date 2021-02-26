@@ -46,24 +46,10 @@ public class DriveArcPath extends PathSection {
     boolean lastTickWasClose=false;
     int timesLeftToPass;
 
-    /**
-     * Drive in an arc to an angle. 
-     * @param targetAngle target angle
-     * @param turnRadius turn radius in feet. Measured from the center of the robot towards the center of the arc.
-     * @param speed speed. -1 to 1. 
-     * @param arcRight Affects to which side the robot will arc.
-     * If true, will arc to the right, if false it will go left.
-     * @also If a turn over 360 degrees is needed, add a {@code true} as another parameter.
-     * 
-     */
-    public DriveArcPath(double targetAngle, double turnRadius, double speed, boolean arcRight){
-        this(targetAngle, turnRadius, speed, arcRight, false);
-    }
     
-    public DriveArcPath(double targetAngle, double turnRadius, double speed, boolean arcRight, boolean is360) {
+    
+    public DriveArcPath(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean is360) {
         this.targetAngle=targetAngle;
-        this.turnRadius=turnRadius;
-        this.mainSpeed=speed;
         this.arcRight=arcRight;
 
         requires(Robot.drivetrain);
@@ -73,12 +59,19 @@ public class DriveArcPath extends PathSection {
         }else{
             timesLeftToPass=1;
         }
+        if(arcRight){
+            targetLeftSpeed= -outerSpeed;
+            targetRightSpeed= innerSpeed;
+        }else{
+            targetLeftSpeed= -innerSpeed;
+            targetRightSpeed= outerSpeed;
+        }
+
+
+        
+        /*
         double radLeft;
         double radRight;
-
-
-        double gridTurnInner=0.051;//0.041
-        double gridTurnOuter=0.4025;//0.4025
         if(arcRight){
             radLeft=turnRadius+robotWidth;
             radRight=turnRadius;
@@ -104,7 +97,7 @@ public class DriveArcPath extends PathSection {
                 targetRightSpeed= gridTurnOuter;
             }
         }
-        
+        */
         
 
     }
@@ -145,7 +138,7 @@ public class DriveArcPath extends PathSection {
         double currentRight=Robot.drivetrain.getRightEncoderVelocityPercent()/rightSpeedProportion;
         double driveSpeed=0;
         
-        driveSpeed=Math.max(0.8, Math.min(1, angDiff*0.01));
+        driveSpeed=Math.max(1, Math.min(1, angDiff*0.01));
         double leftSpeed=targetLeftSpeed*driveSpeed; //-driveSpeed*leftSpeedProportion;
         double rightSpeed = targetRightSpeed*driveSpeed;//driveSpeed*rightSpeedProportion;
         Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);

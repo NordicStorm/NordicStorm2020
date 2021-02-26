@@ -48,26 +48,28 @@ public class MultiPartPath extends CommandGroup {
         return this;
     }
     /**
-     * Drive in an arc to an angle. 
-     * @param targetAngle target angle
-     * @param turnRadius turn radius in feet. Measured from the center of the robot towards the center of the arc.
-     * @param speed speed. -1 to 1. 
-     * @param arcRight Affects to which side the robot will arc.
-     * If true, will arc to the right, if false it will go left.
+     * Drive in an arc with raw numbers
+     * @param targetAngle
+     * @param innerSpeed inner wheel speed
+     * @param outerSpeed outer speed. Please make sure this is bigger than innerSpeed
+     * @param arcRight if it should go right
+     * @return
      */
-    public MultiPartPath addArc(double targetAngle, double turnRadius, double speed, boolean arcRight){
-        sections.add(new DriveArcPath(targetAngle, turnRadius, speed, arcRight));
+    public MultiPartPath addRawArc(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight){
+        sections.add(new DriveArcPath(targetAngle, innerSpeed, outerSpeed, arcRight, false));
         return this;
     }
 
     /**
-     * 
+     * Drive in an arc on the grid(radius 2.5ft)
      * @param targetAngle
      * @param arcRight
      * @return
      */
     public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
-        sections.add(new DriveArcPath(targetAngle, 2.5, 1, arcRight));
+        double gridTurnInner=0.051;//0.041
+        double gridTurnOuter=0.4025;//0.4025
+        sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, false));
         return this;
     } 
     /**
