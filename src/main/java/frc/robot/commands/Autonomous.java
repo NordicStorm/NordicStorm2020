@@ -50,7 +50,7 @@ public class Autonomous extends AutoWithInit {
     public void initializeCommands(){
         addSequential(new WaitTime(1));
         MultiPartPath path= new MultiPartPath();
-        path.addArc(90, 5, 0.5, true);
+        path.addArc(90, 2.5, 0.5, true);
         addSequential(path.finalizePath());
 
 
