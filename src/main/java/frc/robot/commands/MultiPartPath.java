@@ -48,7 +48,7 @@ public class MultiPartPath extends CommandGroup {
         return this;
     }
     /**
-     * Drive in an arc with raw numbers
+     * Drive in an arc with raw numbers. Example: gridTurn is innerSpeed=0.051, outerSpeed=0.4025
      * @param targetAngle
      * @param innerSpeed inner wheel speed
      * @param outerSpeed outer speed. Please make sure this is bigger than innerSpeed
