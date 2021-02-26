@@ -60,6 +60,12 @@ public class MultiPartPath extends CommandGroup {
         return this;
     }
 
+    /**
+     * 
+     * @param targetAngle
+     * @param arcRight
+     * @return
+     */
     public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
         sections.add(new DriveArcPath(targetAngle, 2.5, 1, arcRight));
         return this;

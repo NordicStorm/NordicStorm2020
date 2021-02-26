@@ -29,6 +29,8 @@ public class DriveDistancePath extends PathSection {
     double startSpeed;
     double mainSpeed;
     double endSpeed;
+    double startSpeedDonePoint=0;
+    double mainSpeedDonePoint=0;
 
     boolean done = false;
     double minSpeed = 0.1;// 0.25
@@ -105,6 +107,7 @@ public class DriveDistancePath extends PathSection {
         return distance;
     }
     private double calcSpeedNeeded(double currentPercentdone){
+        if(true)return endSpeed;
         double driveSpeed = currentPercentdone * endSpeed;
         if (Math.abs(driveSpeed) < minSpeed) {
             driveSpeed = Math.copySign(minSpeed, driveSpeed);
@@ -146,6 +149,8 @@ public class DriveDistancePath extends PathSection {
     
     @Override
     public void finalizeForPath(PathSection previous, PathSection next) {
+        startSpeed=previous.getProvidedEndSpeed();
+        
         endSpeed = next.getRequestedStartSpeed();
     }
 
