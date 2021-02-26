@@ -181,7 +181,7 @@ public class DriveArcPath extends PathSection {
 
     @Override
     public double getRequestedStartSpeed() {
-        return Math.abs(targetLeftSpeed);
+        return Math.max(Math.abs(targetLeftSpeed),Math.abs(targetRightSpeed));
         //return Math.max(leftSpeedProportion, rightSpeedProportion)*mainSpeed;
     }
     
