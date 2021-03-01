@@ -51,7 +51,7 @@ public class DriveArcPath extends PathSection {
     public DriveArcPath(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean is360) {
         this.targetAngle=targetAngle;
         this.arcRight=arcRight;
-
+        
         requires(Robot.drivetrain);
 
         if(is360){
@@ -118,6 +118,9 @@ public class DriveArcPath extends PathSection {
         double currentAngle = Robot.drivetrain.getAngle();
         
         double angDiff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
+        double rotSpeed=Robot.drivetrain.getRotationalVelocity();
+        //angDiff=angDiff-rotSpeed*0.10;
+        //System.out.println("rotcomp"+rotSpeed*0.1);
         if(Math.abs(angDiff)<90){
             lastTickWasClose=true;
         }else if(Math.abs(angDiff)>270){//it made a loop
