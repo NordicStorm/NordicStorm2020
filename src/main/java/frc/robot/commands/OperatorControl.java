@@ -91,6 +91,9 @@ public class OperatorControl extends Command {
         }else{
             shiftWasPressed=false;
         }
+        if(rightJoystick.getRawButton(6)){
+            Robot.drivetrain.resetEncoderPositions();
+        }
         double leftY=leftJoystick.getY();
         //Robot.shooter.setPower(leftJoystick.getX());
         //Robot.shooter.rawSet(Util.map(leftJoystick.getZ(), 1, -1, 0, 0.34645669162273407));

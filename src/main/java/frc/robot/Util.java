@@ -13,5 +13,18 @@ public class Util {
         }
         return val;
     }
+    public static double clamp(double n, double min, double max){
+        return Math.max(Math.min(n, max), min);
+    }
+    public static double minWithAbs(double a, double b){
+        return Math.abs(a) < Math.abs(b) ? a : b;
+    }
+    public static double maxWithAbs(double a, double b){
+        return Math.abs(a) > Math.abs(b) ? a : b;
+    }
+    public static double signedSquare(double x) { 
+        if(x<0) return -x*x; 
+        else return x*x; 
+    }
 
 }
