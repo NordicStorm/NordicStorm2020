@@ -48,31 +48,13 @@ public class Autonomous extends AutoWithInit {
     } 
     @Override
     public void initializeCommands(){
-        //addSequential(new WaitTime(1));
+        addSequential(new WaitTime(1));
         MultiPartPath path = new MultiPartPath(0);
- /*       path.addStraight(1.3, false);
-
-        //path.addGridArc(270, false);
-        path.addRawArc(290, 0.051, 0.48, false);
-        path.addGridArc(0, true);
-        path.addStraight(10 , false);//10.5
-
-        path.addGridArc(73, true);
-
-        path.addGridArc(359, false);
-        path.addGridArc(90, false);
-        path.addGridArc(180,true);
-        path.addStraight(10.2 , false);
-        path.addGridArc(270,true);
-        path.addGridArc(180,false);*/
-        path.addStraight(3.5, false);
-        path.addGridArc(90, true);
-        path.addGridArc(0, false);
-        path.addStraight(5, false);
-        //path.addGridArc(270, true);
-        //path.addStraight(8.5, false);
-        //path.addGridArc(0, true);
-
+        path.addStraight(10, 0.5);
+        path.addGridArc(359, true);
+        //path.addStraight(10, 0.5);
+        //path.addArc(0, 2.5, 0.5, true);
+        //path.addStraight(5, 0.5);
         addSequential(path.finalizePath());
         addSequential(new TurnToAngle(0));
 

@@ -40,10 +40,11 @@ public class MultiPartPath extends CommandGroup {
      /**
      * Add a straight segment to the path
      * @param distance distance in feet
-     * @param backward true or false. false=forward
+     * @param speed speed%. Between -1-1. Negative means backward
+     * @param partOfPath If false, use normal p-val based on given speed. If true, use p-val while targeting surrounding segments.
      */
-    public MultiPartPath addStraight(double distance, boolean backward){
-        sections.add(new DriveDistancePath(distance*913, backward));
+    public MultiPartPath addStraight(double distance, double speed){
+        sections.add(new DriveDistancePath(distance*913, speed));
         return this;
     }
     /**
@@ -66,8 +67,8 @@ public class MultiPartPath extends CommandGroup {
      * @return
      */
     public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
-        double gridTurnInner=0.172;//*1.5;//0.051
-        double gridTurnOuter=0.60375;//*1.5;//0.4025
+        double gridTurnInner=0.051;//0.041
+        double gridTurnOuter=0.4025;//0.4025
         sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, false));
         return this;
     } 

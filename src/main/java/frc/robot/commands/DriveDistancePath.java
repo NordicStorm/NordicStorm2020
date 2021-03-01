@@ -39,15 +39,16 @@ public class DriveDistancePath extends PathSection {
     /**
      * 
      * @param distance distance in encoder units. 913=1 ft
+     * @param speed    speed%. Between -1-1. Negative means backward
      */
-    public DriveDistancePath(double distance, boolean backward) {
-        if (backward) {
+    public DriveDistancePath(double distance, double speed) {
+        if (speed < 0) {
             distance *= -1;
         }
-        reversed = backward;
+        reversed = speed < 0;
 
         this.totalDistance = distance;
-        this.mainSpeed = 1;
+        this.mainSpeed = speed;
         requires(Robot.drivetrain);
 
     }
@@ -69,30 +70,16 @@ public class DriveDistancePath extends PathSection {
         double leftPos = Robot.drivetrain.getLeftEncoderDistance();
         double rightPos = Robot.drivetrain.getRightEncoderDistance();
         double distanceAway=Math.min(getDistanceAway(leftPos, leftTargetPos, !reversed), getDistanceAway(rightPos, rightTargetPos, reversed));
-        double percentDone=Util.clamp(1-(distanceAway/Math.abs(totalDistance)), 0, 1);
-        double driveSpeed=mainSpeed;
-        System.out.println(percentDone);
-        if(percentDone>mainSpeedDonePoint){
-            driveSpeed = Util.map(percentDone, mainSpeedDonePoint, 1, mainSpeed, endSpeed);
-        }
-        if(percentDone<startSpeedDonePoint){
-            driveSpeed = Util.map(percentDone, 0, startSpeedDonePoint, startSpeed, mainSpeed);
-        }
-
-        if (Math.abs(driveSpeed) < minSpeed) {
-            driveSpeed = Math.copySign(minSpeed, driveSpeed);
-        }
-        double leftSpeed = driveSpeed;
-        double rightSpeed = driveSpeed;
+        double percentDone=1-(distanceAway/Math.abs(totalDistance));
+        double leftSpeed = calcSpeedNeeded(percentDone);
+        // System.out.println("right");
+        double rightSpeed = calcSpeedNeeded(percentDone);
 
         double currentAngle=Robot.drivetrain.getAngle();
         double angleDiff=Drivetrain.angleDiff(currentAngle, keepStraightAngle);
-        double useDiff=Util.absClamp(angleDiff*0.1, 1);
-        double adjustment=Util.absClamp(useDiff*0.8*(driveSpeed), driveSpeed);//0.01
+        double adjustment=Util.absClamp(angleDiff*0.01, leftSpeed);//left and right are the same at this point
         leftSpeed+=adjustment;
         rightSpeed-=adjustment;
-        System.out.println("drivespeed:"+driveSpeed);
-
         System.out.println("err:"+angleDiff);
 
         System.out.println("adj:"+adjustment);
@@ -119,7 +106,14 @@ public class DriveDistancePath extends PathSection {
 
         return distance;
     }
-   
+    private double calcSpeedNeeded(double currentPercentdone){
+        if(true)return endSpeed;
+        double driveSpeed = currentPercentdone * endSpeed;
+        if (Math.abs(driveSpeed) < minSpeed) {
+            driveSpeed = Math.copySign(minSpeed, driveSpeed);
+        }
+        return driveSpeed;
+    }
     
 
     // Make this return true when this Command no longer needs to run execute()
@@ -156,20 +150,12 @@ public class DriveDistancePath extends PathSection {
     @Override
     public void finalizeForPath(PathSection previous, PathSection next) {
         startSpeed=previous.getProvidedEndSpeed();
+        
         endSpeed = next.getRequestedStartSpeed();
-        double speedDiffStart=mainSpeed-startSpeed;
-        double neededAccelDist=speedDiffStart*913*1.5;
-        startSpeedDonePoint=Util.clamp(neededAccelDist/totalDistance, 0, 1);
-
-        double speedDiffEnd=mainSpeed-endSpeed;
-        double neededDecelDist=(speedDiffEnd*speedDiffEnd)*913*18;//3
-        mainSpeedDonePoint=Util.clamp(1-(neededDecelDist/totalDistance), 0, 1);
-        System.out.println("startdone"+startSpeedDonePoint);
-        System.out.println("maindone"+mainSpeedDonePoint);
     }
 
     @Override
     public double getProvidedEndSpeed() {
-        return endSpeed;
+        return 0;
     }
 }
