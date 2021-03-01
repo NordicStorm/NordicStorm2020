@@ -221,7 +221,7 @@
               "_title": "shiftVal"
             }
           },
-          "9,1": {
+          "8,1": {
             "size": [
               2,
               1
@@ -250,15 +250,22 @@
               "_title": "Throttle"
             }
           },
-          "13,2": {
+          "12,1": {
             "size": [
               2,
               1
             ],
             "content": {
-              "_type": "Text View",
+              "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/rightMasterPower",
-              "_title": "rightMasterPower"
+              "_title": "rightMasterPower",
+              "Graph/Visible time": 30.0,
+              "Graph/X-axis auto scrolling": true,
+              "Y-axis/Automatic bounds": true,
+              "Y-axis/Upper bound": 1.0,
+              "Y-axis/Lower bound": -1.0,
+              "Y-axis/Unit": "ul",
+              "Visible data/SmartDashboard/rightMasterPower": true
             }
           },
           "15,0": {
@@ -281,19 +288,6 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/accum",
               "_title": "accum"
-            }
-          },
-          "13,4": {
-            "size": [
-              2,
-              2
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///SmartDashboard/freq",
-              "_title": "freq",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
             }
           }
         }
