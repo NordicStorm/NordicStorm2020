@@ -13,6 +13,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.Util;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -24,10 +25,8 @@ public class DriveArcPath extends PathSection {
     
     double robotWidth=1.833; //22 inches = 1.833 feet
     
-    double pVal = 0.023;
-    double maxTurn = 0.2;
-    double minTurn = 0.15;
-    double tolerance=2;
+    double pVal = 0.009;//0.005
+    double slowPrevMultiply=0;
 
     double targetAngle;
     double turnRadius;
@@ -35,7 +34,7 @@ public class DriveArcPath extends PathSection {
     double mainSpeed;
     double startSpeed;
     double endSpeed;
-
+    double turnDistance;
     double leftSpeedProportion;
     double rightSpeedProportion;
 
@@ -118,6 +117,11 @@ public class DriveArcPath extends PathSection {
         double currentAngle = Robot.drivetrain.getAngle();
         
         double angDiff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
+        double rotSpeed=Robot.drivetrain.getRotationalVelocity();
+        //angDiff=angDiff+rotSpeed*0.3;
+        System.out.println("angdiff:"+angDiff);
+
+        System.out.println("rotspeed:"+rotSpeed);
         if(Math.abs(angDiff)<90){
             lastTickWasClose=true;
         }else if(Math.abs(angDiff)>270){//it made a loop
@@ -138,11 +142,13 @@ public class DriveArcPath extends PathSection {
         double currentRight=Robot.drivetrain.getRightEncoderVelocityPercent()/rightSpeedProportion;
         double driveSpeed=0;
         
-        driveSpeed=Math.max(1, Math.min(1, angDiff*0.01));
+        driveSpeed=Math.max(0.5, Math.min(1, angDiff*pVal))*slowPrevMultiply;
         double leftSpeed=targetLeftSpeed*driveSpeed; //-driveSpeed*leftSpeedProportion;
         double rightSpeed = targetRightSpeed*driveSpeed;//driveSpeed*rightSpeedProportion;
         Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
         //System.out.println("leftspeed"+leftSpeed);
+        //System.out.println("rightspeed"+rightSpeed);
+
         System.out.println("arc");
         
     }
@@ -169,12 +175,13 @@ public class DriveArcPath extends PathSection {
 
     @Override
     public double modifyAngle(double oldAngle) {
+        turnDistance=Drivetrain.fullAngleDiff(oldAngle, targetAngle, arcRight);
         return targetAngle;
     }
 
     @Override
     public double getRequestedStartSpeed() {
-        return Math.max(Math.abs(targetLeftSpeed),Math.abs(targetRightSpeed));
+        return Util.maxWithAbs(-targetLeftSpeed, targetRightSpeed)*(Math.min(1, pVal*Math.abs(turnDistance)));
         //return Math.max(leftSpeedProportion, rightSpeedProportion)*mainSpeed;
     }
     
@@ -182,11 +189,12 @@ public class DriveArcPath extends PathSection {
     public void finalizeForPath(PathSection previous, PathSection next) {
         double lastSpeed=previous.getProvidedEndSpeed();
         startSpeed=lastSpeed;
+        slowPrevMultiply=getRequestedStartSpeed()/startSpeed;
         //if(previous.getNeededStartSpeed)
     }
     @Override
     public double getProvidedEndSpeed() {
-        return 0;
+        return Util.minWithAbs(targetLeftSpeed, targetRightSpeed);
     }
     
 }
