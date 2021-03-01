@@ -35,6 +35,8 @@ public class DriveArcPath extends PathSection {
     double mainSpeed;
     double startSpeed;
     double endSpeed;
+    double turnDistance;
+    double prevAngle;
 
     double leftSpeedProportion;
     double rightSpeedProportion;
@@ -110,6 +112,17 @@ public class DriveArcPath extends PathSection {
         //leftTargetPos=Robot.drivetrain.getLeftEncoderDistance()-distance;
         //rightTargetPos=Robot.drivetrain.getRightEncoderDistance()+distance;
         Robot.drivetrain.setOutsideControl(true);
+        double currentAngle = Robot.drivetrain.getAngle();
+        double diff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
+        System.out.println("diff:"+diff);
+        System.out.println("turnDist:"+turnDistance);
+
+        /*if(Math.abs(diff-turnDistance)>180){//we overshot on the last arc
+            timesLeftToPass+=1;
+        }*/
+        
+        
+        
         done=false;
     }
     // Called repeatedly when this Command is scheduled to run
@@ -172,7 +185,10 @@ public class DriveArcPath extends PathSection {
 
     @Override
     public double modifyAngle(double oldAngle) {
+        turnDistance=Drivetrain.fullAngleDiff(oldAngle, targetAngle, arcRight);
+        prevAngle=oldAngle;
         return targetAngle;
+        
     }
 
     @Override
