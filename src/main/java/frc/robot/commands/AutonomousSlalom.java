@@ -52,12 +52,13 @@ public class AutonomousSlalom extends AutoWithInit {
         MultiPartPath path = new MultiPartPath(0);
         
 
-        path.addStraight(1.3, false);
+        path.addStraight(1, false);
 
         //path.addGridArc(270, false);
-        path.addRawArc(290, 0.051, 0.48, false);
+        path.addRawArc(315, 0.051, 0.48, false);
+        path.addStraight(4.5, false);
         path.addGridArc(0, true);
-        path.addStraight(10 , false);//10.5
+        path.addStraight(8.2, false);//10.5
 
         path.addGridArc(73, true);
 
