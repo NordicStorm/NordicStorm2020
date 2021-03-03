@@ -45,7 +45,7 @@ public class DriveArcPath extends PathSection {
     double targetRightSpeed=0;
     boolean done=false;
 
-    boolean lastTickWasClose=false;
+    boolean lastTickBig=false;
     int timesLeftToPass;
 
     
@@ -114,12 +114,14 @@ public class DriveArcPath extends PathSection {
         Robot.drivetrain.setOutsideControl(true);
         double currentAngle = Robot.drivetrain.getAngle();
         double diff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
+        System.out.println("curr:"+currentAngle);
+        System.out.println("target:"+targetAngle);
+
+
         System.out.println("diff:"+diff);
+
         System.out.println("turnDist:"+turnDistance);
 
-        /*if(Math.abs(diff-turnDistance)>180){//we overshot on the last arc
-            timesLeftToPass+=1;
-        }*/
         
         
         
@@ -134,18 +136,28 @@ public class DriveArcPath extends PathSection {
         double rotSpeed=Robot.drivetrain.getRotationalVelocity();
         //angDiff=angDiff-rotSpeed*0.10;
         //System.out.println("rotcomp"+rotSpeed*0.1);
-        if(Math.abs(angDiff)<90){
-            lastTickWasClose=true;
-        }else if(Math.abs(angDiff)>270){//it made a loop
-            if(lastTickWasClose){
-                lastTickWasClose=false;
+        if(Math.abs(angDiff)>180){
+            if(!lastTickBig){//cross going 
+                lastTickBig=true;
                 timesLeftToPass-=1;
+            }
+        }else{
+            if(lastTickBig){
+                lastTickBig=false;
+                timesLeftToPass+=1;
             }
         }
         if(timesLeftToPass==0){
             angDiff=0;
             done=true;
         }
+        System.out.println("timesleft:"+timesLeftToPass);
+
+        System.out.println("curr:"+currentAngle);
+        System.out.println("target:"+targetAngle);
+
+
+        System.out.println("diff:"+angDiff);
         //System.out.println("leftProp"+ leftSpeedProportion);
         //System.out.println("rightProp"+ rightSpeedProportion);
 
