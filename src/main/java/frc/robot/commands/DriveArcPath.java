@@ -114,6 +114,8 @@ public class DriveArcPath extends PathSection {
         Robot.drivetrain.setOutsideControl(true);
         double currentAngle = Robot.drivetrain.getAngle();
         double diff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
+        SmartDashboard.putString("currentCommand", "addArc("+targetAngle+", "+arcRight+")");
+
         System.out.println("curr:"+currentAngle);
         System.out.println("target:"+targetAngle);
 
