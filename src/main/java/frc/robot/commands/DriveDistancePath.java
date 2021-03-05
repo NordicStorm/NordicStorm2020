@@ -12,6 +12,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.Util;
 import frc.robot.subsystems.Drivetrain;
@@ -93,19 +94,20 @@ public class DriveDistancePath extends PathSection {
         double adjustment=Util.absClamp(useDiff*0.8*(driveSpeed), driveSpeed);//0.01
         leftSpeed+=adjustment;
         rightSpeed-=adjustment;
-        System.out.println("drivespeed:"+driveSpeed);
+        /*System.out.println("drivespeed:"+driveSpeed);
 
         System.out.println("err:"+angleDiff);
 
         System.out.println("adj:"+adjustment);
 
         System.out.println("left:"+leftSpeed);
-        System.out.println("right:"+rightSpeed);
+        System.out.println("right:"+rightSpeed);*/
 
         Robot.drivetrain.tankDriveDirect(-leftSpeed, rightSpeed);
         if (distanceAway < 0) {
             done = true;
         }
+
     }
 
     private double getDistanceAway(double currentPos, double targetPos, boolean reversed) {

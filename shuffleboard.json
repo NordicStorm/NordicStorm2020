@@ -227,16 +227,9 @@
               1
             ],
             "content": {
-              "_type": "Graph",
+              "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/leftMasterPower",
-              "_title": "leftMasterPower",
-              "Graph/Visible time": 30.0,
-              "Graph/X-axis auto scrolling": true,
-              "Y-axis/Automatic bounds": true,
-              "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "ul",
-              "Visible data/SmartDashboard/leftMasterPower": true
+              "_title": "leftMasterPower"
             }
           },
           "0,2": {
@@ -256,16 +249,9 @@
               1
             ],
             "content": {
-              "_type": "Graph",
+              "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/rightMasterPower",
-              "_title": "rightMasterPower",
-              "Graph/Visible time": 30.0,
-              "Graph/X-axis auto scrolling": true,
-              "Y-axis/Automatic bounds": true,
-              "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "ul",
-              "Visible data/SmartDashboard/rightMasterPower": true
+              "_title": "rightMasterPower"
             }
           },
           "15,0": {

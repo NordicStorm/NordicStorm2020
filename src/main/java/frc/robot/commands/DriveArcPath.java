@@ -12,6 +12,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivetrain;
 
@@ -138,12 +139,12 @@ public class DriveArcPath extends PathSection {
         double rotSpeed=Robot.drivetrain.getRotationalVelocity();
         //angDiff=angDiff-rotSpeed*0.10;
         //System.out.println("rotcomp"+rotSpeed*0.1);
-        if(Math.abs(angDiff)>180){
+        if(Math.abs(angDiff)>270){
             if(!lastTickBig){//cross going 
                 lastTickBig=true;
                 timesLeftToPass-=1;
             }
-        }else{
+        }else if(Math.abs(angDiff)<90){
             if(lastTickBig){
                 lastTickBig=false;
                 timesLeftToPass+=1;
@@ -173,8 +174,7 @@ public class DriveArcPath extends PathSection {
         double rightSpeed = targetRightSpeed*driveSpeed;//driveSpeed*rightSpeedProportion;
         Robot.drivetrain.tankDriveDirect(leftSpeed, rightSpeed);
         //System.out.println("leftspeed"+leftSpeed);
-        System.out.println("arc");
-        
+
     }
 
     
