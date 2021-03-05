@@ -46,7 +46,7 @@ public class DriveArcPath extends PathSection {
     double targetRightSpeed=0;
     boolean done=false;
 
-    boolean lastTickBig=false;
+    int lastTickLocation=0; //-1, 0, 1
     int timesLeftToPass;
 
     
@@ -114,9 +114,12 @@ public class DriveArcPath extends PathSection {
         //rightTargetPos=Robot.drivetrain.getRightEncoderDistance()+distance;
         Robot.drivetrain.setOutsideControl(true);
         double currentAngle = Robot.drivetrain.getAngle();
-        double diff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
+        double diff=Drivetrain.fullAngleDiff(currentAngle, prevAngle, arcRight);
         SmartDashboard.putString("currentCommand", "addArc("+targetAngle+", "+arcRight+")");
 
+        /*if(diff>180){//we overshot on the last command
+            timesLeftToPass+=1;
+        }*/
         System.out.println("curr:"+currentAngle);
         System.out.println("target:"+targetAngle);
 
@@ -140,27 +143,32 @@ public class DriveArcPath extends PathSection {
         //angDiff=angDiff-rotSpeed*0.10;
         //System.out.println("rotcomp"+rotSpeed*0.1);
         if(Math.abs(angDiff)>270){
-            if(!lastTickBig){//cross going 
-                lastTickBig=true;
+            if(lastTickLocation==1){//cross going forward. last small (near target), now big (far away)
                 timesLeftToPass-=1;
+                System.out.println("godown");
             }
+            lastTickLocation=-1;
         }else if(Math.abs(angDiff)<90){
-            if(lastTickBig){
-                lastTickBig=false;
+            if(lastTickLocation==-1){
                 timesLeftToPass+=1;
+                System.out.println("goup");
             }
+            lastTickLocation=1;
+
+        }else{
+            lastTickLocation=0;
         }
         if(timesLeftToPass==0){
             angDiff=0;
             done=true;
         }
         System.out.println("timesleft:"+timesLeftToPass);
-
-        System.out.println("curr:"+currentAngle);
-        System.out.println("target:"+targetAngle);
-
-
         System.out.println("diff:"+angDiff);
+
+        //System.out.println("curr:"+currentAngle);
+        //System.out.println("target:"+targetAngle);
+
+
         //System.out.println("leftProp"+ leftSpeedProportion);
         //System.out.println("rightProp"+ rightSpeedProportion);
 

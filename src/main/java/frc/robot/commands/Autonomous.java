@@ -30,8 +30,11 @@ public class Autonomous extends AutoWithInit {
         MultiPartPath path = new MultiPartPath(0);
 
         path.addStraight(5, false);
+        
         path.addGridArc(90, true);
         path.addGridArc(100, false);
+
+        //path.addGridArc(100, false);
         //path.addGridArc(0, false);
         //path.addStraight(5, false);
         //path.addGridArc(270, true);

@@ -62,7 +62,7 @@ public class DriveDistancePath extends PathSection {
         rightTargetPos = Robot.drivetrain.getRightEncoderDistance() + totalDistance;
         Robot.drivetrain.setOutsideControl(true);
         done = false;
-        SmartDashboard.putString("currentCommand", "addStraight("+totalDistance+", "+reversed+")");
+        SmartDashboard.putString("currentCommand", "addStraight("+(totalDistance/913)+", "+reversed+")");
 
     }
 

@@ -74,7 +74,7 @@ ballIntake = new BallIntake();
         oi = new OI();
 
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
-
+        pixy.setBrightness(100);//does not work?
         pixy.startUpdatingPixy();
         pneumatics.startCompressor();
         drivetrain.shift(true);
