@@ -52,13 +52,38 @@ public class MultiPartPath extends CommandGroup {
      * @param innerSpeed inner wheel speed
      * @param outerSpeed outer speed. Please make sure this is bigger than innerSpeed
      * @param arcRight if it should go right
+     * @param is360 true or false
+     * @return
+     */
+    public MultiPartPath addRawArc(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean is360){
+        sections.add(new DriveArcPath(targetAngle, innerSpeed, outerSpeed, arcRight, is360));
+        return this;
+    }
+    /**
+     * Drive in an arc with raw numbers. Example: gridTurn is innerSpeed=0.051, outerSpeed=0.4025
+     * @param targetAngle
+     * @param innerSpeed inner wheel speed
+     * @param outerSpeed outer speed. Please make sure this is bigger than innerSpeed
+     * @param arcRight if it should go right
      * @return
      */
     public MultiPartPath addRawArc(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight){
-        sections.add(new DriveArcPath(targetAngle, innerSpeed, outerSpeed, arcRight, false));
-        return this;
+        return addRawArc(targetAngle, innerSpeed, outerSpeed, arcRight, false);
     }
 
+    /**
+     * Drive in an arc on the grid(radius 2.5ft)
+     * @param targetAngle
+     * @param arcRight
+     * @param is360 true or false
+     * @return
+     */
+    public MultiPartPath addGridArc(double targetAngle, boolean arcRight, boolean is360){
+        double gridTurnInner=0.051;//0.041
+        double gridTurnOuter=0.4025;//0.4025
+        sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, is360));
+        return this;
+    } 
     /**
      * Drive in an arc on the grid(radius 2.5ft)
      * @param targetAngle
@@ -66,11 +91,9 @@ public class MultiPartPath extends CommandGroup {
      * @return
      */
     public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
-        double gridTurnInner=0.051;//0.041
-        double gridTurnOuter=0.4025;//0.4025
-        sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, false));
-        return this;
-    } 
+        return addGridArc(targetAngle, arcRight, false);
+    }
+    
     /**
      * Finalize and calculate speeds for path segments. Must be called before execution.
      * @return this same path for chaining

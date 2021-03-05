@@ -142,6 +142,8 @@ public class Shooter extends Subsystem {
 
         SmartDashboard.putNumber("Should be", targetRPM);
         SmartDashboard.putNumber("RPM", flywheel.getEncoder().getVelocity());
+        //hoodServo.set(Util.map(Robot.oi.getRightJoystick().getThrottle(), -1, 1, 0.34645669162273407, 0));
+
         hoodServo.set(Util.map(hoodAngle, 25, 45, 0.34645669162273407, 0));
         // hoodServo.set(Util.map(hoodAngle, 25, 45, 0.44645669162273407, 0));
         SmartDashboard.putNumber("Temp", flywheel.getMotorTemperature());
