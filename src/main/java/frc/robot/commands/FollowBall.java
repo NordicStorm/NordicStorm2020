@@ -56,10 +56,10 @@ public class FollowBall extends Command {
 
     double turnValue = 0;
     double forwardValue = 0;
-    double maxTurn = 0.75;
-    double pVal = 1.25;
-    double proxPVal = 0.07 * 0;
-    double stopWidth = 40 * 0;
+    double maxTurn = 0.25;
+    double pVal = 1.00;
+    double proxPVal = 0.07*0;
+    double stopWidth = 40*0;
     double forwardMod = 0.75;
     boolean fullAuto = true;
     boolean shouldStop = false;
@@ -95,7 +95,11 @@ public class FollowBall extends Command {
     protected void execute() {
         List<PixyObject> objects = Robot.pixy.readObjects();
         PixyObject object = findTarget(objects);
-        
+        /*if(object!=null){
+            if(object.width<stopWidth){
+                shouldStop=true;
+            }
+        }*/
         if (object != null) {
             double[] speeds = targetTracker.execute(object.x, object.width);
             turnValue = speeds[0];

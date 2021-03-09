@@ -163,8 +163,8 @@ public class BallIntake extends Subsystem {
             // This stage will be commanded to move based on either of the above cases.
 
             boolean kickerReady = true;
-            if (i == 4 && approxKickerSpeed < 1000) {
-                //kickerReady = false;
+            if (timeToStopKicker > now && i == 4 && approxKickerSpeed < 1000) {
+                kickerReady = false;
             }
             if ((timeStopFrom > now || timeStopTo > now) && kickerReady) {// if we should run because we are moving a
                                                                           // ball from or to

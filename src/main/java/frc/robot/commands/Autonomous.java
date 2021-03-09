@@ -27,12 +27,34 @@ public class Autonomous extends AutoWithInit {
     @Override
     public void initializeCommands(){
         //addSequential(new WaitTime(1));
-        MultiPartPath path = new MultiPartPath(0);
+        addSequential(new DriveForDistance(4*913, 0.5));
+       
+        addSequential(new TurnToAngle(270));
+        addSequential(new DriveForDistance(5*913, 0.5));
+        addSequential(new TurnToAngle(0));
+        addSequential(new DriveForDistance(15*913, 1));
+        addSequential(new TurnToAngle(90)); 
+        addSequential(new DriveForDistance(5*913, 0.5));
+        addSequential(new TurnToAngle(0));
+        addSequential(new DriveForDistance(5*913, 0.5));
+        addSequential(new TurnToAngle(270));
+        addSequential(new DriveForDistance(5*913, 0.5));
+        addSequential(new TurnToAngle(180));
+        addSequential(new DriveForDistance(5*913, 0.5));
+        addSequential(new TurnToAngle(90));
+        addSequential(new DriveForDistance(5*913, 0.5));
+        addSequential(new TurnToAngle(180));
+        addSequential(new DriveForDistance(15*913, 1));
+        addSequential(new TurnToAngle(270));
+        addSequential(new DriveForDistance(5*913, 0.5));
+        addSequential(new TurnToAngle(180));
+        addSequential(new DriveForDistance(5*913, 0.5));
+        /*MultiPartPath path = new MultiPartPath(0);
 
         path.addStraight(5, false);
         
         path.addGridArc(90, true);
-        path.addGridArc(100, false);
+        path.addGridArc(100, false);*/
 
         //path.addGridArc(100, false);
         //path.addGridArc(0, false);
@@ -41,8 +63,8 @@ public class Autonomous extends AutoWithInit {
         //path.addStraight(8.5, false);
         //path.addGridArc(0, true);
 
-        addSequential(path.finalizePath());
-        addSequential(new TurnToAngle(180));
+        //addSequential(path.finalizePath());
+        //addSequential(new TurnToAngle(180));
 
 
 
