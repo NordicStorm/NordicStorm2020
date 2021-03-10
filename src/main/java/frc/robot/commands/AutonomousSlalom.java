@@ -56,19 +56,20 @@ public class AutonomousSlalom extends AutoWithInit {
 
         //path.addGridArc(270, false);
         path.addRawArc(315, 0.051, 0.48, false);
-        path.addStraight(4.7, false);
+        path.addStraight(4.5, false);
         path.addGridArc(0, true);
-        path.addStraight(8.2, false);//10.5
+        path.addStraight(7.6, false);//10.5
 
         path.addGridArc(45, true);
-        path.addStraight(0.5, false);//10.5
+        path.addStraight(4.3, false);//10.5
 
-        path.addGridArc(359, false);
-        path.addGridArc(90, false);
+        path.addGridArc(135, false);
+        path.addStraight(4, false);//10.5
+
         path.addGridArc(180,true);
-        path.addStraight(9.2, false);
-        path.addGridArc(270,true);
-        path.addGridArc(180,false);
+        path.addStraight(8, false);
+        path.addGridArc(205,true);
+        path.addStraight(5, false);//10.5
 
         //path.addGridArc(180,false);
         
