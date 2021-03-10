@@ -65,7 +65,7 @@ shootTrigger.whileHeld(new CenterAndShoot());
 rightJoystick = new Joystick(0);
 
 trigger = new JoystickButton(rightJoystick, 1);
-trigger.whileHeld(new FollowBall(true));
+trigger.whileHeld(new FollowBall(true, false));
 
 
         // SmartDashboard Buttons
