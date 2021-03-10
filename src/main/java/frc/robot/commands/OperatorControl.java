@@ -48,6 +48,7 @@ public class OperatorControl extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+        
         Joystick rightJoystick = Robot.oi.getRightJoystick();
         Joystick leftJoystick = Robot.oi.getLeftJoystick();
         double forwardPower= -rightJoystick.getY();
@@ -69,8 +70,9 @@ public class OperatorControl extends Command {
         }
 
         double throttle=rightJoystick.getThrottle();
-        throttle=Util.map(throttle, 1, -1, 0.1, 1);//TODO remove/tweak when encoders
-        SmartDashboard.putNumber("Throttle",throttle);
+        throttle=Util.map(throttle, 1, -1, 0.1, 1);
+        SmartDashboard.putNumber("NumBalls",Robot.pixy.getNumObs());
+
         forwardPower*=throttle;
         turnPower*=throttle;
         if(rightJoystick.getX()<=-0.75){
@@ -95,6 +97,10 @@ public class OperatorControl extends Command {
             Robot.drivetrain.resetEncoderPositions();
         }
         double leftY=leftJoystick.getY();
+        
+        //Robot.pixy.setLamps(rightJoystick.getRawButton(5));
+        //Robot.pixy.setLamps(System.currentTimeMillis()%1000>500);
+
         //Robot.shooter.setPower(leftJoystick.getX());
         //Robot.shooter.rawSet(Util.map(leftJoystick.getZ(), 1, -1, 0, 0.34645669162273407));
         double kick=0;

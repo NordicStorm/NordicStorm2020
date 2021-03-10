@@ -1,4 +1,6 @@
-﻿Pin 6 ➜ your controller's ground signal
+﻿pixy:https://docs.pixycam.com/wiki/lib/exe/fetch.php?cache=&w=900&h=519&tok=c3adb1&media=wiki:v2:image_248_2.jpg
+
+Pin 6 ➜ your controller's ground signal
 Pin 1 (SPI MISO) ➜ your controller's SPI MISO signal
 Pin 4 (SPI MOSI) ➜ your controller's SPI MOSI signal
 Pin 3 (SPI SCK) ➜ your controller's SPI SCK signal

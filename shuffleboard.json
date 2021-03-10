@@ -275,6 +275,17 @@
               "_source0": "network_table:///SmartDashboard/accum",
               "_title": "accum"
             }
+          },
+          "9,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/NumBalls",
+              "_title": "NumBalls"
+            }
           }
         }
       }
@@ -883,9 +894,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.0,
-    "y": -7.0,
-    "width": 1295.0,
-    "height": 695.0
+    "x": -6.666666507720947,
+    "y": -6.666666507720947,
+    "width": 1295.3333740234375,
+    "height": 695.3333129882812
   }
 }

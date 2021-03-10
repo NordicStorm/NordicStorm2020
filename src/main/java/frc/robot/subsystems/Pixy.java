@@ -121,11 +121,11 @@ public class Pixy extends Subsystem {
         
 
         byte[] request = { (byte) 174, (byte) 193, 32, 2, (byte) sigmap, (byte) numBlocksToRead };
-        // request=new byte[]{ (byte) 174, (byte) 193, 22, 2,0,0 };
+        // request=new byte[]{ (byte) 174, (byte) 193, 22, 2,1,1 };
         pixyPort.write(request, 6);
 
-        pixyPort.read(true, rawData, readSize);
-        // System.out.println(Arrays.toString(rawData));
+        pixyPort.read(false, rawData, readSize);
+        //System.out.println(Arrays.toString(rawData));
         for (int i = 0; i <= 20; i++) {
 
             int syncWord = cvt(rawData[i + 0], rawData[i + 1]); // Parse first 2 bytes
@@ -155,7 +155,7 @@ public class Pixy extends Subsystem {
                 // never be entered* 
                 if (checksum != sum) {
                     int diff=sum-checksum;
-                    if (diff%255 != 0) {// weird thing were pixy sends wrong checksum, diff is always mult of 255. Therefore, don't log it.
+                    if (diff%255 != 0) {// weird thing where pixy sends wrong checksum, diff is always mult of 255. Therefore, don't log it.
                                                  
                         System.out.println("checkfail:");
                         System.out.println(checksum);
@@ -173,8 +173,8 @@ public class Pixy extends Subsystem {
                     // System.out.println(checksum);
                 }
 
-                // System.out.println(packet);
-                // System.out.print("Thing found");
+                //System.out.println(packet);
+                //System.out.print("Thing found");
                 break;
             }
         }
@@ -205,20 +205,31 @@ public class Pixy extends Subsystem {
         return knownObjects;
     }
 
- 
+    public int getNumObs() {
+        return knownObjects.size();
+    }
 
     public boolean canSeeObject() {
         return knownObjects.size() >= 1;
     }
 
     public void setBrightness(int brightness) {
-        // default 100, vision around = 20
+        // default 100
         if (brightness < 0 || brightness > 255) {
             throw new PixyException("Invalid brightness value:" + brightness);
         }
         byte[] request = { (byte) 174, (byte) 193, 16, 1, (byte) brightness };
         pixyPort.write(request, 5);
-
+    }
+    public void setLamps(boolean on){
+        byte[] request;
+        if(on){
+            request=new byte[]{ (byte) 174, (byte) 193, 22, 2,1,1 };
+        }else{
+            request=new byte[]{ (byte) 174, (byte) 193, 22, 2,0,0 };
+        }
+        pixyPort.write(request, 6);
+       
     }
 
 }

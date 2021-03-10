@@ -11,6 +11,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Util;
 
 /**
  *
@@ -27,7 +28,7 @@ public class DriveToObject{
     double camWidth=315;
     double camHeight=207;
     public DriveToObject(double pVal, double forwardMod, double maxTurn, double stopProximity, double proxPVal, double camWidth, double camHeight) {
-        this.pVal=-pVal;//negative so it goes the right way
+        this.pVal=pVal;
         this.forwardMod=forwardMod;
         this.maxTurn=maxTurn;
         this.stopProximity=stopProximity;
@@ -58,14 +59,14 @@ public class DriveToObject{
             proximitySlow=1;
         }
 
-        /*System.out.println(asPercent);
-        System.out.println(pVal);
-        System.out.println(maxTurn);*/
+        System.out.println("perc"+asPercent);
+        //System.out.println(pVal);
+        //System.out.println(maxTurn);
 
       
 
 
-        double turnValue=Math.min(Math.max(asPercent*pVal,-maxTurn),maxTurn);
+        double turnValue=Util.absClamp(asPercent*pVal, maxTurn);
  
         
         double forwardValue=(1-Math.abs(asPercent))*forwardMod*proximitySlow;
@@ -73,7 +74,7 @@ public class DriveToObject{
         //System.out.println(proximitySlow);
 
         
-        //System.out.println(turnValue);
+        System.out.println("turn"+turnValue);
 
         return new double[]{turnValue,forwardValue};
         
