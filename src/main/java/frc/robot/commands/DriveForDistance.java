@@ -13,6 +13,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 /**
@@ -50,6 +51,8 @@ public class DriveForDistance extends CommandGroup {
 
     @Override
     protected void initialize() {
+        SmartDashboard.putString("currentCommand", "driveForDistance("+distance+")");
+
         Robot.drivetrain.setEncMode(true);
         Robot.drivetrain.setSuperPMode(true);
         // Robot.drivetrain.resetEncoderPositions();

@@ -51,7 +51,7 @@ public class TurnToAngle extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        
+        SmartDashboard.putString("currentCommand", "turnToAngle("+targetAngle+")");
         //turningThread.start();
         Robot.drivetrain.setEncMode(true);
     }

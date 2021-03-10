@@ -52,6 +52,8 @@ public class FollowBall extends Command {
 
         targetTracker = new DriveToObject(pVal, forwardMod, maxTurn, stopWidth*0, proxPVal, camWidth, camHeight);
         targetTracker.setOffset(0);
+        SmartDashboard.putString("currentCommand", "followBall()");
+
         
     }
 
