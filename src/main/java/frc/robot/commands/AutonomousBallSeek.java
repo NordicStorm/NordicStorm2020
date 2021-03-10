@@ -70,7 +70,7 @@ public class AutonomousBallSeek extends AutoWithInit {
             //if(pixy_on_right())
             doRedA();
             //else
-            //add more other driving
+            //add more other driving, then 
             addSequential(new CheckAndSplit(this, 1));
 
         }else if(whichCheck==1){

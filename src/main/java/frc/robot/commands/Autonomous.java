@@ -28,8 +28,10 @@ public class Autonomous extends AutoWithInit {
     public void initializeCommands(){
         //addSequential(new WaitTime(1));
         addSequential(new DriveForDistance(4*913, 0.5));
-       
+        addSequential(new SetIntakeRunning(true));
         addSequential(new TurnToAngle(270));
+        addSequential(new SetIntakeRunning(false));
+
         addSequential(new DriveForDistance(5*913, 0.5));
         addSequential(new TurnToAngle(0));
         addSequential(new DriveForDistance(15*913, 1));

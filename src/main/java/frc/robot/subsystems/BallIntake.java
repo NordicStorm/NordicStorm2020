@@ -241,6 +241,13 @@ public class BallIntake extends Subsystem {
 
         }
     }
+    public void setLongRunningIntake(boolean runIntake) {
+        if (runIntake) {
+            timeToStopStageBeingMovedTo[0] = now + 999999;
+        }else{
+            timeToStopStageBeingMovedTo[0] = now;
+        }
+    }
 
     public boolean areBallsPresent() {
         return (stageSensors[0].get() || stageSensors[1].get() || stageSensors[2].get() || stageSensors[3].get()
