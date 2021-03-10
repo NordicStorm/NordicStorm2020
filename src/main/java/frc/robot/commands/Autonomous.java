@@ -30,7 +30,7 @@ public class Autonomous extends AutoWithInit {
         addSequential(new DriveForDistance(4*913, 0.5));
         addSequential(new TurnToAngle(270));
         addSequential(new SetIntakeRunning(true));
-        addSequential(new FollowBall(false));
+        addSequential(new FollowBall(false, true));
         addSequential(new WaitTime(1.5));
         addSequential(new SetIntakeRunning(false));
         addSequential(new TurnToAngle(270));
