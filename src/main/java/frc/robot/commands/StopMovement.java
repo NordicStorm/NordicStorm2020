@@ -31,6 +31,8 @@ public class StopMovement extends PathSection {
 
     @Override
     protected void initialize() {
+        SmartDashboard.putString("currentCommand", "stopMovement");
+
         Robot.drivetrain.setEncMode(true);
         Robot.drivetrain.setOutsideControl(false);
         Robot.drivetrain.setSuperPMode(true);
