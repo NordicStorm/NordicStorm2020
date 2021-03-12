@@ -29,7 +29,6 @@ public class CheckAndSplit extends InstantCommand {
 
     @Override
     protected void execute() {
-        auto.scanAndSplit(whichCheck);
+        auto.checkAndSplit(whichCheck);
     }
-
 }

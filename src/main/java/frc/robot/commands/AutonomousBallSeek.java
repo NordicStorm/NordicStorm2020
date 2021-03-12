@@ -48,7 +48,8 @@ public class AutonomousBallSeek extends AutoWithInit {
     public void initializeCommands(){
         
         //Put the common, first stage stuff here.
-        doRedA();
+        //doRedA();
+        addSequential(new CheckAndSplit(this, 0));
         /*MultiPartPath path = new MultiPartPath(0);
 
         path.addStraight(9, false);
@@ -64,7 +65,7 @@ public class AutonomousBallSeek extends AutoWithInit {
 
     }
 
-    public void scanAndSplit(int whichCheck){
+    public void checkAndSplit(int whichCheck){
         //This is used to sequence checks and forking paths.
         if(whichCheck==0){
             //if(pixy_on_right())
@@ -78,11 +79,12 @@ public class AutonomousBallSeek extends AutoWithInit {
         }
     }
     public void doRedA(){
+        CommandGroup group=new CommandGroup();
         addSequential(new SetIntakeRunning(true));
         addSequential(new FollowBall(false, true));
         addSequential(new TurnToAngle(26, 5));
         addSequential(new FollowBall(false, true));
-
+        group.start();
         
         
        /*

@@ -14,6 +14,7 @@ package frc.robot.commands;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
@@ -83,7 +84,7 @@ public class MultiPartPath extends CommandGroup {
         double gridTurnOuter=0.4025;//0.4025
         sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, is360));
         return this;
-    } 
+    }
     /**
      * Drive in an arc on the grid(radius 2.5ft)
      * @param targetAngle
@@ -93,7 +94,14 @@ public class MultiPartPath extends CommandGroup {
     public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
         return addGridArc(targetAngle, arcRight, false);
     }
-    
+
+    /**
+     * Runs the previous and the next commands at max speed.
+     */
+    public MultiPartPath atMaxSpeed(){
+        sections.add(new AtMaxSpeed());
+        return this;
+    }
     /**
      * Finalize and calculate speeds for path segments. Must be called before execution.
      * @return this same path for chaining
