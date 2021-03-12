@@ -99,6 +99,8 @@ ballIntake = new BallIntake();
 
     @Override
     public void autonomousInit() {
+        Robot.ballIntake.setLongRunningIntake(false);
+
         Robot.drivetrain.setSuperPMode(false);
 
         Robot.drivetrain.resetHeading();
