@@ -82,9 +82,22 @@ public class AutonomousBallSeek extends AutoWithInit {
         CommandGroup group=new CommandGroup();
         addSequential(new SetIntakeRunning(true));
         addSequential(new FollowBall(false, true));
-        addSequential(new TurnToAngle(26, 5));
+        //addSequential(new TurnToAngle(26, 5));
+        addSequential(new MultiPartPath(0).addRawArc(26, 0, 1, true).finalizePath());
+
         addSequential(new FollowBall(false, true));
-        group.start();
+        //addSequential(new TurnToAngle(270, 5));
+        addSequential(new MultiPartPath(26).addRawArc(270, 0, 1, false).finalizePath());
+
+        addSequential(new FollowBall(false, true));
+        //addSequential(new TurnToAngle(0, 5));
+        addSequential(new MultiPartPath(270).
+        addRawArc(0, 0, 1, true).
+        addStraight(11.5, false).
+        finalizePath());
+
+        //addSequential(new MultiPartPath(0).finalizePath());
+
         
         
        /*
