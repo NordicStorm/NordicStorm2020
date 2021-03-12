@@ -126,6 +126,7 @@ ballIntake = new BallIntake();
         if (autonomousCommand != null){
             autonomousCommand.cancel();
         }
+        Robot.ballIntake.setLongRunningIntake(false);
         Robot.drivetrain.setOutsideControl(false);
         Robot.drivetrain.setEncMode(true);
         Robot.drivetrain.setSuperPMode(false);
