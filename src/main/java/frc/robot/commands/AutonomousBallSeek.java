@@ -79,10 +79,13 @@ public class AutonomousBallSeek extends AutoWithInit {
     }
     public void doRedA(){
         addSequential(new SetIntakeRunning(true));
+        addSequential(new FollowBall(false, true));
+        addSequential(new TurnToAngle(26, 5));
+        addSequential(new FollowBall(false, true));
+
         
         
-        
-       
+       /*
         addSequential(new FollowBall(false, true));
         addSequential(new TurnToAngle(0));
         MultiPartPath path = new MultiPartPath(0);
@@ -99,7 +102,7 @@ public class AutonomousBallSeek extends AutoWithInit {
         addSequential(new TurnToAngle(0));
         path = new MultiPartPath(0);
         path.addStraight(6, false);
-        addSequential(new SetIntakeRunning(false));
+        addSequential(new SetIntakeRunning(false));*/
     }
 
     public void doBlueA(){
