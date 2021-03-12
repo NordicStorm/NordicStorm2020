@@ -48,8 +48,8 @@ public class AutonomousBallSeek extends AutoWithInit {
     public void initializeCommands(){
         
         //Put the common, first stage stuff here.
-        //doRedA();
-        addSequential(new CheckAndSplit(this, 0));
+        doRedA();
+        //addSequential(new CheckAndSplit(this, 0));
         /*MultiPartPath path = new MultiPartPath(0);
 
         path.addStraight(9, false);
