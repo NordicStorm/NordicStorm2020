@@ -25,6 +25,7 @@ import frc.robot.Robot;
 public class MultiPartPath extends CommandGroup {
 
     boolean hasFinalized=false;
+    boolean endStop=true;
     double startingAngle;
     List<PathSection> sections = new ArrayList<>();
     /**
@@ -103,12 +104,32 @@ public class MultiPartPath extends CommandGroup {
         return this;
     }
     /**
+     * Make it so this does not wait to stop before moving out of the path
+     * @return
+     */
+    public MultiPartPath coastOut(){
+        endStop=false;
+        return this;
+    }
+
+    /**
+     * Make it so this does not wait to stop before moving into the path
+     * @return
+     */
+    public MultiPartPath coastIn(){
+        sections.remove(0);
+        return this;
+    }
+
+    /**
      * Finalize and calculate speeds for path segments. Must be called before execution.
      * @return this same path for chaining
      */
     public MultiPartPath finalizePath(){
         double currentAngle=startingAngle;
-        sections.add(new StopMovement()); // add stop at end for calculations of speed
+        if(endStop){
+            sections.add(new StopMovement()); // add stop at end for calculations of speed
+        }
         for(PathSection section : sections){
             currentAngle=section.modifyAngle(currentAngle);
         }
