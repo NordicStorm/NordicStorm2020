@@ -11,7 +11,10 @@
 
 package frc.robot.commands;
 
+import java.util.List;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
 import frc.robot.subsystems.*;
 
 /**
@@ -48,8 +51,8 @@ public class AutonomousBallSeek extends AutoWithInit {
     public void initializeCommands(){
         
         //Put the common, first stage stuff here.
-        doRedA();
-        //addSequential(new CheckAndSplit(this, 0));
+        addSequential(new CheckAndSplit(this, 0));
+
         /*MultiPartPath path = new MultiPartPath(0);
 
         path.addStraight(9, false);
@@ -68,11 +71,21 @@ public class AutonomousBallSeek extends AutoWithInit {
     public void checkAndSplit(int whichCheck){
         //This is used to sequence checks and forking paths.
         if(whichCheck==0){
-            //if(pixy_on_right())
-            doRedA();
-            //else
+            List<PixyObject> obs = Robot.pixy.readObjects();
+            if(obs.size()==1){
+                PixyObject ball = obs.get(0);
+                System.out.println("ballx:"+ball.x);
+                if(ball.x>250){
+                    doRedB();
+                } else{
+                   doRedA();
+                }
+            }else{
+                System.out.println("none");
+            }
+           
             //add more other driving, then 
-            addSequential(new CheckAndSplit(this, 1));
+           // addSequential(new CheckAndSplit(this, 1));
 
         }else if(whichCheck==1){
             //second check
@@ -80,22 +93,22 @@ public class AutonomousBallSeek extends AutoWithInit {
     }
     public void doRedA(){
         CommandGroup group=new CommandGroup();
-        addSequential(new SetIntakeRunning(true));
-        addSequential(new FollowBall(false, true));
+        group.addSequential(new SetIntakeRunning(true));
+        group.addSequential(new FollowBall(false, true));
         //addSequential(new TurnToAngle(26, 5));
-        addSequential(new MultiPartPath(0).addRawArc(26, 0, 1, true).finalizePath());
+        group.addSequential(new MultiPartPath(0).addRawArc(26, 0, 1, true).finalizePath());
 
-        addSequential(new FollowBall(false, true));
+        group.addSequential(new FollowBall(false, true));
         //addSequential(new TurnToAngle(270, 5));
-        addSequential(new MultiPartPath(26).addRawArc(270, 0, 1, false).finalizePath());
+        group.addSequential(new MultiPartPath(26).addRawArc(270, 0, 1, false).finalizePath());
 
-        addSequential(new FollowBall(false, true));
+        group.addSequential(new FollowBall(false, true));
         //addSequential(new TurnToAngle(0, 5));
-        addSequential(new MultiPartPath(270).
+        group.addSequential(new MultiPartPath(270).
         addRawArc(0, 0, 1, true).
         addStraight(11.5, false).
         finalizePath());
-
+        group.start();
         //addSequential(new MultiPartPath(0).finalizePath());
 
         
