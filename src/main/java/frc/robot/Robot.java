@@ -103,7 +103,7 @@ ballIntake = new BallIntake();
 
         Robot.drivetrain.resetHeading();
         Robot.shooter.resetHeading();
-        autonomousCommand=new AutonomousBallSeek();
+        autonomousCommand=new Autonomous();
         autonomousCommand.initializeCommands();
         autonomousCommand.start();
         
