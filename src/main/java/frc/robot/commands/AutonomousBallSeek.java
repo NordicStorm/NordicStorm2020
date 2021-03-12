@@ -78,17 +78,28 @@ public class AutonomousBallSeek extends AutoWithInit {
         }
     }
     public void doRedA(){
-
-        MultiPartPath path = new MultiPartPath(0);
+        addSequential(new SetIntakeRunning(true));
         
-        path.addStraight(3.5, false);
+        
+        
+       
+        addSequential(new FollowBall(false, true));
+        addSequential(new TurnToAngle(0));
+        MultiPartPath path = new MultiPartPath(0);
         path.addGridArc(26.5, true);
-        path.addStraight(6, false);
-        path.addGridArc(71.6, false);
-        path.addStraight(8, false);
-        path.addGridArc(0, true);
-        path.addStraight(6, false);
+        path.addStraight(1.5, false);
         addSequential(path.finalizePath());
+        addSequential(new FollowBall(false, true));
+        addSequential(new TurnToAngle(26.5));
+        path = new MultiPartPath(26.5);
+        path.addGridArc(270, false);
+        path.addStraight(5, false);
+        addSequential(path.finalizePath());
+        addSequential(new FollowBall(false, true));
+        addSequential(new TurnToAngle(0));
+        path = new MultiPartPath(0);
+        path.addStraight(6, false);
+        addSequential(new SetIntakeRunning(false));
     }
 
     public void doBlueA(){
