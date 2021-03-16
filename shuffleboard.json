@@ -286,6 +286,17 @@
               "_source0": "network_table:///SmartDashboard/NumBalls",
               "_title": "NumBalls"
             }
+          },
+          "10,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/currentCommand",
+              "_title": "currentCommand"
+            }
           }
         }
       }

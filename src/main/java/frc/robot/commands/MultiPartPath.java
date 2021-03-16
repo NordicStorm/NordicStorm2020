@@ -26,6 +26,7 @@ public class MultiPartPath extends CommandGroup {
 
     boolean hasFinalized=false;
     boolean endStop=true;
+    boolean startStop=true;
     double startingAngle;
     List<PathSection> sections = new ArrayList<>();
     /**
@@ -34,11 +35,19 @@ public class MultiPartPath extends CommandGroup {
      * It does not turn to there, it is just used for information.
      */
     public MultiPartPath(double startingAngle) {
-        this.startingAngle=startingAngle;
-        sections.add(new StopMovement());//start path stopped
-        requires(Robot.drivetrain);
-
+        this(startingAngle, true, true);
     }
+    public MultiPartPath(double startingAngle, boolean stopAtStart, boolean stopAtEnd) {
+        this.startStop=stopAtStart;
+        this.endStop=stopAtEnd;
+        this.startingAngle=startingAngle;
+        if(startStop){
+            sections.add(new StopMovement());//start path stopped
+        }
+        requires(Robot.drivetrain);
+    }
+
+
      /**
      * Add a straight segment to the path
      * @param distance distance in feet
@@ -117,7 +126,10 @@ public class MultiPartPath extends CommandGroup {
      * @return
      */
     public MultiPartPath coastIn(){
-        sections.remove(0);
+        if(startStop){
+            sections.remove(0);
+            startStop=false;
+        }
         return this;
     }
 
