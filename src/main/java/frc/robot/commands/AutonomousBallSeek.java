@@ -86,7 +86,7 @@ public class AutonomousBallSeek extends AutoWithInit {
                 MultiPartPath path = new MultiPartPath(0);
                 path.addStraight(0.5, false);
 
-
+                //" This is the part where it goes over to look for the balls of the blue runs.
                 //path.addGridArc(270, false);
                 path.addRawArc(45, 0.051, 0.48, true);
                 path.addStraight(4, false);
