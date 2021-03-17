@@ -49,6 +49,9 @@ public class FollowBall extends Command {
 
     @Override
     protected void initialize() {
+        Robot.drivetrain.setSuperPMode(false);
+        Robot.drivetrain.setOutsideControl(false);
+        Robot.drivetrain.setEncMode(true);
 
         targetTracker = new DriveToObject(pVal, forwardMod, maxTurn, stopWidth*0, proxPVal, camWidth, camHeight);
         targetTracker.setOffset(0);
