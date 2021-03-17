@@ -14,6 +14,7 @@ package frc.robot.commands;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.*;
 
@@ -104,6 +105,8 @@ public class AutonomousBallSeek extends AutoWithInit {
         }
     }
     public void doRedA(){
+        SmartDashboard.putString("RunAuto", "Red A");
+
         CommandGroup group=new CommandGroup();
         group.addSequential(new SetIntakeRunning(true));
         group.addSequential(new FollowBall(false, true));
@@ -152,7 +155,8 @@ public class AutonomousBallSeek extends AutoWithInit {
     }
 
     public void doBlueA(){
-       
+        SmartDashboard.putString("RunAuto", "Blue A");
+
         CommandGroup group=new CommandGroup();
         group.addSequential(new SetIntakeRunning(true));
         group.addSequential(new FollowBall(false, true));
@@ -177,25 +181,25 @@ public class AutonomousBallSeek extends AutoWithInit {
     }
 
     public void doRedB(){
-
+        SmartDashboard.putString("RunAuto", "Red B");
         CommandGroup group=new CommandGroup();
         group.addSequential(new SetIntakeRunning(true));
         
         group.addSequential(new FollowBall(false, true));
        //group.addSequential(new TurnToAngle(45, 5))
        group.addSequential(new MultiPartPath(-45, false, false)
-            .addRawArc(45, 0, 1, false)
+            .addRawArc(5, -0.5, 0.5, true)
         
             .finalizePath());
         group.addSequential(new FollowBall(false, true));
         //group.addSequential(new TurnToAngle(270, 5));
         group.addSequential(new MultiPartPath(45, false, false)
-            .addRawArc(270, 0, 1, false)
+            .addRawArc(270, -0.5, 0.5, false)
         
             .finalizePath());
         group.addSequential(new FollowBall(false, true));
         group.addSequential(new MultiPartPath(35, false, true)
-        .addRawArc(0, 0, 1, true)
+        .addRawArc(0, -0.5, 0.5, true)
         .addStraight(2, false)
         .atMaxSpeed()
         .finalizePath());
@@ -204,6 +208,8 @@ public class AutonomousBallSeek extends AutoWithInit {
     }
 
     public void doBlueB(){
+        SmartDashboard.putString("RunAuto", "Blue B");
+
         CommandGroup group=new CommandGroup();
         group.addSequential(new SetIntakeRunning(true));
         
