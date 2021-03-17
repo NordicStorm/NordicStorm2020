@@ -152,17 +152,71 @@ public class AutonomousBallSeek extends AutoWithInit {
     }
 
     public void doBlueA(){
-
+       
+        CommandGroup group=new CommandGroup();
+        group.addSequential(new SetIntakeRunning(true));
+        group.addSequential(new FollowBall(false, true));
+        group.addSequential(new MultiPartPath(0, false, false)
+            .addRawArc(300, 0, 1, false)
+        
+            .finalizePath());
+        
+        group.addSequential(new FollowBall(false, true));
+        group.addSequential(new MultiPartPath(300, false, false)
+        .addRawArc(35, 0, 1, false)
+        
+        .finalizePath());
+        group.addSequential(new FollowBall(false, true));
+        group.addSequential(new MultiPartPath(35, false, true)
+            .addRawArc(0, 0, 1, true)
+            .addStraight(1, false)
+            .atMaxSpeed()
+            .finalizePath());
+        group.start();
+      
     }
 
     public void doRedB(){
 
         CommandGroup group=new CommandGroup();
         group.addSequential(new SetIntakeRunning(true));
+        
+        group.addSequential(new FollowBall(false, true));
+       //group.addSequential(new TurnToAngle(45, 5))
+       group.addSequential(new MultiPartPath(-45, false, false)
+            .addRawArc(45, 0, 1, false)
+        
+            .finalizePath());
+        group.addSequential(new FollowBall(false, true));
+        //group.addSequential(new TurnToAngle(270, 5));
+        group.addSequential(new MultiPartPath(45, false, false)
+            .addRawArc(270, 0, 1, false)
+        
+            .finalizePath());
+        group.addSequential(new FollowBall(false, true));
+        group.addSequential(new MultiPartPath(35, false, true)
+        .addRawArc(0, 0, 1, true)
+        .addStraight(2, false)
+        .atMaxSpeed()
+        .finalizePath());
+
         group.start();
     }
 
     public void doBlueB(){
+        CommandGroup group=new CommandGroup();
+        group.addSequential(new SetIntakeRunning(true));
+        
+        group.addSequential(new FollowBall(false, true));
+        //group.addSequential(new TurnToAngle(-45, 5));
+        group.addSequential(new MultiPartPath(0, true, false)
+        .addRawArc(-45, 0, 1, false)
+    
+        .finalizePath());
+        group.addSequential(new FollowBall(false, true));
+        //group.addSequential(new TurnToAngle(45, 5));
+        group.addSequential(new FollowBall(false, true));
+        group.start();
 
     }
 }
