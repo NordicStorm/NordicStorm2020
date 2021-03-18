@@ -74,7 +74,7 @@ public class DriveDistancePath extends PathSection {
         double distanceAway=Math.min(getDistanceAway(leftPos, leftTargetPos, !reversed), getDistanceAway(rightPos, rightTargetPos, reversed));
         double percentDone=Util.clamp(1-(distanceAway/Math.abs(totalDistance)), 0, 1);
         double driveSpeed=mainSpeed;
-        System.out.println(percentDone);
+        //System.out.println(percentDone);
         if(percentDone>mainSpeedDonePoint){
             driveSpeed = Util.map(percentDone, mainSpeedDonePoint, 1, mainSpeed, endSpeed);
         }

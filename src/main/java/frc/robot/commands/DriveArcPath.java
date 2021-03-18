@@ -45,16 +45,16 @@ public class DriveArcPath extends PathSection {
     double targetLeftSpeed=0;
     double targetRightSpeed=0;
     boolean done=false;
-
+    boolean veloPredictStop;
     int lastTickLocation=0; //-1, 0, 1
     int timesLeftToPass;
 
     
     
-    public DriveArcPath(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean is360) {
+    public DriveArcPath(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean is360, boolean veloPredictStop) {
         this.targetAngle=targetAngle;
         this.arcRight=arcRight;
-        
+        this.veloPredictStop=veloPredictStop;
         requires(Robot.drivetrain);
 
         if(is360){
@@ -139,19 +139,21 @@ public class DriveArcPath extends PathSection {
         double currentAngle = Robot.drivetrain.getAngle();
         
         double angDiff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
-        double rotSpeed=Robot.drivetrain.getRotationalVelocity();
-        //angDiff=angDiff-rotSpeed*0.10;
-        //System.out.println("rotcomp"+rotSpeed*0.1);
+        if(veloPredictStop){
+            double rotSpeed=Robot.drivetrain.getRotationalVelocity();
+            angDiff=angDiff-rotSpeed*1;
+            System.out.println("rot:"+rotSpeed);
+        }
         if(Math.abs(angDiff)>270){
             if(lastTickLocation==1){//cross going forward. last small (near target), now big (far away)
                 timesLeftToPass-=1;
-                System.out.println("godown");
+                //System.out.println("godown");
             }
             lastTickLocation=-1;
         }else if(Math.abs(angDiff)<90){
             if(lastTickLocation==-1){
                 timesLeftToPass+=1;
-                System.out.println("goup");
+                //System.out.println("goup");
             }
             lastTickLocation=1;
 
@@ -162,8 +164,8 @@ public class DriveArcPath extends PathSection {
             angDiff=0;
             done=true;
         }
-        System.out.println("timesleft:"+timesLeftToPass);
-        System.out.println("diff:"+angDiff);
+        //System.out.println("timesleft:"+timesLeftToPass);
+        //System.out.println("diff:"+angDiff);
 
         //System.out.println("curr:"+currentAngle);
         //System.out.println("target:"+targetAngle);

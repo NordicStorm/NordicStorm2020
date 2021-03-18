@@ -59,7 +59,7 @@ public class DriveToObject{
             proximitySlow=1;
         }
 
-        System.out.println("perc"+asPercent);
+        //System.out.println("perc"+asPercent);
         //System.out.println(pVal);
         //System.out.println(maxTurn);
 
@@ -74,7 +74,7 @@ public class DriveToObject{
         //System.out.println(proximitySlow);
 
         
-        System.out.println("turn"+turnValue);
+        //System.out.println("turn"+turnValue);
 
         return new double[]{turnValue,forwardValue};
         

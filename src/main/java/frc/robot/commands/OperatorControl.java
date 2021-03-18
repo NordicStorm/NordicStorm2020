@@ -108,7 +108,7 @@ public class OperatorControl extends Command {
             kick=1;
         }
         if(Math.abs(leftY)>0.7){
-            Robot.ballIntake.setRawMotors(leftY, leftY, leftY, leftY, leftY,leftY);
+            Robot.ballIntake.setRawMotors(leftY, leftY, leftY, leftY, leftY,leftY*0.1);
         }
         if(Math.abs(leftJoystick.getX())>0.7){
             //Robot.shooter.setPower(leftJoystick.getX());

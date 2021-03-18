@@ -127,9 +127,7 @@ public class BallIntake extends Subsystem {
     public void periodic() {
         // Put code here to be run every loop
         runBallsThroughSystem();
-        if(keepRunningIntake){
-            setIntakeRunning(true);
-        }
+        
         // System.out.println("stage"+stageSensors[0].get());
 
     }
@@ -220,6 +218,9 @@ public class BallIntake extends Subsystem {
             }
             WPI_TalonSRX stageMotor = stageMotors[i];
 
+            if(i==0 && keepRunningIntake){
+                runStageMotor=true;
+            }
             if (runStageMotor) {
 
                 stageMotor.set(moveSpeed);

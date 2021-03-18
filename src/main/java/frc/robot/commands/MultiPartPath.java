@@ -66,8 +66,8 @@ public class MultiPartPath extends CommandGroup {
      * @param is360 true or false
      * @return
      */
-    public MultiPartPath addRawArc(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean is360){
-        sections.add(new DriveArcPath(targetAngle, innerSpeed, outerSpeed, arcRight, is360));
+    public MultiPartPath addRawArc(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean is360, boolean predictVeloStop){
+        sections.add(new DriveArcPath(targetAngle, innerSpeed, outerSpeed, arcRight, is360, predictVeloStop));
         return this;
     }
     /**
@@ -79,7 +79,7 @@ public class MultiPartPath extends CommandGroup {
      * @return
      */
     public MultiPartPath addRawArc(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight){
-        return addRawArc(targetAngle, innerSpeed, outerSpeed, arcRight, false);
+        return addRawArc(targetAngle, innerSpeed, outerSpeed, arcRight, false, false);
     }
 
     /**
@@ -92,8 +92,9 @@ public class MultiPartPath extends CommandGroup {
     public MultiPartPath addGridArc(double targetAngle, boolean arcRight, boolean is360){
         double gridTurnInner=0.051;//0.041
         double gridTurnOuter=0.4025;//0.4025
-        sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, is360));
-        return this;
+        return addRawArc(targetAngle, gridTurnInner, gridTurnOuter, arcRight, is360, false);
+        //sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, is360, false));
+        //return this;
     }
     /**
      * Drive in an arc on the grid(radius 2.5ft)
