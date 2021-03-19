@@ -54,9 +54,14 @@ public class MultiPartPath extends CommandGroup {
      * @param backward true or false. false=forward
      */
     public MultiPartPath addStraight(double distance, boolean backward){
-        sections.add(new DriveDistancePath(distance*913, backward));
+        sections.add(new DriveDistancePath(distance*913, backward, false, 0));
         return this;
     }
+    public MultiPartPath addStraight(double distance, boolean backward, double targetAngle){
+        sections.add(new DriveDistancePath(distance*913, backward, true, targetAngle));
+        return this;
+    }
+
     /**
      * Drive in an arc with raw numbers. Example: gridTurn is innerSpeed=0.051, outerSpeed=0.4025
      * @param targetAngle

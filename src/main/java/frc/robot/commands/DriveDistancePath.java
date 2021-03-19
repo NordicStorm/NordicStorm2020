@@ -36,12 +36,13 @@ public class DriveDistancePath extends PathSection {
     boolean done = false;
     double minSpeed = 0.1;// 0.25
     double keepStraightAngle=0;
+    boolean customTargetAngle;
 
     /**
      * 
      * @param distance distance in encoder units. 913=1 ft
      */
-    public DriveDistancePath(double distance, boolean backward) {
+    public DriveDistancePath(double distance, boolean backward, boolean customTargetAngle, double targetAngle) {
         if (backward) {
             distance *= -1;
         }
@@ -49,8 +50,9 @@ public class DriveDistancePath extends PathSection {
 
         this.totalDistance = distance;
         this.mainSpeed = 1;
+        this.keepStraightAngle=targetAngle;
+        this.customTargetAngle=customTargetAngle;
         requires(Robot.drivetrain);
-
     }
 
     @Override
@@ -149,8 +151,13 @@ public class DriveDistancePath extends PathSection {
 
     @Override
     public double modifyAngle(double oldAngle) {
-        keepStraightAngle=oldAngle;
-        return oldAngle;
+        if(customTargetAngle){
+            return keepStraightAngle;
+        }else{
+            keepStraightAngle=oldAngle;
+            return oldAngle;
+        }
+        
     }
     @Override
     public double getRequestedStartSpeed() {

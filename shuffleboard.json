@@ -297,6 +297,17 @@
               "_source0": "network_table:///SmartDashboard/currentCommand",
               "_title": "currentCommand"
             }
+          },
+          "11,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/RunAuto",
+              "_title": "RunAuto"
+            }
           }
         }
       }
