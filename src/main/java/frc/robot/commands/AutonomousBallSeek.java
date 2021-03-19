@@ -76,7 +76,7 @@ public class AutonomousBallSeek extends AutoWithInit {
             if(obs.size()>0){
                 PixyObject ball = obs.get(0);
                 System.out.println("ballx:"+ball.x);
-                if(ball.x>250){
+                if(ball.x>225){
                     doRedB();
                 } else{
                    doRedA();
@@ -84,24 +84,39 @@ public class AutonomousBallSeek extends AutoWithInit {
             }else{
                 System.out.println("none");
                 CommandGroup group=new CommandGroup();
-                MultiPartPath path = new MultiPartPath(0);
-                path.addStraight(0.5, false);
+                MultiPartPath path = new MultiPartPath(0, true, false);
+                //path.addStraight(0.5, false);
 
                 //" This is the part where it goes over to look for the balls of the blue runs.
                 //path.addGridArc(270, false);
                 path.addRawArc(45, 0.051, 0.48, true);
-                path.addStraight(4, false);
+                path.addStraight(5, false);
                 path.addGridArc(0, false);
                 group.addSequential(path.finalizePath());
                 group.addSequential(new TurnToAngle(0));
+                group.addSequential(new CheckAndSplit(this, 1));
                 group.start();
             }
            
             //add more other driving, then 
+
            // addSequential(new CheckAndSplit(this, 1));
 
         }else if(whichCheck==1){
             //second check
+            List<PixyObject> obs = Robot.pixy.readObjects();
+            if(obs.size()>0){
+                PixyObject ball = obs.get(0);
+                System.out.println("ballx2:"+ball.x);
+                if(ball.x>225){
+                    //doRedB();
+                } else{
+                   //doRedA();
+                }
+            } else {
+                SmartDashboard.putString("RunAuto", "No ball");
+            
+            }
         }
     }
     public void doRedA(){
@@ -188,19 +203,19 @@ public class AutonomousBallSeek extends AutoWithInit {
         group.addSequential(new FollowBall(false, true));
        //group.addSequential(new TurnToAngle(45, 5))
        group.addSequential(new MultiPartPath(-45, false, false)
-            .addRawArc(15, -0.5, 0.5, true, false, true)
+            .addRawArc(15, -0.5, 0.5, true)
         
             .finalizePath());
         group.addSequential(new FollowBall(false, true));
         //group.addSequential(new TurnToAngle(270, 5));
         group.addSequential(new MultiPartPath(45, false, false)
-            .addRawArc(310, -0.5, 0.5, false, false, true)
+            .addRawArc(-30, -0.5, 0.5, false)
         
             .finalizePath());
         group.addSequential(new FollowBall(false, true));
         group.addSequential(new MultiPartPath(35, false, true)
-        .addRawArc(0, -0.5, 0.5, true, false, true)
-        .addStraight(2, false)
+        .addRawArc(0, 0, 0.5, true)
+        .addStraight(6, false)
         .atMaxSpeed()
         .finalizePath());
 
