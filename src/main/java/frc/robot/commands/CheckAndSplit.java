@@ -23,7 +23,7 @@ public class CheckAndSplit extends InstantCommand {
     AutonomousBallSeek auto;
     public CheckAndSplit(AutonomousBallSeek auto, int whichCheck) {
         requires(Robot.drivetrain);
-        this.whichCheck=0;
+        this.whichCheck=whichCheck;
         this.auto=auto;
     }
 

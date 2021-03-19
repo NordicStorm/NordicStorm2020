@@ -47,6 +47,7 @@ public class StopMovement extends PathSection {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
+        System.out.println("rotvel:"+Robot.drivetrain.getRotationalVelocity());
         boolean done=Math.abs(Robot.drivetrain.getRotationalVelocity())<0.1
          && Math.abs(Robot.drivetrain.getLeftEncoderVelocity())<12
          && Math.abs(Robot.drivetrain.getRightEncoderVelocity())<12;
