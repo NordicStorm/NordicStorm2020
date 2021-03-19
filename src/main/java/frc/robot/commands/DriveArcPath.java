@@ -141,7 +141,7 @@ public class DriveArcPath extends PathSection {
         double angDiff=Drivetrain.fullAngleDiff(currentAngle, targetAngle, arcRight);
         if(veloPredictStop){
             double rotSpeed=Robot.drivetrain.getRotationalVelocity();
-            angDiff=angDiff-rotSpeed*1;
+            angDiff=angDiff-rotSpeed*0.5;
             System.out.println("rot:"+rotSpeed);
         }
         if(Math.abs(angDiff)>270){
