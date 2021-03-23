@@ -27,15 +27,15 @@ public class Autonomous extends AutoWithInit {
     @Override
     public void initializeCommands(){
         //addSequential(new WaitTime(1));
-        addSequential(new DriveForDistance(4*913, 0.5));
-        addSequential(new TurnToAngle(270));
-        addSequential(new SetIntakeRunning(true));
-        addSequential(new FollowBall(false, true));
-        addSequential(new WaitTime(1.5));
-        addSequential(new SetIntakeRunning(false));
-        addSequential(new TurnToAngle(270));
+        MultiPartPath path = new MultiPartPath(0);
+        path.addStraight(9, false);
 
+        //path.addGridArc(270, false);
+        path.addRawArc(1, 0.051, 0.48, true, true, false);
+        //path.addStraight(7.5, false);
+        //path.addRawArc(90, 0.051, 0.48, false);
 
+        addSequential(path.finalizePath());
 
 
 

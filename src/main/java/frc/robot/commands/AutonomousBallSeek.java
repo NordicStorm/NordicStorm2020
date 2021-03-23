@@ -11,6 +11,7 @@
 
 package frc.robot.commands;
 
+import java.util.Arrays;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -73,6 +74,8 @@ public class AutonomousBallSeek extends AutoWithInit {
         //This is used to sequence checks and forking paths.
         if(whichCheck==0){
             List<PixyObject> obs = Robot.pixy.readObjects();
+            obs.sort( (a, b) -> a.y - b.y);
+           
             if(obs.size()>0 && obs.get(0).y<170){
                 PixyObject ball = obs.get(0);
                 System.out.println("ballx:"+ball.x);
@@ -137,15 +140,15 @@ public class AutonomousBallSeek extends AutoWithInit {
         group.addSequential(new FollowBall(false, true));
         //addSequential(new TurnToAngle(270, 5));
         group.addSequential(new MultiPartPath(26, false, false)
-            .addRawArc(-10, -0.5, 0.5, false)
+            .addRawArc(20, -0.5, 0.5, false)
             .finalizePath());
 
         group.addSequential(new FollowBall(false, true, 0.5));
         //group.addSequential(new TurnToAngle(0, 5));
         group.addSequential(new MultiPartPath(0, false, true)
-            .addRawArc(-45, -0.5, 0.5, true)
+            .addRawArc(-70, -0.5, 0.5, true)
             .atMaxSpeed()
-            .addStraight(14, false, 0)
+            .addStraight(11, false, 0)
             .atMaxSpeed()
             .finalizePath());
         group.start();
@@ -191,7 +194,7 @@ public class AutonomousBallSeek extends AutoWithInit {
         .finalizePath());
         group.addSequential(new FollowBall(false, true));
         group.addSequential(new MultiPartPath(35, false, true)
-            .addRawArc(0, 0, 1, false)
+            .addRawArc(0, 0.1, 1, false)
             .addStraight(1, false)
             .atMaxSpeed()
             .finalizePath());
@@ -213,13 +216,14 @@ public class AutonomousBallSeek extends AutoWithInit {
         group.addSequential(new FollowBall(false, true));
         //group.addSequential(new TurnToAngle(270, 5));
         group.addSequential(new MultiPartPath(45, false, false)
-            .addRawArc(-30, -0.5, 0.5, false)
+            .addRawArc(60, -0.5, 0.5, false)
         
             .finalizePath());
         group.addSequential(new FollowBall(false, true));
         group.addSequential(new MultiPartPath(35, false, true)
-        .addRawArc(0, 0, 0.5, true)
-        .addStraight(6, false)
+        .addRawArc(-10, 0, 0.5, true)
+        .atMaxSpeed()
+        .addStraight(7, false, 0)
         .atMaxSpeed()
         .finalizePath());
 
@@ -236,9 +240,9 @@ public class AutonomousBallSeek extends AutoWithInit {
         .finalizePath());
         group.addSequential(new FollowBall(false, true));
         //group.addSequential(new TurnToAngle(-45, 5));
-        /*group.addSequential(new MultiPartPath(0, false, false)
+        group.addSequential(new MultiPartPath(0, false, false)
         .addRawArc(-25, -0.5, 0.5, false)
-        .finalizePath());*/
+        .finalizePath());
         group.addSequential(new FollowBall(false, true));
         group.addSequential(new MultiPartPath(0, false, false)
         .addRawArc(10, -0.5, 0.5, true)
@@ -246,8 +250,7 @@ public class AutonomousBallSeek extends AutoWithInit {
         //group.addSequential(new TurnToAngle(45, 5));
         group.addSequential(new FollowBall(false, true));
         group.addSequential(new MultiPartPath(0, false, false)
-        .addRawArc(-10, -0.5, 0.5, false)
-        .addStraight(1, false, 0)
+        .addStraight(3, false, 0)
         .finalizePath());
         group.start();
 

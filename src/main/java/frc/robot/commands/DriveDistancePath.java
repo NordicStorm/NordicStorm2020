@@ -175,8 +175,8 @@ public class DriveDistancePath extends PathSection {
         double speedDiffEnd=mainSpeed-endSpeed;
         double neededDecelDist=(speedDiffEnd*speedDiffEnd)*913*18;//3
         mainSpeedDonePoint=Util.clamp(1-(neededDecelDist/totalDistance), 0, 1);
-        System.out.println("startdone"+startSpeedDonePoint);
-        System.out.println("maindone"+mainSpeedDonePoint);
+        //System.out.println("startdone"+startSpeedDonePoint);
+        //System.out.println("maindone"+mainSpeedDonePoint);
     }
 
     @Override

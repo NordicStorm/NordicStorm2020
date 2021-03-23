@@ -117,9 +117,11 @@ public class DriveArcPath extends PathSection {
         double diff=Drivetrain.fullAngleDiff(currentAngle, prevAngle, arcRight);
         SmartDashboard.putString("currentCommand", "addArc("+targetAngle+", "+arcRight+")");
 
-        /*if(diff>180){//we overshot on the last command
+        if(diff>180){//we overshot on the last command
             timesLeftToPass+=1;
-        }*/
+        }
+        System.out.println("supposedPrev:"+prevAngle);
+
         System.out.println("curr:"+currentAngle);
         System.out.println("target:"+targetAngle);
 
@@ -147,13 +149,13 @@ public class DriveArcPath extends PathSection {
         if(Math.abs(angDiff)>270){
             if(lastTickLocation==1){//cross going forward. last small (near target), now big (far away)
                 timesLeftToPass-=1;
-                //System.out.println("godown");
+                System.out.println("godown");
             }
             lastTickLocation=-1;
         }else if(Math.abs(angDiff)<90){
             if(lastTickLocation==-1){
                 timesLeftToPass+=1;
-                //System.out.println("goup");
+                System.out.println("goup");
             }
             lastTickLocation=1;
 
@@ -164,7 +166,7 @@ public class DriveArcPath extends PathSection {
             angDiff=0;
             done=true;
         }
-        //System.out.println("timesleft:"+timesLeftToPass);
+        System.out.println("timesleft:"+timesLeftToPass);
         //System.out.println("diff:"+angDiff);
 
         //System.out.println("curr:"+currentAngle);
