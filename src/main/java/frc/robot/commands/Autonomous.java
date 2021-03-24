@@ -28,10 +28,12 @@ public class Autonomous extends AutoWithInit {
     public void initializeCommands(){
         //addSequential(new WaitTime(1));
         MultiPartPath path = new MultiPartPath(0);
-        path.addStraight(9, false);
+        path.addStraight(9, true);
+        path.addRawArc(90, 0.051, 0.48, true, true);
+        path.addStraight(4, true);
 
         //path.addGridArc(270, false);
-        path.addRawArc(1, 0.051, 0.48, true);
+        //path.addRawArc(1, 0.051, 0.48, true);
         //path.addStraight(7.5, false);
         //path.addRawArc(90, 0.051, 0.48, false);
 

@@ -64,17 +64,28 @@ public class MultiPartPath extends CommandGroup {
 
     /**
      * Drive in an arc with raw numbers. Example: gridTurn is innerSpeed=0.051, outerSpeed=0.4025
-     * @param targetAngle
+     * @param targetAngle target angle in degrees
+     * @param innerSpeed inner wheel speed
+     * @param outerSpeed outer speed. Please make sure this is bigger than innerSpeed
+     * @param arcRight if it should go right. This refers to the actual rotation direction of the robot, so ignore backward/forward motion. Imagine it was pivoting.
+     * @param backward true=arc backward, false=arc forward
+     * @return
+     */
+    public MultiPartPath addRawArc(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean backward){
+        sections.add(new DriveArcPath(targetAngle, innerSpeed, outerSpeed, arcRight, backward));
+        return this;
+    }
+    /**
+     * Drive in an arc with raw numbers. Example: gridTurn is innerSpeed=0.051, outerSpeed=0.4025
+     * @param targetAngle target angle in degrees
      * @param innerSpeed inner wheel speed
      * @param outerSpeed outer speed. Please make sure this is bigger than innerSpeed
      * @param arcRight if it should go right
      * @return
      */
     public MultiPartPath addRawArc(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight){
-        sections.add(new DriveArcPath(targetAngle, innerSpeed, outerSpeed, arcRight));
-        return this;
+        return addRawArc(targetAngle, innerSpeed, outerSpeed, arcRight, false);
     }
-    
 
     /**
      * Drive in an arc on the grid(radius 2.5ft)
@@ -85,7 +96,7 @@ public class MultiPartPath extends CommandGroup {
     public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
         double gridTurnInner=0.051;//0.041
         double gridTurnOuter=0.4025;//0.4025
-        return addRawArc(targetAngle, gridTurnInner, gridTurnOuter, arcRight);
+        return addRawArc(targetAngle, gridTurnInner, gridTurnOuter, arcRight, false);
         //sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, is360, false));
         //return this;
     }
