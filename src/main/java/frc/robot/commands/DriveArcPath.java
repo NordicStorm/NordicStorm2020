@@ -64,7 +64,7 @@ public class DriveArcPath extends PathSection {
             timesLeftToPass=1;
         }*/
         if(backward){
-            arcRight=!arcRight;
+            arcRight=!arcRight; //swap temporarily to make inner/outer work
         }
         if(arcRight){
             targetLeftSpeed= -outerSpeed;
@@ -72,6 +72,9 @@ public class DriveArcPath extends PathSection {
         }else{
             targetLeftSpeed= -innerSpeed;
             targetRightSpeed= outerSpeed;
+        }
+        if(backward){
+            arcRight=!arcRight; //unswap
         }
         if(backward){
             targetLeftSpeed*=-1;
@@ -157,13 +160,13 @@ public class DriveArcPath extends PathSection {
         if(Math.abs(angDiff)>270){
             if(lastTickLocation==1){//cross going forward. last small (near target), now big (far away)
                 timesLeftToPass-=1;
-                //System.out.println("godown");
+                System.out.println("godown");
             }
             lastTickLocation=-1;
         }else if(Math.abs(angDiff)<90){
             if(lastTickLocation==-1){
                 timesLeftToPass+=1;
-                //System.out.println("goup");
+                System.out.println("goup");
             }
             lastTickLocation=1;
 
@@ -175,10 +178,10 @@ public class DriveArcPath extends PathSection {
             done=true;
         }
         //System.out.println("timesleft:"+timesLeftToPass);
-        //System.out.println("diff:"+angDiff);
+        System.out.println("diff:"+angDiff);
 
-        //System.out.println("curr:"+currentAngle);
-        //System.out.println("target:"+targetAngle);
+        System.out.println("curr:"+currentAngle);
+        System.out.println("target:"+targetAngle);
 
 
         //System.out.println("leftProp"+ leftSpeedProportion);
