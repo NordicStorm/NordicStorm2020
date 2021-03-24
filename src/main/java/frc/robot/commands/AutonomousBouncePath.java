@@ -47,26 +47,32 @@ public class AutonomousBouncePath extends AutoWithInit {
     }
     @Override
     public void initializeCommands(){
+        MultiPartPath path = new MultiPartPath(0);
+
+     path.addStraight(5.5, false);
+        path.addRawArc(235, 0.051, 0.48, false);
+        path.addStraight(8.5, true);
         
-        addSequential(new DriveForDistance(5.5*913, 0.5));
-        addSequential(new TurnToAngle(-120.6));
-        addSequential(new DriveForDistance(3.5*913, 0.5));
+        path.addRawArc(270, 0.051, 0.48, true);
+       // addSequential(new DriveForDistance(5.5*913, 0.5));
+       // addSequential(new TurnToAngle(-120.6));
+       // addSequential(new DriveForDistance(3.5*913, 0.5));
     
-        addSequential(new DriveForDistance(9*913, -0.3));
-        addSequential(new TurnToAngle(-34));
-        addSequential(new DriveForDistance(4.5*913, 0.5));
-        addSequential(new TurnToAngle(-90));
-        addSequential(new DriveForDistance(7.2*913, 0.5));
+       // addSequential(new DriveForDistance(9*913, -0.3));
+       // addSequential(new TurnToAngle(-34));
+       // addSequential(new DriveForDistance(4.5*913, 0.5));
+       // addSequential(new TurnToAngle(-90));
+        //addSequential(new DriveForDistance(7.2*913, 0.5));
         
-        addSequential(new DriveForDistance(8*913, -0.3));
-        addSequential(new TurnToAngle(0));
-        addSequential(new DriveForDistance(7.5*913, 0.5)); //Make Longer
-        addSequential(new TurnToAngle(-90));
-        addSequential(new DriveForDistance(9*913, 0.5));  
-        addSequential(new DriveForDistance(2*913, -0.3));
-        addSequential(new TurnToAngle(215));
+        //addSequential(new DriveForDistance(8*913, -0.3));
+        //addSequential(new TurnToAngle(0));
+       // addSequential(new DriveForDistance(7.5*913, 0.5)); //Make Longer
+        //addSequential(new TurnToAngle(-90));
+       // addSequential(new DriveForDistance(9*913, 0.5));  
+       // addSequential(new DriveForDistance(2*913, -0.3));
+       // addSequential(new TurnToAngle(215));
          
-        addSequential(new DriveForDistance(2*913, -0.3));
+        //addSequential(new DriveForDistance(2*913, -0.3));
        
        
 

@@ -54,12 +54,18 @@ public class AutonomousBarrelRacing extends AutoWithInit {
         MultiPartPath path = new MultiPartPath(0);
         
 
-        path.addStraight(9, false);
+        path.addStraight(7.5, false);
 
         //path.addGridArc(270, false);
-        path.addRawArc(359, 0.051, 0.48, true);
-        path.addStraight(7.5, false);
-        path.addRawArc(90, 0.051, 0.48, false);
+        path.addRawArc(90, 0.13, 0.48, true);
+        path.addRawArc(0, 0.13, 0.48, true);
+        path.addStraight(7, false);
+        path.addRawArc(90, 0.13, 0.48, false);
+        path.addRawArc(45, 0.13, 0.48, false);
+        path.addStraight(6, false);
+        path.addRawArc(180, 0.14, 0.48, false);
+        path.addStraight(19, false).atMaxSpeed();
+        
 
        addSequential(path.finalizePath());
        // addSequential(new DriveForDistance(11.5*913, 0.5));
