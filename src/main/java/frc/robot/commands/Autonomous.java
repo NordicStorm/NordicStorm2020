@@ -31,7 +31,7 @@ public class Autonomous extends AutoWithInit {
         path.addStraight(9, false);
 
         //path.addGridArc(270, false);
-        path.addRawArc(1, 0.051, 0.48, true, true, false);
+        path.addRawArc(1, 0.051, 0.48, true);
         //path.addStraight(7.5, false);
         //path.addRawArc(90, 0.051, 0.48, false);
 
