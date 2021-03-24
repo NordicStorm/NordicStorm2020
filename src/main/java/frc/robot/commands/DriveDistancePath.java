@@ -34,7 +34,7 @@ public class DriveDistancePath extends PathSection {
     double mainSpeedDonePoint=0;
 
     boolean done = false;
-    double minSpeed = 0.1;// 0.25
+    double minSpeed = 0.4;// 0.25
     double keepStraightAngle=0;
     boolean customTargetAngle;
 
@@ -43,13 +43,14 @@ public class DriveDistancePath extends PathSection {
      * @param distance distance in encoder units. 913=1 ft
      */
     public DriveDistancePath(double distance, boolean backward, boolean customTargetAngle, double targetAngle) {
+        this.mainSpeed = 1;
         if (backward) {
             distance *= -1;
+            this.mainSpeed*=-1;
         }
         reversed = backward;
 
         this.totalDistance = distance;
-        this.mainSpeed = 1;
         this.keepStraightAngle=targetAngle;
         this.customTargetAngle=customTargetAngle;
         requires(Robot.drivetrain);
@@ -168,11 +169,11 @@ public class DriveDistancePath extends PathSection {
     public void finalizeForPath(PathSection previous, PathSection next) {
         startSpeed=previous.getProvidedEndSpeed();
         endSpeed = next.getRequestedStartSpeed();
-        double speedDiffStart=mainSpeed-startSpeed;
+        double speedDiffStart=Math.abs(mainSpeed-startSpeed);
         double neededAccelDist=speedDiffStart*913*1.5;
         startSpeedDonePoint=Util.clamp(neededAccelDist/totalDistance, 0, 1);
 
-        double speedDiffEnd=mainSpeed-endSpeed;
+        double speedDiffEnd=Math.abs(mainSpeed-endSpeed);
         double neededDecelDist=(speedDiffEnd*speedDiffEnd)*913*18;//3
         mainSpeedDonePoint=Util.clamp(1-(neededDecelDist/totalDistance), 0, 1);
         //System.out.println("startdone"+startSpeedDonePoint);

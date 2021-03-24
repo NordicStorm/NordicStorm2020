@@ -48,19 +48,23 @@ public class DriveArcPath extends PathSection {
     boolean veloPredictStop;
     int lastTickLocation=0; //-1, 0, 1
     int timesLeftToPass;
-
+    boolean backward;
     
     
-    public DriveArcPath(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean is360, boolean veloPredictStop) {
+    public DriveArcPath(double targetAngle, double innerSpeed, double outerSpeed, boolean arcRight, boolean backward) {
         this.targetAngle=targetAngle;
+        this.backward=backward;
         this.arcRight=arcRight;
-        this.veloPredictStop=veloPredictStop;
+        //this.veloPredictStop=veloPredictStop;
         requires(Robot.drivetrain);
 
-        if(is360){
+        /*if(is360){
             timesLeftToPass=2;//todo think more
         }else{
             timesLeftToPass=1;
+        }*/
+        if(backward){
+            arcRight=!arcRight;
         }
         if(arcRight){
             targetLeftSpeed= -outerSpeed;
@@ -68,6 +72,10 @@ public class DriveArcPath extends PathSection {
         }else{
             targetLeftSpeed= -innerSpeed;
             targetRightSpeed= outerSpeed;
+        }
+        if(backward){
+            targetLeftSpeed*=-1;
+            targetRightSpeed*=-1;
         }
 
 
