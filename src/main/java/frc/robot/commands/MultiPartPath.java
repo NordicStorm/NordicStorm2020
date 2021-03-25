@@ -57,6 +57,13 @@ public class MultiPartPath extends CommandGroup {
         sections.add(new DriveDistancePath(distance*913, backward, false, 0));
         return this;
     }
+    /**
+     * 
+     * @param distance distance in feet
+     * @param backward false=forward
+     * @param targetAngle angle that the **front** of the robot should try to be facing
+     * @return
+     */
     public MultiPartPath addStraight(double distance, boolean backward, double targetAngle){
         sections.add(new DriveDistancePath(distance*913, backward, true, targetAngle));
         return this;
