@@ -91,22 +91,36 @@ public class MultiPartPath extends CommandGroup {
      * Drive in an arc on the grid(radius 2.5ft)
      * @param targetAngle In degrees
      * @param arcRight true=right, false=left
+     * @param backward true=backward, false=forward
      * @return
      */
-    public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
+    public MultiPartPath addGridArc(double targetAngle, boolean arcRight, boolean backward){
         double gridTurnInner=0.051;//0.041
         double gridTurnOuter=0.4025;//0.4025
-        return addRawArc(targetAngle, gridTurnInner, gridTurnOuter, arcRight, false);
+        return addRawArc(targetAngle, gridTurnInner, gridTurnOuter, arcRight, backward);
         //sections.add(new DriveArcPath(targetAngle, gridTurnInner, gridTurnOuter, arcRight, is360, false));
         //return this;
     }
-
+/**
+     * Drive in an arc on the grid(radius 2.5ft)
+     * @param targetAngle In degrees
+     * @param arcRight true=right, false=left
+     * @return
+     */
+    public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
+        return addGridArc(targetAngle, arcRight, false);
+    }
 
     /**
      * Runs the previous and the next commands at max speed.
      */
     public MultiPartPath atMaxSpeed(){
         sections.add(new AtMaxSpeed());
+        return this;
+    }
+
+    public MultiPartPath addStop(){
+        sections.add(new StopMovement());
         return this;
     }
     /**

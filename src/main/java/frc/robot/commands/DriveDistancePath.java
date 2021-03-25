@@ -34,7 +34,7 @@ public class DriveDistancePath extends PathSection {
     double mainSpeedDonePoint=0;
 
     boolean done = false;
-    double minSpeed = 0.4;// 0.25
+    double minSpeed = 0.1;// 0.25
     double keepStraightAngle=0;
     boolean customTargetAngle;
 
@@ -46,7 +46,6 @@ public class DriveDistancePath extends PathSection {
         this.mainSpeed = 1;
         if (backward) {
             distance *= -1;
-            this.mainSpeed*=-1;
         }
         reversed = backward;
 
@@ -80,6 +79,7 @@ public class DriveDistancePath extends PathSection {
         //System.out.println(percentDone);
         if(percentDone>mainSpeedDonePoint){
             driveSpeed = Util.map(percentDone, mainSpeedDonePoint, 1, mainSpeed, endSpeed);
+            
         }
         if(percentDone<startSpeedDonePoint){
             driveSpeed = Util.map(percentDone, 0, startSpeedDonePoint, startSpeed, mainSpeed);
@@ -94,18 +94,25 @@ public class DriveDistancePath extends PathSection {
         double currentAngle=Robot.drivetrain.getAngle();
         double angleDiff=Drivetrain.angleDiff(currentAngle, keepStraightAngle);
         double useDiff=Util.absClamp(angleDiff*0.1, 1);
-        double adjustment=Util.absClamp(useDiff*0.8*(driveSpeed), driveSpeed);//0.01
+        double adjustment=Util.absClamp(useDiff*0.8*driveSpeed, Math.abs(driveSpeed));//0.01
+        if(driveSpeed<0.4){
+            adjustment=Util.absClamp(useDiff*0.8*driveSpeed, Math.abs(0.5*driveSpeed));
+        }
+        if(reversed){
+            leftSpeed*=-1;
+            rightSpeed*=-1;
+        }
         leftSpeed+=adjustment;
         rightSpeed-=adjustment;
-        /*System.out.println("drivespeed:"+driveSpeed);
+        System.out.println("drivespeed:"+driveSpeed);
 
-        System.out.println("err:"+angleDiff);
+        //System.out.println("err:"+angleDiff);
 
-        System.out.println("adj:"+adjustment);
+        //System.out.println("adj:"+adjustment);
 
-        System.out.println("left:"+leftSpeed);
-        System.out.println("right:"+rightSpeed);*/
-
+        //System.out.println("left:"+leftSpeed);
+        //System.out.println("right:"+rightSpeed);
+        
         Robot.drivetrain.tankDriveDirect(-leftSpeed, rightSpeed);
         if (distanceAway < 0) {
             done = true;
@@ -167,15 +174,16 @@ public class DriveDistancePath extends PathSection {
     
     @Override
     public void finalizeForPath(PathSection previous, PathSection next) {
-        startSpeed=previous.getProvidedEndSpeed();
-        endSpeed = next.getRequestedStartSpeed();
+        startSpeed = Math.abs(previous.getProvidedEndSpeed());
+        endSpeed = Math.abs(next.getRequestedStartSpeed());
+        double absDist=Math.abs(totalDistance);
         double speedDiffStart=Math.abs(mainSpeed-startSpeed);
         double neededAccelDist=speedDiffStart*913*1.5;
-        startSpeedDonePoint=Util.clamp(neededAccelDist/totalDistance, 0, 1);
+        startSpeedDonePoint=Util.clamp(neededAccelDist/absDist, 0, 1);
 
         double speedDiffEnd=Math.abs(mainSpeed-endSpeed);
         double neededDecelDist=(speedDiffEnd*speedDiffEnd)*913*18;//3
-        mainSpeedDonePoint=Util.clamp(1-(neededDecelDist/totalDistance), 0, 1);
+        mainSpeedDonePoint=Util.clamp(1-(neededDecelDist/absDist), 0, 1);
         //System.out.println("startdone"+startSpeedDonePoint);
         //System.out.println("maindone"+mainSpeedDonePoint);
     }

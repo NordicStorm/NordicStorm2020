@@ -29,8 +29,10 @@ public class Autonomous extends AutoWithInit {
         //addSequential(new WaitTime(1));
         MultiPartPath path = new MultiPartPath(0);
         path.addStraight(9, true);
-        path.addRawArc(90, 0.051, 0.38, true, true);
-        path.addStraight(4, true);
+        path.addGridArc(90, true, true);
+        path.addStop();
+        path.addGridArc(0, false, false);
+        //path.addStraight(4, true);
 
         //path.addGridArc(270, false);
         //path.addRawArc(1, 0.051, 0.48, true);
@@ -38,6 +40,7 @@ public class Autonomous extends AutoWithInit {
         //path.addRawArc(90, 0.051, 0.48, false);
 
         addSequential(path.finalizePath());
+
         /*addSequential(new DriveForDistance(4*913, 0.5));
        
        addSequential(new TurnToAngle(270));

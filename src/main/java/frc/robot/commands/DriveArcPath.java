@@ -60,9 +60,9 @@ public class DriveArcPath extends PathSection {
 
         /*if(is360){
             timesLeftToPass=2;//todo think more
-        }else{
-            timesLeftToPass=1;
-        }*/
+        }else{*/
+        timesLeftToPass=1;
+        
         if(backward){
             arcRight=!arcRight; //swap temporarily to make inner/outer work
         }
