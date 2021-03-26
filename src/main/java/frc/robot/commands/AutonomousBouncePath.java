@@ -49,12 +49,19 @@ public class AutonomousBouncePath extends AutoWithInit {
     public void initializeCommands(){
         MultiPartPath path = new MultiPartPath(0);
 
-        path.addRawArc(290, 0.091, 0.48, false);
-        path.addStop();
-        path.addStraight(5.5, true, 245);
+        path.addRawArc(290, 0.10, 0.48, false);
+        //path.addStop();
+        path.addStraight(5, true, 245);
 
-        path.addRawArc(90, 0.005, 0.68, false, true);
-        path.addStraight(6.3, true, 90);
+        path.addRawArc(160, 0.00, 0.59, false, true);
+        path.addStraight(10.5, true, 90, 0.8);
+        path.atSpeed(0.1);
+        path.addStraight(5, false, 91, 1);
+        path.addRawArc(350, 0.239, 0.55, false, false);
+        path.addStraight(10, false, 270, 0.6);
+        path.addRawArc(200, 0.12, 0.48, false, true);
+        path.addStraight(3, true, 180, 1);
+
         addSequential(path.finalizePath());
        
        

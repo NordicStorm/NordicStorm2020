@@ -42,8 +42,8 @@ public class DriveDistancePath extends PathSection {
      * 
      * @param distance distance in encoder units. 913=1 ft
      */
-    public DriveDistancePath(double distance, boolean backward, boolean customTargetAngle, double targetAngle) {
-        this.mainSpeed = 1;
+    public DriveDistancePath(double distance, boolean backward, boolean customTargetAngle, double targetAngle, double speed) {
+        this.mainSpeed = speed;
         if (backward) {
             distance *= -1;
         }

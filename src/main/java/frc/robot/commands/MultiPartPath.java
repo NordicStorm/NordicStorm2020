@@ -54,7 +54,7 @@ public class MultiPartPath extends CommandGroup {
      * @param backward true or false. false=forward
      */
     public MultiPartPath addStraight(double distance, boolean backward){
-        sections.add(new DriveDistancePath(distance*913, backward, false, 0));
+        sections.add(new DriveDistancePath(distance*913, backward, false, 0, 1));
         return this;
     }
     /**
@@ -65,7 +65,18 @@ public class MultiPartPath extends CommandGroup {
      * @return
      */
     public MultiPartPath addStraight(double distance, boolean backward, double targetAngle){
-        sections.add(new DriveDistancePath(distance*913, backward, true, targetAngle));
+        return addStraight(distance, backward, targetAngle, 1);
+    }
+    /**
+     * 
+     * @param distance distance in feet
+     * @param backward false=forward
+     * @param targetAngle angle that the **front** of the robot should try to be facing
+     * @param speed the max speed that the robot will try to achieve. 0 to 1. One by default.
+     * @return
+     */
+    public MultiPartPath addStraight(double distance, boolean backward, double targetAngle, double speed){
+        sections.add(new DriveDistancePath(distance*913, backward, true, targetAngle, speed));
         return this;
     }
 
@@ -122,7 +133,11 @@ public class MultiPartPath extends CommandGroup {
      * Runs the previous and the next commands at max speed.
      */
     public MultiPartPath atMaxSpeed(){
-        sections.add(new AtMaxSpeed());
+        sections.add(new AtMaxSpeed(1));
+        return this;
+    }
+    public MultiPartPath atSpeed(double speed){
+        sections.add(new AtMaxSpeed(speed));
         return this;
     }
 

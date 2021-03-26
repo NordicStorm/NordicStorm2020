@@ -223,7 +223,7 @@ public class AutonomousBallSeek extends AutoWithInit {
         group.addSequential(new MultiPartPath(35, false, true)
         .addRawArc(-10, 0, 0.5, true)
         .atMaxSpeed()
-        .addStraight(7, false, 0)
+        .addStraight(8, false, 0)
         .atMaxSpeed()
         .finalizePath());
 

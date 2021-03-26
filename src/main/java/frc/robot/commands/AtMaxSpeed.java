@@ -22,9 +22,9 @@ import frc.robot.subsystems.Drivetrain;
 public class AtMaxSpeed extends PathSection {
 
 
-    
-    public AtMaxSpeed() {
-
+    double speed;
+    public AtMaxSpeed(double speed) {
+        this.speed=speed;
     }
 
     
@@ -38,11 +38,11 @@ public class AtMaxSpeed extends PathSection {
 
     @Override
     public double getRequestedStartSpeed() {
-        return 1;
+        return speed;
     }
     @Override
     public double getProvidedEndSpeed() {
-        return 1;
+        return speed;
     }
 
     @Override

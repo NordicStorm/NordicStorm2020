@@ -437,6 +437,7 @@ if __name__ == "__main__":
             #print(previousSeenHeights)
             rpm, angle = getRPMAndAngle(dist, origDist)
 
+            netOut.putNumber("distance", dist)
 
             if 0 not in previousSeenHeights:
                 netOut.putNumber("rpm", rpm)
@@ -448,5 +449,7 @@ if __name__ == "__main__":
         else:
             clearAverage()
             netOut.putNumber("rpm", -1)
+            netOut.putNumber("distance", -1)
+
             netOut.putNumber("angle", -1)
         start = time()
