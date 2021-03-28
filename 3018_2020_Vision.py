@@ -357,8 +357,10 @@ def clearAverage():
     previousSeenHeights=[0 for i in range(windowSize)]
 def getAverageOverRecent():
     return statistics.mean(previousSeenHeights)
+def getAverageOverLastFew():
+    return statistics.mean(previousSeenHeights[0:10])
 averageIndex=0
-windowSize=50
+windowSize=5
 previousSeenHeights=[0 for i in range(windowSize)]
 if __name__ == "__main__":
     ntinst = NetworkTablesInstance.getDefault()
@@ -430,14 +432,23 @@ if __name__ == "__main__":
             h=getAverageOverRecent()
             dist = heightToDistance(h)
             origDist=dist
-            print (dist)
-            #dist=131
+
             dist+= 3.75 #shooter is behind cam
+            print ("dist:",dist)
+
+
+            recentHeight=getAverageOverLastFew()
+            recentDist = heightToDistance(recentHeight)
+            
+            recentDist+= 3.75 #shooter is behind cam
+            print ("distRecent:",recentDist)
+            netOut.putNumber("distance", recentDist)
+            
+
             dist= dist/39.37 # convert inches to meters
             #print(previousSeenHeights)
             rpm, angle = getRPMAndAngle(dist, origDist)
 
-            netOut.putNumber("distance", dist)
 
             if 0 not in previousSeenHeights:
                 netOut.putNumber("rpm", rpm)
