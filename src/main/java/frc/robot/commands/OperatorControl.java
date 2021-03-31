@@ -84,6 +84,10 @@ public class OperatorControl extends Command {
             forwardPower=tightTurnForwardval;
             turnPower=-tightTurnTurnVal;
         }
+        if(leftJoystick.getRawButtonPressed(8)){
+            Robot.shooter.setAutoSeekHeading(!Robot.shooter.getAutoSeekHeadingEnable(), 0);
+        }
+        
         Robot.drivetrain.drive(forwardPower, turnPower);
 
         if(rightJoystick.getRawButton(4)){

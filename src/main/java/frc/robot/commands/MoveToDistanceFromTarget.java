@@ -51,7 +51,7 @@ public class MoveToDistanceFromTarget extends Command {
     }
 
     double camWidth=320;
-    double offset=6.5;
+    double offset=5;
     double minSpeed = 0.1;
     double maxSpeed = 0.5;
     boolean shouldStop=false;
@@ -62,7 +62,7 @@ public class MoveToDistanceFromTarget extends Command {
         
         double currentDistance=Robot.shooter.getVisionDistance();
         double distanceAway;
-        System.out.println("dist:"+currentDistance);
+        //System.out.println("dist:"+currentDistance);
 
         if(backward){
             distanceAway=targetDistance-currentDistance;
@@ -101,28 +101,49 @@ public class MoveToDistanceFromTarget extends Command {
 
         double target=(camWidth/2)-offset;
         double currentX=Robot.shooter.getVisionXValue();
-        double sidewaysCorrection=Math.tan(Math.toRadians(currentAngle))*currentDistance;
         //currentX+=sidewaysCorrection;
         double horizError=currentX-target;
-        
-        double horizAdjustment=Util.absClamp(horizError*0.02, Math.abs(driveSpeed));//0.01
-        System.out.println("target:"+target);
-        System.out.println("xOfVision:"+currentX);
-        System.out.println("currAng:"+currentAngle);
-        System.out.println("perc:"+percentDone);
+            
+        //System.out.println("xOfVision:"+currentX);
+        //System.out.println("currAng:"+currentAngle);
+        //System.out.println("perc:"+percentDone);
+        double horizAdjusted=-6.7468411303383064e+001+3.4200421298358008e-001*horizError-4.8669109240412925e-004*horizError*horizError;
+        double horizDistance=Math.tan(Math.toRadians(horizAdjusted))*currentDistance;
+
+        double targetAngle=0;
+        double changeTargetVal=horizDistance;
+
+        if(System.currentTimeMillis()%200<=100){
+            System.out.println(currentDistance+" "+horizError);
+        }
+
+        if (Math.abs(changeTargetVal) > 20) {
+            changeTargetVal = Math.copySign(20, changeTargetVal);
+        }
+        if(backward){
+            //changeTargetVal*=-1;
+        }
+        SmartDashboard.putNumber("horizdist", horizDistance);
+        SmartDashboard.putNumber("horizerr", horizError);
+        SmartDashboard.putNumber("distance", currentDistance);
 
 
-        double angleDiff=Drivetrain.angleDiff(currentAngle, 0);
+        //System.out.println("horizDist:"+horizDistance);
+
+        //System.out.println("changeval:"+changeTargetVal);
+        changeTargetVal=0;
+        targetAngle+=changeTargetVal;
+        double angleDiff=Drivetrain.angleDiff(currentAngle, targetAngle);
         double useDiff=Util.absClamp(angleDiff*0.1, 1);
         double angAdjustment=Util.absClamp(useDiff*0.2*driveSpeed, Math.abs(driveSpeed));//0.01
         percentDone=1;
 
-        double adjustment=(horizAdjustment*(1-percentDone))+(angAdjustment*percentDone);
+        double adjustment=(angAdjustment*percentDone);
         
         
         
-        leftSpeed+=0.05;
-        adjustment=0;
+        //leftSpeed+=0.05;
+       // adjustment=0;
         if(backward){
 
         }else{
@@ -133,18 +154,18 @@ public class MoveToDistanceFromTarget extends Command {
         leftSpeed+=adjustment;
         rightSpeed-=adjustment;
 
-        //leftSpeed=0;
-        //rightSpeed=0;
+        leftSpeed=0;
+        rightSpeed=0;
         //System.out.println("dist:"+currentDistance);
 
-        System.out.println("drivespeed:"+driveSpeed);
+        //System.out.println("drivespeed:"+driveSpeed);
 
-        System.out.println("angErr:"+angleDiff);
-        System.out.println("horizErr:"+horizError);
+        //System.out.println("angErr:"+angleDiff);
+        //System.out.println("horizErr:"+horizError);
 
 
-        System.out.println("left:"+leftSpeed);
-        System.out.println("right:"+rightSpeed);
+        //System.out.println("left:"+leftSpeed);
+        //System.out.println("right:"+rightSpeed);
         
         Robot.drivetrain.tankDriveDirect(-leftSpeed, rightSpeed);
 

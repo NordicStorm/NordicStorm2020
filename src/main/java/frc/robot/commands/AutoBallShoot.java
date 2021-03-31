@@ -8,10 +8,10 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
 import frc.robot.subsystems.*;
 
 /**
@@ -46,6 +46,10 @@ public class AutoBallShoot extends AutoWithInit {
  
     }
     @Override
+    protected void initialize() {
+        Robot.shooter.setAutoSeekHeading(true, 0);
+    }
+    @Override
     public void initializeCommands(){
         
         addSequential(new MoveToDistanceFromTarget(250, true));
@@ -54,7 +58,13 @@ public class AutoBallShoot extends AutoWithInit {
         addSequential(new MoveToDistanceFromTarget(100, false));
         addSequential(new MoveToDistanceFromTarget(250, true));
         addSequential(new MoveToDistanceFromTarget(100, false));
-
-       
     }
+    @Override
+    protected void end() {
+        Robot.shooter.setAutoSeekHeading(false, 0);
+    }
+    @Override
+    protected void interrupted(){
+        end();
+    }   
 }
