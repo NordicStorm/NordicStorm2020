@@ -65,7 +65,7 @@ public class OperatorControl extends Command {
         if(Math.abs(forwardPower)<0.05){
             forwardPower=0;
         }
-        if(Math.abs(turnPower)<0.05){
+        if(Math.abs(turnPower)<0.15){
             turnPower=0;
         }
 
@@ -75,17 +75,29 @@ public class OperatorControl extends Command {
 
         forwardPower*=throttle;
         turnPower*=throttle;
+        double leftThrottle = Util.map(leftJoystick.getZ(), 1, -1, 0, 1);
+        //System.out.println("throt:"+leftThrottle);
 
-        if(leftJoystick.getRawButton(7)){
-            forwardPower=tightTurnForwardval;
-            turnPower=tightTurnTurnVal;
+        double forwardArc=0.5;
+        double turnArc=leftThrottle;
+        int reverseArc=(rightJoystick.getY()>0.05)?-1 : 1; //this makes it so moving the joystick backward arcs backward
+        if(rightJoystick.getRawButton(11)){ //this turns left
+            forwardPower=forwardArc*reverseArc;
+            turnPower=turnArc;
         }
-        if(leftJoystick.getRawButton(10)){
-            forwardPower=tightTurnForwardval;
-            turnPower=-tightTurnTurnVal;
+        if(rightJoystick.getRawButton(9)){ //this turns right
+            forwardPower=forwardArc*reverseArc;
+            turnPower=-turnArc;
         }
+        //System.out.println("turnarc:"+turnPower);
         if(leftJoystick.getRawButtonPressed(8)){
             Robot.shooter.setAutoSeekHeading(!Robot.shooter.getAutoSeekHeadingEnable(), 0);
+        }
+        if(leftJoystick.getRawButtonPressed(9)){
+            Robot.shooter.setAutoTargetSeek(!Robot.shooter.getAutoTargetSeek());
+        }
+        if(leftJoystick.getRawButtonPressed(3)){
+            Robot.shooter.setFlywheelOn(!Robot.shooter.getFlywheelOn());
         }
         
         Robot.drivetrain.drive(forwardPower, turnPower);

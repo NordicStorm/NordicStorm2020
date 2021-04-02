@@ -105,6 +105,7 @@ ballIntake = new BallIntake();
 
         Robot.drivetrain.resetHeading();
         Robot.shooter.resetHeading();
+        Robot.shooter.setFlywheelOn(true);
         autonomousCommand=new AutonomousBouncePath();
         autonomousCommand.initializeCommands();
         autonomousCommand.start();
@@ -128,6 +129,7 @@ ballIntake = new BallIntake();
         if (autonomousCommand != null){
             autonomousCommand.cancel();
         }
+        Robot.shooter.setFlywheelOn(false);
         Robot.ballIntake.setLongRunningIntake(false);
         Robot.drivetrain.setOutsideControl(false);
         Robot.drivetrain.setEncMode(true);

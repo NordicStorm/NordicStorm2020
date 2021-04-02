@@ -56,7 +56,7 @@ public class CenterAndShoot extends Command {
         double xOfTarget=Robot.shooter.getVisionXValue();
 
         double turnValue = pivotController.calculate(xOfTarget, target);
-        System.out.println(turnValue);
+        System.out.println("turnval"+turnValue);
         Robot.shooter.setPivotPower(-turnValue);
 
         /*if(xError<10){

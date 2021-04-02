@@ -47,17 +47,48 @@ public class AutoBallShoot extends AutoWithInit {
     }
     @Override
     protected void initialize() {
+
         Robot.shooter.setAutoSeekHeading(true, 0);
     }
     @Override
     public void initializeCommands(){
         
+        //Shoot from 6 = 180 inch.
+
         addSequential(new MoveToDistanceFromTarget(250, true));
-        addSequential(new MoveToDistanceFromTarget(100, false));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(180, false));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
         addSequential(new MoveToDistanceFromTarget(250, true));
-        addSequential(new MoveToDistanceFromTarget(100, false));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(180, false));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
         addSequential(new MoveToDistanceFromTarget(250, true));
-        addSequential(new MoveToDistanceFromTarget(100, false));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(180, false));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(250, true));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(180, false));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(250, true));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(180, false));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(250, true));
+        addSequential(new StopMovement());
+        addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(180, false));
     }
     @Override
     protected void end() {

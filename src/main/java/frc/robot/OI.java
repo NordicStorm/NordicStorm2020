@@ -68,9 +68,9 @@ rightJoystick = new Joystick(0);
 
 trigger = new JoystickButton(rightJoystick, 1);
 trigger.whileHeld(new FollowBall(true, false));
-startShootModeButton = new JoystickButton(rightJoystick, 11);
-startShootModeButton.toggleWhenPressed(new MoveToDistanceFromTarget(150, false));
-new JoystickButton(rightJoystick, 9).whenPressed(new StartAutoShooter());
+//startShootModeButton = new JoystickButton(rightJoystick, 6);
+//startShootModeButton.toggleWhenPressed(new MoveToDistanceFromTarget(150, false));
+new JoystickButton(rightJoystick, 6).whenPressed(new StartAutoShooter());
         // SmartDashboard Buttons
         SmartDashboard.putData("DriveForTime", new DriveForTime());
         SmartDashboard.putData("WaitTime", new WaitTime());
