@@ -1,9 +1,12 @@
 Controls:
-    Right:
+    Right Stick:
         Forward/Twist: driving
         Throttle: drive throttle
         Trigger (hold): follow ball
         Right thumb button (btn 4): shift
-    Left:
+        Button 9: arc right
+        Button 11: arc left
+    Left Stick:
         Trigger (hold): shoot
         Left thumb button (btn 4): manually run intake
+        Throttle: control the arc radius for the driver

@@ -82,6 +82,9 @@ public class OperatorControl extends Command {
         double turnArc=leftThrottle;
         int reverseArc=(rightJoystick.getY()>0.05)?-1 : 1; //this makes it so moving the joystick backward arcs backward
         if(rightJoystick.getRawButton(11)){ //this turns left
+            // if you wanted this to be on the left stick,
+            // change the above to something like:
+            // if(leftJoystick.getRawButton(7)){
             forwardPower=forwardArc*reverseArc;
             turnPower=turnArc;
         }
