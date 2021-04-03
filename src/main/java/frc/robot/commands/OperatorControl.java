@@ -136,8 +136,9 @@ public class OperatorControl extends Command {
 
 
         if(leftJoystick.getTrigger()){
-            if(Robot.shooter.isReadyToShoot()){
+            if(Robot.shooter.isReadyToShoot() && Robot.ballIntake.isBallAvailableToShoot()){
                 Robot.ballIntake.feedBallToShooter();
+                System.out.println("shoot");
             }
         }
         Robot.ballIntake.setIntakeRunning(leftJoystick.getRawButton(4));

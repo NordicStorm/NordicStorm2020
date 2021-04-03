@@ -61,7 +61,7 @@ public class BallIntake extends Subsystem {
     int sensorMoveTime = moveTime - 300;// 200;
     int timeToKick = 200;
 
-    int shooterFeedTime = 800;
+    int shooterFeedTime = 750;
     long now = 0;
     int timeToIntake = 500;
     boolean keepRunningIntake=false;
@@ -167,25 +167,27 @@ public class BallIntake extends Subsystem {
             if (timeToStopKicker > now && i == 4 && approxKickerSpeed < 1000) {
                 kickerReady = false;
             }
-            if ((timeStopFrom > now || timeStopTo > now) && kickerReady) {// if we should run because we are moving a
-                                                                          // ball from or to
-                runStageMotor = true;
-                //System.out.println("run" + i + "keep. MovingFrom:"+(timeStopFrom > now)+" MovingTo:"+(timeStopTo > now));
+            if ((timeStopFrom > now || timeStopTo > now)) {// if we should run because we are moving a
+                                                             // ball from or to
+                
+                if(kickerReady){
+                    runStageMotor = true;
+                    //System.out.println("run" + i + "keep. MovingFrom:"+(timeStopFrom > now)+" MovingTo:"+(timeStopTo > now));
 
-                //If we are moving to this stage and the
-                if (timeLeftToMoveTo <= sensorMoveTime || i == 4) {// if we have gotten beyond the dead time
-                    if (isOccupied || timeLeftToMoveTo < 0) { // and if the ball has gotten here, tell the previous
-                                                              // stage
-                                                              // and this one to stop
-                        if (i != 0) {
-                            timeToStopStageBeingMovedFrom[i - 1] = 0;
-                        }
-                        timeToStopStageBeingMovedTo[i] = 0;
-                        //System.out.println("stop " + i + ". Sensor:"+isOccupied);
-                        if(!isOccupied){
-                            double qqq=0;
-                        }
+                    //If we are moving to this stage and the
+                    if (timeLeftToMoveTo <= sensorMoveTime || i == 4) {// if we have gotten beyond the dead time
+                        if (isOccupied || timeLeftToMoveTo < 0) { // and if the ball has gotten here, tell the previous
+                                                                // stage
+                                                                // and this one to stop
+                            if (i != 0) {
+                                timeToStopStageBeingMovedFrom[i - 1] = 0;
+                            }
+                            timeToStopStageBeingMovedTo[i] = 0;
+                            //System.out.println("stop " + i + ". Sensor:"+isOccupied);
+                            if(!isOccupied){
+                            }
 
+                        }
                     }
                 }
             } else {
@@ -204,7 +206,7 @@ public class BallIntake extends Subsystem {
 
                             timeToStopStageBeingMovedTo[i + 1] = now + toStageMoveTime;
                             runStageMotor = true;
-                            // System.out.println("run" + i + "start");
+                            //System.out.println("run" + i + "start");
                         }
                     } else {
                         isAvailable = false;// if it is occupied and not moving out
