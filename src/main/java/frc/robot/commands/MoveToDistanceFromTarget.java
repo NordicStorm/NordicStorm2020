@@ -45,14 +45,17 @@ public class MoveToDistanceFromTarget extends Command {
     double totalDistanceToMove=0;
     @Override
     protected void initialize() {
-        Robot.drivetrain.setSuperPMode(false);
+        Robot.drivetrain.setDirectP(1);
         Robot.drivetrain.setOutsideControl(true);
         Robot.drivetrain.setEncMode(true);
         Robot.shooter.setFlywheelOn(true);
         startDistance=Robot.shooter.getVisionDistance();
         totalDistanceToMove=Math.abs(targetDistance-startDistance);
-    }
+        SmartDashboard.putString("currentCommand", "moveToDistanceFromTarget("+targetDistance+", "+backward+")");
+        startTime=System.currentTimeMillis();
 
+    }
+    double startTime=0;
     double camWidth=320;
     double offset=5;
     double minSpeed = 0.1;
@@ -62,8 +65,10 @@ public class MoveToDistanceFromTarget extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        
+        double timeSoFar=System.currentTimeMillis()-startTime;
         double currentDistance=Robot.shooter.getVisionDistance();
+
+
         double movedSoFar=Math.abs(currentDistance-startDistance);
         double distanceAway;
         //System.out.println("dist:"+currentDistance);
@@ -73,6 +78,10 @@ public class MoveToDistanceFromTarget extends Command {
         }else{
             distanceAway=currentDistance-targetDistance;
         }
+        System.out.println("dist:"+distanceAway);
+        distanceAway-=Math.abs(Robot.drivetrain.getLeftEncoderVelocity())*0.142;
+        System.out.println("predDist:"+distanceAway);
+
         if(currentDistance==-1){
             Robot.drivetrain.tankDriveDirect(0, 0);
             return;
@@ -80,18 +89,24 @@ public class MoveToDistanceFromTarget extends Command {
         
         if(distanceAway<=0){
             Robot.drivetrain.tankDriveDirect(0, 0);
-            if(Math.abs(Robot.drivetrain.getRightEncoderVelocity())<4 && Math.abs(Robot.drivetrain.getLeftEncoderVelocity())<4){
+            //if(Math.abs(Robot.drivetrain.getRightEncoderVelocity())<4 && Math.abs(Robot.drivetrain.getLeftEncoderVelocity())<4){
                 shouldStop=true;
-            }
+            //}
+            Robot.ballIntake.feedBallToShooter();
             return;
         }
         double percentDone=Util.clamp(1-(distanceAway/totalDistanceToMove), 0, 1);
-        double distancePidSpeed=(1-percentDone)*0.85;
-
+        double distancePidSpeed;//=(1-percentDone)*0.85;
+        distancePidSpeed=distanceAway*distanceAway*0.000213+distanceAway*-0.00155+0.05;
+        if(distanceAway>50){
+            distancePidSpeed=0.5;
+        }
         double accelSpeed;
-        accelSpeed=movedSoFar*0.08;
-        
-        //System.out.println(accelSpeed);
+        accelSpeed=timeSoFar*0.002;
+        //distancePidSpeed=0;
+        //System.out.println("dist: "+distanceAway);
+
+        System.out.println("distSpeed: "+distancePidSpeed);
 
         
         double driveSpeed=Math.min(accelSpeed, distancePidSpeed);
@@ -125,7 +140,7 @@ public class MoveToDistanceFromTarget extends Command {
         double changeTargetVal=horizError;
 
         if(System.currentTimeMillis()%200<=100){
-            System.out.println(currentDistance+" "+horizError);
+            //System.out.println(currentDistance+" "+horizError);
         }
 
         if (Math.abs(changeTargetVal) > 20) {
@@ -152,7 +167,7 @@ public class MoveToDistanceFromTarget extends Command {
         }else{
             pVal=0.4;
         }
-        double angAdjustment=Util.absClamp(useDiff*pVal*driveSpeed, Math.abs(driveSpeed));//0.01
+        double angAdjustment=Util.absClamp(useDiff*pVal*driveSpeed*driveSpeed*2, Math.abs(driveSpeed));//0.01
         percentDone=1;
 
         double adjustment=(angAdjustment*percentDone);
@@ -177,12 +192,12 @@ public class MoveToDistanceFromTarget extends Command {
 
         //System.out.println("drivespeed:"+driveSpeed);
 
-        System.out.println("angErr:"+angleDiff);
+        //System.out.println("angErr:"+angleDiff);
         //System.out.println("horizErr:"+horizError);
 
 
-        System.out.println("left:"+leftSpeed);
-        System.out.println("right:"+rightSpeed);
+        //System.out.println("left:"+leftSpeed);
+        //System.out.println("right:"+rightSpeed);
         
         Robot.drivetrain.tankDriveDirect(-leftSpeed, rightSpeed);
 

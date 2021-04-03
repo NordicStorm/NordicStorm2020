@@ -32,16 +32,21 @@ public class AutoBallShoot extends AutoWithInit {
     public void initializeCommands(){
         
         //Shoot from 6 = 180 inch.
-        addSequential(new SetShooter(1775, 42));
+        /*addSequential(new SetShooter(1775, 41));
         addSequential(new ShootBalls());
-
-        addSequential(new MultiPartPath(0, false ,false).addStraight(5, false).atSpeed(0.5).finalizePath());
-        addSequential(new MoveToDistanceFromTarget(250, true));
-        /*addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(180, false));
+        addSequential(new WaitTime(0.25));*/
+        addSequential(new MultiPartPath(0, true ,true)
+        .addStraight(5.8, false)
+        .addStop()
+        
+        .addStraight(5.8, true)
+        .finalizePath());
+        /*addSequential(new MoveToDistanceFromTarget(250, true));//122
         addSequential(new StopMovement());
         addSequential(new WaitTime(0.5));
+        addSequential(new MoveToDistanceFromTarget(180, false));
+        addSequential(new StopMovement());*/
+        /*addSequential(new WaitTime(0.5));
         addSequential(new MoveToDistanceFromTarget(250, true));
         addSequential(new StopMovement());
         addSequential(new WaitTime(0.5));
