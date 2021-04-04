@@ -96,8 +96,17 @@ public class DriveDistancePath extends PathSection {
         double useDiff=Util.absClamp(angleDiff*0.1, 1);
         double adjustment=Util.absClamp(useDiff*0.8*driveSpeed, Math.abs(driveSpeed));//0.01
         if(driveSpeed<0.4){
-            adjustment=Util.absClamp(useDiff*0.8*driveSpeed, Math.abs(0.5*driveSpeed));
+            adjustment=Util.absClamp(useDiff*0.4*driveSpeed*driveSpeed*2, Math.abs(driveSpeed));//0.01
+
         }
+        double pVal=0;
+        if(!reversed){
+            pVal=0.8;
+        }else{
+            pVal=0.4;
+        }
+        adjustment=Util.absClamp(useDiff*pVal*driveSpeed, Math.abs(driveSpeed));//0.01
+        
         if(reversed){
             leftSpeed*=-1;
             rightSpeed*=-1;

@@ -167,7 +167,7 @@ public class MoveToDistanceFromTarget extends Command {
         }else{
             pVal=0.4;
         }
-        double angAdjustment=Util.absClamp(useDiff*pVal*driveSpeed*driveSpeed*2, Math.abs(driveSpeed));//0.01
+        double angAdjustment=Util.absClamp(useDiff*pVal*driveSpeed, Math.abs(driveSpeed));//0.01
         percentDone=1;
 
         double adjustment=(angAdjustment*percentDone);

@@ -26,55 +26,42 @@ public class AutoBallShoot extends AutoWithInit {
     @Override
     protected void initialize() {
 
-        Robot.shooter.setAutoSeekHeading(true, 0);
+        //Robot.shooter.setAutoSeekHeading(true, 0);
+        Robot.shooter.setAutoTargetSeek(true);
     }
     @Override
     public void initializeCommands(){
-        
+        addSequential(new SetIntakeRunning(true));
+
         //Shoot from 6 = 180 inch.
-        /*addSequential(new SetShooter(1775, 41));
-        addSequential(new ShootBalls());
-        addSequential(new WaitTime(0.25));*/
-        addSequential(new MultiPartPath(0, true ,true)
-        .addStraight(5.8, false)
-        .addStop()
-        
-        .addStraight(5.8, true)
-        .finalizePath());
-        /*addSequential(new MoveToDistanceFromTarget(250, true));//122
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(180, false));
-        addSequential(new StopMovement());*/
-        /*addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(250, true));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(180, false));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(250, true));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(180, false));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(250, true));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(180, false));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(250, true));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(180, false));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(250, true));
-        addSequential(new StopMovement());
-        addSequential(new WaitTime(0.5));
-        addSequential(new MoveToDistanceFromTarget(180, false));*/
+        addSequential(new SetShooter(1645, 41));
+        addSequential(new ShootBalls(3));
+        addSequential(new WaitTime(0.25));
+        addSequential(new MultiPartPath(0, true, true).addStraight(19, false, 0, 0.5).finalizePath());
+        addSequential(new WaitTime(3));
+        addSequential(new SetShooter(1970, 31));//2080, 27
+        addSequential(new MultiPartPath(0, true, true).addStraight(14.2, true, 0, 0.5).finalizePath());
+        addSequential(new ShootBalls(3));
+        addSequential(new WaitTime(0.25));
+        addSequential(new MultiPartPath(0, true, true).addStraight(15, false, 0, 0.5).finalizePath());
+        addSequential(new WaitTime(3));
+        addSequential(new SetShooter(2550, 25));
+        addSequential(new MultiPartPath(0, true, true).addStraight(11, true, 0, 0.5).finalizePath());
+        addSequential(new ShootBalls(3));
+        addSequential(new WaitTime(0.25));
+        addSequential(new MultiPartPath(0, true, true).addStraight(11, false, 0, 0.5).finalizePath());
+        addSequential(new WaitTime(3));
+        addSequential(new SetShooter(2400, 25));
+        addSequential(new MultiPartPath(0, true, true).addStraight(6, true, 0, 0.5).finalizePath());
+        addSequential(new ShootBalls(3));
+        addSequential(new WaitTime(0.25));
+        addSequential(new MultiPartPath(0, true, true).addStraight(6, false, 0, 0.5).finalizePath());
+        addSequential(new WaitTime(3));
+        addSequential(new SetShooter(1645, 41));
+        addSequential(new MultiPartPath(0, true, true).addStraight(20, true, 0, 0.5).finalizePath());
+        addSequential(new ShootBalls(3));
+        addSequential(new SetIntakeRunning(false));
+
     }
     @Override
     protected void end() {

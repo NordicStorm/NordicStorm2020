@@ -48,7 +48,7 @@ public class ShootBalls extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return shotsLeft<=0;
+        return shotsLeft<=0 || Robot.oi.getRightJoystick().getRawButton(10);
     }
 
     // Called once after isFinished returns true
