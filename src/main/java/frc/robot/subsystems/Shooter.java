@@ -324,15 +324,16 @@ public class Shooter extends Subsystem {
         this.autoHeadingEnable=enabled;
         this.targetPivotAngle=angle;
         if(enabled){
-            setAutoTargetSeek(false);
+            setAutoTargetSeek(false, 0);
         }
     }
 	public boolean getAutoSeekHeadingEnable() {
         return autoHeadingEnable;
     }
-    public void setAutoTargetSeek(boolean enable){
+    public void setAutoTargetSeek(boolean enable, int offset){
         if(enable){
             setAutoSeekHeading(false, 0);
+            this.offset=offset;
         }
         this.autoTargetSeek=enable;
     }

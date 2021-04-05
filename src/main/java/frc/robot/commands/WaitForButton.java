@@ -17,23 +17,20 @@ import frc.robot.Robot;
 /**
  *
  */
-public class StartAutoShooter extends InstantCommand {
+public class WaitForButton extends Command {
 
-    int whichOne;
-    public StartAutoShooter(int whichOne) {
-        requires(Robot.drivetrain);
-        this.whichOne=whichOne;
+    int button;
+    public WaitForButton(int button) {
+        this.button=button;
     }
+
     @Override
-    protected void initialize() {
-        AutoWithInit auto=null;
-        if(whichOne==0){
-            auto = new AutoBallShoot();
-        }else if (whichOne==1){
-            auto = new TimedBallShoot();
-        }
-        auto.initializeCommands();
-        auto.start();
+    protected void execute() {
     }
-    
+
+    @Override
+    protected boolean isFinished() {
+        return Robot.oi.getRightJoystick().getRawButton(button);
+    }
+
 }

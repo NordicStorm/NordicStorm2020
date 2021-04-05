@@ -61,7 +61,7 @@ public class BallIntake extends Subsystem {
     int sensorMoveTime = moveTime - 300;// 200;
     int timeToKick = 200;
 
-    int shooterFeedTime = 750;
+    int shooterFeedTime = 800;
     long now = 0;
     int timeToIntake = 500;
     boolean keepRunningIntake=false;

@@ -97,7 +97,7 @@ public class OperatorControl extends Command {
             Robot.shooter.setAutoSeekHeading(!Robot.shooter.getAutoSeekHeadingEnable(), 0);
         }
         if(leftJoystick.getRawButtonPressed(9)){
-            Robot.shooter.setAutoTargetSeek(!Robot.shooter.getAutoTargetSeek());
+            Robot.shooter.setAutoTargetSeek(!Robot.shooter.getAutoTargetSeek(), -2);
         }
         if(leftJoystick.getRawButtonPressed(3)){
             Robot.shooter.setFlywheelOn(!Robot.shooter.getFlywheelOn());

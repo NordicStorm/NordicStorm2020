@@ -20,27 +20,31 @@ import frc.robot.subsystems.Drivetrain;
 /**
  *
  */
-public class SetShooter extends InstantCommand {
+public class SetShooterTargeting extends InstantCommand {
 
    
     
-    double hoodAngle;
-    double rpm;
     
-    public SetShooter(double rpm, double hoodAngle) {
-        this.rpm=rpm;
-        this.hoodAngle=hoodAngle;
+    boolean headingSeek;
+    double headingVal;
+    boolean targetSeek;
+    int offset;
+    
+    public SetShooterTargeting(boolean headingSeek, double headingVal, boolean targetSeek, int offset) {
+        this.headingSeek=headingSeek;
+        this.headingVal=headingVal;
+        this.targetSeek=targetSeek;
+        this.offset=offset;
         requires(Robot.shooter);
 
     }
 
     @Override
     protected void initialize() {
-        //Robot.shooter.setAutoSeekHeading(true, 0);
-        Robot.shooter.setFlywheelOn(true);
+        Robot.shooter.setAutoSeekHeading(headingSeek, headingVal);
+        Robot.shooter.setAutoTargetSeek(targetSeek, offset);
         Robot.shooter.setAutoAdjustValues(false);
-        Robot.shooter.setAngle(hoodAngle);
-        Robot.shooter.setVelocity(rpm);
+        
 
     }
     // Called repeatedly when this Command is scheduled to run

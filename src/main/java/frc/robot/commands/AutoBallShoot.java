@@ -26,15 +26,15 @@ public class AutoBallShoot extends AutoWithInit {
     @Override
     protected void initialize() {
 
-        //Robot.shooter.setAutoSeekHeading(true, 0);
-        Robot.shooter.setAutoTargetSeek(true);
+        Robot.shooter.setAutoSeekHeading(true, 0);
+        //Robot.shooter.setAutoTargetSeek(true, 5);
     }
     @Override
     public void initializeCommands(){
         addSequential(new SetIntakeRunning(true));
 
-        //Shoot from 6 = 180 inch.
-        addSequential(new SetShooter(1645, 41));
+        //Great run: :Le4che off charger, 2in left of box. Also good 12.46
+        addSequential(new SetShooter(1615, 41));
         addSequential(new ShootBalls(3));
         addSequential(new WaitTime(0.25));
         addSequential(new MultiPartPath(0, true, true).addStraight(19, false, 0, 0.5).finalizePath());
@@ -51,13 +51,15 @@ public class AutoBallShoot extends AutoWithInit {
         addSequential(new WaitTime(0.25));
         addSequential(new MultiPartPath(0, true, true).addStraight(11, false, 0, 0.5).finalizePath());
         addSequential(new WaitTime(3));
-        addSequential(new SetShooter(2400, 25));
+        addSequential(new SetShooterTargeting(true, -1, false, 0));
+        addSequential(new SetShooter(2670, 25));
         addSequential(new MultiPartPath(0, true, true).addStraight(6, true, 0, 0.5).finalizePath());
         addSequential(new ShootBalls(3));
         addSequential(new WaitTime(0.25));
         addSequential(new MultiPartPath(0, true, true).addStraight(6, false, 0, 0.5).finalizePath());
         addSequential(new WaitTime(3));
-        addSequential(new SetShooter(1645, 41));
+        addSequential(new SetShooterTargeting(true, -4, false, 0));
+        addSequential(new SetShooter(1615, 41));
         addSequential(new MultiPartPath(0, true, true).addStraight(20, true, 0, 0.5).finalizePath());
         addSequential(new ShootBalls(3));
         addSequential(new SetIntakeRunning(false));

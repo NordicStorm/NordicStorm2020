@@ -70,7 +70,9 @@ trigger = new JoystickButton(rightJoystick, 1);
 trigger.whileHeld(new FollowBall(true, false));
 //startShootModeButton = new JoystickButton(rightJoystick, 6);
 //startShootModeButton.toggleWhenPressed(new MoveToDistanceFromTarget(150, false));
-new JoystickButton(rightJoystick, 8).whenPressed(new StartAutoShooter());
+new JoystickButton(rightJoystick, 8).whenPressed(new StartAutoShooter(0));
+new JoystickButton(rightJoystick, 12).whenPressed(new StartAutoShooter(1));
+
         
     }
 
