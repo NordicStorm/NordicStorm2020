@@ -35,11 +35,14 @@ public class TimedBallShoot extends AutoWithInit {
         addSequential(new SetShooter(2900, 26));
 
         for(int i=0; i<111; i++){
-            addSequential(new ShootBalls(33333));
+            addSequential(new ShootBalls(3));
             addSequential(new WaitTime(0.25));
-            addSequential(new MultiPartPath(0, true, true).addStraight(15, false, 0, 0.5).finalizePath());
+            addSequential(new MultiPartPath(0, true, true).addStraight(15, false, 0, 0.69).finalizePath());
             if(i==2){
-                addSequential(new SetShooterTargeting(true, -3, false, 0));
+                addSequential(new SetShooterTargeting(true, -2.5, false, 0));
+            }
+            if(i==2){
+                addSequential(new SetShooterTargeting(true, -3.5, false, 0));
             }
             if(i==3){
                 addSequential(new SetShooterTargeting(true, -3.5, false, 0));
@@ -49,7 +52,7 @@ public class TimedBallShoot extends AutoWithInit {
             }
             //addSequential(new WaitTime(3));
             addSequential(new WaitForButton(9));
-            addSequential(new MultiPartPath(0, true, true).addStraight(15, true, 0, 0.5).finalizePath());
+            addSequential(new MultiPartPath(0, true, true).addStraight(15, true, 0, 0.69).finalizePath());
             
             //System.out.println("iter:"+i);
         }
