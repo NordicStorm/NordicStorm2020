@@ -33,6 +33,8 @@ public class ShootBalls extends Command {
 
     @Override
     protected void initialize() {
+        SmartDashboard.putString("currentCommand", "ShootBalls()");
+
         
     }
     // Called repeatedly when this Command is scheduled to run
@@ -42,13 +44,17 @@ public class ShootBalls extends Command {
             Robot.ballIntake.feedBallToShooter();
             shotsLeft-=1;
         }
+        if(Robot.oi.getRightJoystick().getRawButton(10)){
+            shotsLeft=0;
+            Robot.ballIntake.forceEjectTop();
+        }
     }
 
     
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return shotsLeft<=0 || Robot.oi.getRightJoystick().getRawButton(10);
+        return shotsLeft<=0;
     }
 
     // Called once after isFinished returns true

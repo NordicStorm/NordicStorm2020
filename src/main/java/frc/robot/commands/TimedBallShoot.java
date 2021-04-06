@@ -32,17 +32,20 @@ public class TimedBallShoot extends AutoWithInit {
     @Override
     public void initializeCommands(){
         addSequential(new SetIntakeRunning(true));
-        addSequential(new SetShooter(1800, 35));
+        addSequential(new SetShooter(2900, 26));
 
         for(int i=0; i<111; i++){
-            addSequential(new ShootBalls(3));
+            addSequential(new ShootBalls(33333));
             addSequential(new WaitTime(0.25));
             addSequential(new MultiPartPath(0, true, true).addStraight(15, false, 0, 0.5).finalizePath());
+            if(i==2){
+                addSequential(new SetShooterTargeting(true, -3, false, 0));
+            }
             if(i==3){
-                addSequential(new SetShooterTargeting(true, -1, false, 0));
+                addSequential(new SetShooterTargeting(true, -3.5, false, 0));
             }
             if(i==4){
-                addSequential(new SetShooterTargeting(true, -1.5, false, 0));
+                addSequential(new SetShooterTargeting(true, -4, false, 0));
             }
             //addSequential(new WaitTime(3));
             addSequential(new WaitForButton(9));

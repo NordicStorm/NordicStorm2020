@@ -39,20 +39,20 @@ public class AutoBallShoot extends AutoWithInit {
         addSequential(new WaitTime(0.25));
         addSequential(new MultiPartPath(0, true, true).addStraight(19, false, 0, 0.5).finalizePath());
         addSequential(new WaitTime(3));
-        addSequential(new SetShooter(1970, 31));//2080, 27
+        addSequential(new SetShooter(2180, 31));//2080, 27
         addSequential(new MultiPartPath(0, true, true).addStraight(14.2, true, 0, 0.5).finalizePath());
         addSequential(new ShootBalls(3));
         addSequential(new WaitTime(0.25));
         addSequential(new MultiPartPath(0, true, true).addStraight(15, false, 0, 0.5).finalizePath());
         addSequential(new WaitTime(3));
-        addSequential(new SetShooter(2550, 25));
+        addSequential(new SetShooter(2790, 29));
         addSequential(new MultiPartPath(0, true, true).addStraight(11, true, 0, 0.5).finalizePath());
         addSequential(new ShootBalls(3));
         addSequential(new WaitTime(0.25));
         addSequential(new MultiPartPath(0, true, true).addStraight(11, false, 0, 0.5).finalizePath());
         addSequential(new WaitTime(3));
-        addSequential(new SetShooterTargeting(true, -1, false, 0));
-        addSequential(new SetShooter(2670, 25));
+        addSequential(new SetShooterTargeting(true, -2, false, 0));
+        addSequential(new SetShooter(3270, 27));
         addSequential(new MultiPartPath(0, true, true).addStraight(6, true, 0, 0.5).finalizePath());
         addSequential(new ShootBalls(3));
         addSequential(new WaitTime(0.25));
