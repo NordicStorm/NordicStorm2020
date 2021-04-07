@@ -115,9 +115,9 @@ public class DriveDistancePath extends PathSection {
         rightSpeed-=adjustment;
         System.out.println("drivespeed:"+driveSpeed);
 
-        //System.out.println("err:"+angleDiff);
+        System.out.println("err:"+angleDiff);
 
-        //System.out.println("adj:"+adjustment);
+        System.out.println("adj:"+adjustment);
 
         //System.out.println("left:"+leftSpeed);
         //System.out.println("right:"+rightSpeed);
