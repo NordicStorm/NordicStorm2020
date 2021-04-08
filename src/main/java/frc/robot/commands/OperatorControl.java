@@ -68,29 +68,63 @@ public class OperatorControl extends Command {
         if(Math.abs(turnPower)<0.15){
             turnPower=0;
         }
+        if(forwardPower>0.2){
+            //forwardPower=0.5;
+        }
+        if(forwardPower<-0.2){
+            //forwardPower=-0.5;
+        }
 
         double throttle=rightJoystick.getThrottle();
         throttle=Util.map(throttle, 1, -1, 0.1, 1);
+        throttle=0.75;
         SmartDashboard.putNumber("NumBalls",Robot.pixy.getNumObs());
 
         forwardPower*=throttle;
         turnPower*=throttle;
+        //turnPower=0;
         double leftThrottle = Util.map(leftJoystick.getZ(), 1, -1, 0, 1);
         //System.out.println("throt:"+leftThrottle);
-
+        SmartDashboard.putNumber("LeftThrottle",leftThrottle);
+        //long ender: 0.362204730510712
         double forwardArc=0.5;
         double turnArc=leftThrottle;
         int reverseArc=(rightJoystick.getY()>0.05)?-1 : 1; //this makes it so moving the joystick backward arcs backward
-        if(rightJoystick.getRawButton(11)){ //this turns left
+        if(rightJoystick.getRawButton(4)){
+            turnPower=-0.5;//*reverseArc;
+        }
+        if(rightJoystick.getRawButton(3)){
+            turnPower=0.5;//*reverseArc;
+        }
+        if(rightJoystick.getRawButton(9)){ //this turns left
             // if you wanted this to be on the left stick,
             // change the above to something like:
             // if(leftJoystick.getRawButton(7)){
             forwardPower=forwardArc*reverseArc;
-            turnPower=turnArc;
+            turnPower=turnArc*reverseArc;
         }
-        if(rightJoystick.getRawButton(9)){ //this turns right
+        if(rightJoystick.getRawButton(10)){ //this turns right
+            //forwardPower=forwardArc*reverseArc;
+            //turnPower=-turnArc*reverseArc;
+        }
+        double shortStarter=0.41;
+        if(rightJoystick.getRawButton(7)){//left
             forwardPower=forwardArc*reverseArc;
-            turnPower=-turnArc;
+            turnPower=shortStarter*reverseArc;
+        }
+        if(rightJoystick.getRawButton(8)){//right
+            forwardPower=forwardArc*reverseArc;
+            turnPower=-0.51*reverseArc;
+        }
+        double longEnder = 0.362204730510712;
+        
+        if(rightJoystick.getRawButton(9)){
+            forwardPower=forwardArc*reverseArc;
+            turnPower=longEnder*reverseArc;
+        }
+        if(rightJoystick.getRawButton(10) || rightJoystick.getRawButton(12)){//right
+            forwardPower=forwardArc*reverseArc;
+            turnPower=0.51;
         }
         //System.out.println("turnarc:"+turnPower);
         if(leftJoystick.getRawButtonPressed(8)){
@@ -107,7 +141,7 @@ public class OperatorControl extends Command {
 
         if(rightJoystick.getRawButton(4)){
             if(!shiftWasPressed){
-                Robot.drivetrain.shiftToggle();
+                //Robot.drivetrain.shiftToggle();
             }
             shiftWasPressed=true;
         }else{
