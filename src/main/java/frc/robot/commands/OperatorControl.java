@@ -61,7 +61,7 @@ public class OperatorControl extends Command {
         if(forwardPower<0.008 && turnPower>0 && turnPower<=0.10){//weird thing with joystick
             turnPower=0;
         }
-
+        turnPower*=0.5;
         if(Math.abs(forwardPower)<0.05){
             forwardPower=0;
         }
@@ -77,7 +77,10 @@ public class OperatorControl extends Command {
 
         double throttle=rightJoystick.getThrottle();
         throttle=Util.map(throttle, 1, -1, 0.1, 1);
-        throttle=0.75;
+        throttle=0.7;
+        if(rightJoystick.getRawButton(2) && forwardPower>0){
+            forwardPower*=3;
+        }
         SmartDashboard.putNumber("NumBalls",Robot.pixy.getNumObs());
 
         forwardPower*=throttle;
@@ -104,8 +107,8 @@ public class OperatorControl extends Command {
             turnPower=turnArc*reverseArc;
         }
         if(rightJoystick.getRawButton(10)){ //this turns right
-            //forwardPower=forwardArc*reverseArc;
-            //turnPower=-turnArc*reverseArc;
+            forwardPower=forwardArc*reverseArc;
+            turnPower=-turnArc*reverseArc;
         }
         double shortStarter=0.41;
         if(rightJoystick.getRawButton(7)){//left
@@ -119,12 +122,12 @@ public class OperatorControl extends Command {
         double longEnder = 0.362204730510712;
         
         if(rightJoystick.getRawButton(9)){
-            forwardPower=forwardArc*reverseArc;
-            turnPower=longEnder*reverseArc;
+            //forwardPower=forwardArc*reverseArc;
+            //turnPower=longEnder*reverseArc;
         }
         if(rightJoystick.getRawButton(10) || rightJoystick.getRawButton(12)){//right
-            forwardPower=forwardArc*reverseArc;
-            turnPower=0.51;
+            //forwardPower=forwardArc*reverseArc;
+            //turnPower=0.51;
         }
         //System.out.println("turnarc:"+turnPower);
         if(leftJoystick.getRawButtonPressed(8)){
