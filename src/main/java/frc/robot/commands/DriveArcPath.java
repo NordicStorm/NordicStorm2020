@@ -242,7 +242,7 @@ public class DriveArcPath extends PathSection {
     }
     @Override
     public double getProvidedEndSpeed() {
-        return 0;
+        return Math.min(Math.abs(targetLeftSpeed),Math.abs(targetRightSpeed));
     }
     
 }

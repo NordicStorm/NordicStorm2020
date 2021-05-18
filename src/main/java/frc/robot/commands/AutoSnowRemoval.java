@@ -25,17 +25,16 @@ public class AutoSnowRemoval extends AutoWithInit {
     }
     @Override
     protected void initialize() {
-
+        Robot.drivetrain.resetHeading();
         //Robot.shooter.setAutoSeekHeading(true, 0);
         //Robot.shooter.setAutoTargetSeek(true, 5);
     }
     @Override
     public void initializeCommands(){
         double startAng = 36;
-        Robot.drivetrain.setAngleAdjustment(-startAng);
         MultiPartPath path = new MultiPartPath(startAng);
         //addSequential(new SetIntakeRunning(true));
-        addSequential(path);
+        addSequential(path.finalizePath());
 
     }
     @Override

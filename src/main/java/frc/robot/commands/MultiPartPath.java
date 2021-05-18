@@ -153,6 +153,21 @@ public class MultiPartPath extends CommandGroup {
     public MultiPartPath addBallGrab(){
         return addBallGrab(false);
     }
+
+    /**
+     * Mostly just like the arc, except it pivots in place
+     * @param targetAngle
+     * @param turnSpeed Wheel speeds during pivot, should probably be 0.25
+     * @param turnRight
+     * @param stopBefore If the robot should come to a stop before the pivot. Should normally be true.
+     */
+    public MultiPartPath addPivot(double targetAngle, double turnSpeed, boolean turnRight, boolean stopBefore){
+        if(stopBefore){
+            addStop();
+        }
+        addRawArc(targetAngle, -turnSpeed, turnSpeed, turnRight);
+        return this;
+    }
     /**
      * Runs the previous and the next commands at max speed.
      */
@@ -192,7 +207,7 @@ public class MultiPartPath extends CommandGroup {
 
     /**
      * Finalize and calculate speeds for path segments. Must be called before execution.
-     * @return this same path for chaining
+     * @return this same path so it can go into an addSequential
      */
     public MultiPartPath finalizePath(){
         double currentAngle=startingAngle;
