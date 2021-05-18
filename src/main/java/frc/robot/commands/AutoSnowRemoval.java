@@ -34,12 +34,12 @@ public class AutoSnowRemoval extends AutoWithInit {
         double startAng = 36;
         addSequential(new SetIntakeRunning(true));
         MultiPartPath path = new MultiPartPath(startAng);
-        path.addStraight(7, false);
-        path.addRawArc(-53, 0.051, 0.4025, false);
+        path.addStraight(8, false);
+        path.addRawArc(-33, 0.051, 0.4025, false);
         path.addBallGrab();
-        path.addPivot(125, 0.25, false, true);
-        path.addStraight(4, false);
-        path.addRawArc(100, 0.051, 0.4025, false)
+        path.addPivot(115, 0.25, false, true);
+        path.addStraight(4, false, 125);
+        path.addRawArc(100, 0.051, 0.4025, false);
         path.addBallGrab();
         path.addRawArc(270, 0.051, 0.4025, true);
         path.addBallGrab();
@@ -54,7 +54,9 @@ public class AutoSnowRemoval extends AutoWithInit {
         path.addRawArc(180, 0.051, 0.4025, true);
         path.addStraight(10, false);
         path.addRawArc(210, 0.051, 0.4025, true);
-        
+        path.addRawArc(90, 0.051, 0.4025, false);
+
+
 
         //addSequential(new SetIntakeRunning(true));
         addSequential(path.finalizePath());
