@@ -37,8 +37,8 @@ public class AutoSnowRemoval extends AutoWithInit {
         path.addStraight(8, false);
         path.addRawArc(-33, 0.051, 0.4025, false);
         path.addBallGrab();
-        path.addPivot(115, 0.25, false, true);
-        path.addStraight(4, false, 125);
+        path.addPivot(150, 0.25, false, true);
+        path.addStraight(6, false, 140);
         path.addRawArc(100, 0.051, 0.4025, false);
         path.addBallGrab();
         path.addRawArc(270, 0.051, 0.4025, true);
@@ -46,9 +46,9 @@ public class AutoSnowRemoval extends AutoWithInit {
         path.addPivot(0, 0.25, true, true);
         path.addStraight(12.5, false);
         path.addRawArc(300, 0.051, 0.4025, false);
-        path.addStraight(4, false);
+        path.addStraight(2, false); //first 8 line of figure 8
         path.addRawArc(110, 0.051, 0.4025, true);
-        path.addStraight(4, false);
+        path.addStraight(2, false);
         path.addRawArc(270, 0.051, 0.4025, false);
         path.addRawArc(110, 0.051, 0.4025, false);
         path.addRawArc(180, 0.051, 0.4025, true);
