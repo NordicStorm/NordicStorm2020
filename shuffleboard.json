@@ -254,9 +254,9 @@
               "_title": "rightMasterPower"
             }
           },
-          "15,0": {
+          "10,4": {
             "size": [
-              1,
+              2,
               1
             ],
             "content": {
@@ -276,7 +276,7 @@
               "_title": "accum"
             }
           },
-          "9,2": {
+          "12,4": {
             "size": [
               2,
               1
@@ -298,7 +298,7 @@
               "_title": "currentCommand"
             }
           },
-          "11,2": {
+          "12,3": {
             "size": [
               2,
               1
@@ -351,6 +351,22 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodAngle",
               "_title": "HoodAngle"
+            }
+          },
+          "8,2": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Number Bar",
+              "_source0": "network_table:///SmartDashboard/LeftThrottle",
+              "_title": "LeftThrottle",
+              "Range/Min": 0.0,
+              "Range/Max": 1.0,
+              "Range/Center": 0.0,
+              "Visuals/Num tick marks": 5,
+              "Visuals/Show text": true
             }
           }
         }

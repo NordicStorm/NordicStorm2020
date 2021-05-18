@@ -8,34 +8,38 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package frc.robot.commands;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
+import frc.robot.subsystems.*;
 
 /**
  *
  */
-public class StartAutoShooter extends InstantCommand {
+public class AutoSnowRemoval extends AutoWithInit {
 
-    int whichOne;
-    public StartAutoShooter(int whichOne) {
+    public AutoSnowRemoval() {
         requires(Robot.drivetrain);
-        this.whichOne=whichOne;
+    
     }
     @Override
     protected void initialize() {
-        AutoWithInit auto=null;
-        if(whichOne==0){
-            auto = new AutoBallShoot();
-        }else if (whichOne==1){
-            auto = new TimedBallShoot();
-        }else if (whichOne==2){
-            auto = new AutoSnowRemoval();
-        }
-        auto.initializeCommands();
-        auto.start();
+
+        //Robot.shooter.setAutoSeekHeading(true, 0);
+        //Robot.shooter.setAutoTargetSeek(true, 5);
     }
-    
+    @Override
+    public void initializeCommands(){
+        //addSequential(new SetIntakeRunning(true));
+        
+    }
+    @Override
+    protected void end() {
+        Robot.shooter.setAutoSeekHeading(false, 0);
+    }
+    @Override
+    protected void interrupted(){
+        end();
+    }   
 }
