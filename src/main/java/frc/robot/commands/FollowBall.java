@@ -193,6 +193,6 @@ public class FollowBall extends PathSection {
 
     @Override
     public void finalizeForPath(PathSection previous, PathSection next) {
-        forwardMod = Math.min(previous.getProvidedEndSpeed(), forwardMod);
+        //forwardMod = Math.min(previous.getProvidedEndSpeed(), forwardMod);
     }
 }

@@ -20,11 +20,14 @@ import frc.robot.Robot;
 public class ResetHeading extends InstantCommand {
 
     public ResetHeading() {
+        this.setRunWhenDisabled(true);
     }
 
     @Override
     protected void initialize() {
         Robot.drivetrain.resetHeading();
+        Robot.shooter.resetHeading();
+
     }
 
 }

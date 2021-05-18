@@ -134,8 +134,8 @@ ballIntake = new BallIntake();
         Robot.drivetrain.setOutsideControl(false);
         Robot.drivetrain.setEncMode(true);
         Robot.drivetrain.setSuperPMode(false);
-        Robot.drivetrain.resetHeading();
-        Robot.shooter.resetHeading();
+        //Robot.drivetrain.resetHeading();
+        //Robot.shooter.resetHeading();
             
     }
 
