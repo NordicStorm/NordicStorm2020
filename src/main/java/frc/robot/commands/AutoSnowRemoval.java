@@ -33,13 +33,28 @@ public class AutoSnowRemoval extends AutoWithInit {
     public void initializeCommands(){
         double startAng = 36;
         Robot.drivetrain.setAngleAdjustment(-startAng);
+        addSequential(new SetIntakeRunning(true));
         MultiPartPath path = new MultiPartPath(startAng);
+        path.addStraight(7, false);
+        path.addRawArc(-53, 0.051, 0.4025, false);
+        path.addBallGrab();
+        path.addPivot(125, 0.25, turnRight, true);
+        path.addStraight(4, false)
+        path.addRawArc(100, 0.051, 0.4025, false)
+        path.addBallGrab();
+        path.addRawArc(270, 0.051, 0.4025, true);
+        path.addBallGrab();
+        path.addPivot(0, 0.25, turnRight, true);
+        path.addStraight(distance, backward)
+        
+
         //addSequential(new SetIntakeRunning(true));
         addSequential(path);
 
     }
     @Override
     protected void end() {
+        Robot.ballIntake.setLongRunningIntake(false);
         Robot.shooter.setAutoSeekHeading(false, 0);
     }
     @Override
