@@ -286,4 +286,7 @@ public class Drivetrain extends Subsystem {
     public void resetHeading() {
         navx.zeroYaw();
     }
+    public void setAngleAdjustment(double adjustment){
+        navx.setAngleAdjustment(adjustment);
+    }
 }

@@ -31,8 +31,12 @@ public class AutoSnowRemoval extends AutoWithInit {
     }
     @Override
     public void initializeCommands(){
+        double startAng = 36;
+        Robot.drivetrain.setAngleAdjustment(-startAng);
+        MultiPartPath path = new MultiPartPath(startAng);
         //addSequential(new SetIntakeRunning(true));
-        
+        addSequential(path);
+
     }
     @Override
     protected void end() {

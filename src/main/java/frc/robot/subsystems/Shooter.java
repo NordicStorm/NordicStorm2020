@@ -55,7 +55,7 @@ public class Shooter extends Subsystem {
     CANSparkMax flywheel;
 
     WPI_TalonSRX pivot;
-    int rpmTolerance = 7;
+    int rpmTolerance = 10;
     double hoodAngle = 20;
     int servoMaxTimeDelay = 1000;// note: this is scaled based on how far the servo moves
     int timeLeftToMoveServo = 0;

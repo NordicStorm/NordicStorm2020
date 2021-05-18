@@ -128,7 +128,31 @@ public class MultiPartPath extends CommandGroup {
     public MultiPartPath addGridArc(double targetAngle, boolean arcRight){
         return addGridArc(targetAngle, arcRight, false);
     }
-
+    /**
+     * Follow and pick up a single ball
+     * @param handleOwnIntake if it should control starting and stopping the intake
+     * @param maxSpeed max speed to drive
+     * @return this path for chaining
+     */
+    public MultiPartPath addBallGrab(boolean handleOwnIntake, double maxSpeed){
+        sections.add(new FollowBall(handleOwnIntake, true, maxSpeed));
+        return this;
+    }
+    /**
+     * Follow and pick up a single ball
+     * @param handleOwnIntake if it should control starting and stopping the intake
+     * @return this path for chaining
+     */
+    public MultiPartPath addBallGrab(boolean handleOwnIntake){
+        return addBallGrab(handleOwnIntake, 0.75);
+    }
+    /**
+     * Follow and pick up a single ball
+     * @return this path for chaining
+     */
+    public MultiPartPath addBallGrab(){
+        return addBallGrab(false);
+    }
     /**
      * Runs the previous and the next commands at max speed.
      */
