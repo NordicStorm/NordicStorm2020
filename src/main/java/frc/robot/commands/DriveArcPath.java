@@ -229,7 +229,8 @@ public class DriveArcPath extends PathSection {
 
     @Override
     public double getRequestedStartSpeed() {
-        if(Math.signum(targetLeftSpeed) != Math.signum(targetRightSpeed)){
+        //if equal, that means reversed since they spin opposite ways normally
+        if(Math.signum(targetLeftSpeed) == Math.signum(targetRightSpeed)){
             return 0;
         }
         return Math.max(Math.abs(targetLeftSpeed),Math.abs(targetRightSpeed));

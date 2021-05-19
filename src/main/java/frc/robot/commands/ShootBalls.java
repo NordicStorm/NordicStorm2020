@@ -19,7 +19,7 @@ import frc.robot.subsystems.Drivetrain;
 /**
  *
  */
-public class ShootBalls extends Command {
+public class ShootBalls extends PathSection {
 
    
     
@@ -68,6 +68,26 @@ public class ShootBalls extends Command {
     @Override
     protected void interrupted() {
         end();
+    }
+
+    @Override
+    public double getRequestedStartSpeed() {
+        return 0;
+    }
+
+    @Override
+    public double getProvidedEndSpeed() {
+        return 0;
+    }
+
+    @Override
+    public double modifyAngle(double oldAngle) {
+        return oldAngle;
+    }
+
+    @Override
+    public void finalizeForPath(PathSection previous, PathSection next) {
+        //nothing to do
     }
 
     
