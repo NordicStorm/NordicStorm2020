@@ -34,27 +34,28 @@ public class AutoSnowRemoval extends AutoWithInit {
         double startAng = 36;
         addSequential(new SetIntakeRunning(true));
         MultiPartPath path = new MultiPartPath(startAng);
-        path.addStraight(8, false);
+        path.addStraight(8.5, false);
         path.addRawArc(-33, 0.051, 0.4025, false);
         path.addBallGrab();
         path.addPivot(150, 0.25, false, true);
-        path.addStraight(6, false, 140);
-        path.addRawArc(100, 0.051, 0.4025, false);
+        path.addStraight(5.5, false, 140);
+        path.addRawArc(110, 0.051, 0.48, false);
         path.addBallGrab();
-        path.addRawArc(270, 0.051, 0.4025, true);
-        path.addBallGrab();
-        path.addPivot(0, 0.25, true, true);
-        path.addStraight(12.5, false);
-        path.addRawArc(300, 0.051, 0.4025, false);
-        path.addStraight(2, false); //first 8 line of figure 8
-        path.addRawArc(110, 0.051, 0.4025, true);
         path.addStraight(2, false);
-        path.addRawArc(270, 0.051, 0.4025, false);
-        path.addRawArc(110, 0.051, 0.4025, false);
+        path.addRawArc(250, 0.051, 0.4025, true);
+        path.addBallGrab();
+        path.addPivot(10, 0.25, true, true);
+        path.addStraight(11.5, false, 0); //long straight 1
+        path.addRawArc(285, 0.051, 0.4025, false);
+        path.addStraight(5, false); //first 8 line of figure 8
+        path.addRawArc(140, 0.06, 0.39, true);
+        path.addStraight(2, false);
+        path.addRawArc(270, 0.06, 0.39, false);
+        path.addRawArc(110, 0.06, 0.39, false);
         path.addRawArc(180, 0.051, 0.4025, true);
-        path.addStraight(10, false);
-        path.addRawArc(210, 0.051, 0.4025, true);
-        path.addRawArc(90, 0.051, 0.4025, false);
+        path.addStraight(9, false);
+        path.addRawArc(235, 0.051, 0.4025, true);
+        path.addRawArc(100, 0.056, 0.37, false);
 
 
 

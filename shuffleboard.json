@@ -254,9 +254,9 @@
               "_title": "rightMasterPower"
             }
           },
-          "10,4": {
+          "15,0": {
             "size": [
-              2,
+              1,
               1
             ],
             "content": {
@@ -276,7 +276,7 @@
               "_title": "accum"
             }
           },
-          "12,4": {
+          "9,2": {
             "size": [
               2,
               1
@@ -289,7 +289,7 @@
           },
           "10,3": {
             "size": [
-              2,
+              4,
               1
             ],
             "content": {
@@ -298,7 +298,7 @@
               "_title": "currentCommand"
             }
           },
-          "12,3": {
+          "11,2": {
             "size": [
               2,
               1
@@ -316,57 +316,19 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/horizdist",
-              "_title": "horizdist"
-            }
-          },
-          "2,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/horizerr",
-              "_title": "horizerr"
-            }
-          },
-          "3,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/distance",
-              "_title": "distance"
-            }
-          },
-          "0,4": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/HoodAngle",
               "_title": "HoodAngle"
             }
           },
-          "8,2": {
+          "16,0": {
             "size": [
-              4,
-              2
+              1,
+              1
             ],
             "content": {
-              "_type": "Number Bar",
+              "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/LeftThrottle",
-              "_title": "LeftThrottle",
-              "Range/Min": 0.0,
-              "Range/Max": 1.0,
-              "Range/Center": 0.0,
-              "Visuals/Num tick marks": 5,
-              "Visuals/Show text": true
+              "_title": "LeftThrottle"
             }
           }
         }
@@ -976,9 +938,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.333333492279053,
-    "y": -7.333333492279053,
-    "width": 1294.6666259765625,
-    "height": 694.6666870117188
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1382.0,
+    "height": 744.0
   }
 }
