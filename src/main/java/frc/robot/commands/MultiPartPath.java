@@ -155,6 +155,19 @@ public class MultiPartPath extends CommandGroup {
     }
 
     /**
+     * Shoot balls that are already in the shooter
+     * @param numShots
+     * @return
+     */
+    public MultiPartPath addBallShoot(int numShots){
+        sections.add(new ShootBalls(numShots));
+        return this;
+    }
+    public MultiPartPath addShooterAdjustment(int numShots){
+        sections.add(new ShootBalls(numShots));
+        return this;
+    }
+    /**
      * Mostly just like the arc, except it pivots in place
      * @param targetAngle
      * @param turnSpeed Wheel speeds during pivot, should probably be 0.25
@@ -215,10 +228,14 @@ public class MultiPartPath extends CommandGroup {
             sections.add(new StopMovement()); // add stop at end for calculations of speed
         }
         for(PathSection section : sections){
+            if(section.isPassive()){ continue; }
             currentAngle=section.modifyAngle(currentAngle);
         }
         for(int i=1; i<sections.size()-1; i++){//iterate over all except first and last (the stops)
-            sections.get(i).finalizeForPath(sections.get(i-1), sections.get(i+1));
+            PathSection section = sections.get(i);
+            PathSection prev = sections.get(i-1);
+            PathSection next = sections.get(i+1);
+            section.finalizeForPath(seekToNonPassive(i, false), seekToNonPassive(i, true));
         }
         for(PathSection section : sections){
             addSequential(section);
@@ -226,10 +243,28 @@ public class MultiPartPath extends CommandGroup {
         this.hasFinalized=true;
         return this;
     }
+    public PathSection seekToNonPassive(int startI, boolean seekForward){
+        PathSection section;
+        int iOffset=1;
+        if(seekForward){
+            section=sections.get(startI+iOffset);
+            while(section.isPassive()){
+                iOffset+=1;
+                section = sections.get(startI+iOffset);
+            }
+        }else{
+            section = sections.get(startI-iOffset);
+            while(section.isPassive()){
+                iOffset+=1;
+                section = sections.get(startI-iOffset);
+            }
+        }
+        return section;
+    }
     @Override
     protected void initialize() {
         if(!hasFinalized){
-            throw new IllegalStateException("Path has not been finalized!");
+            throw new IllegalStateException("MultiPartPath has not been finalized!");
         }
     }
     

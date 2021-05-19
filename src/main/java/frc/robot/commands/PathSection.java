@@ -16,4 +16,6 @@ public abstract class PathSection extends Command {
     public abstract double getProvidedEndSpeed();
     public abstract double modifyAngle(double oldAngle);
     public abstract void finalizeForPath(PathSection previous, PathSection next);
+
+    public boolean isPassive(){return false;};
 }
