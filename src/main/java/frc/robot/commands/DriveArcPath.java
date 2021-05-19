@@ -225,11 +225,13 @@ public class DriveArcPath extends PathSection {
         turnDistance=Drivetrain.fullAngleDiff(oldAngle, targetAngle, arcRight);
         prevAngle=oldAngle;
         return targetAngle;
-        
     }
 
     @Override
     public double getRequestedStartSpeed() {
+        if(Math.signum(targetLeftSpeed) != Math.signum(targetRightSpeed)){
+            return 0;
+        }
         return Math.max(Math.abs(targetLeftSpeed),Math.abs(targetRightSpeed));
         //return Math.max(leftSpeedProportion, rightSpeedProportion)*mainSpeed;
     }
