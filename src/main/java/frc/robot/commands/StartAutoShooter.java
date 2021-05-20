@@ -33,7 +33,7 @@ public class StartAutoShooter extends InstantCommand {
             auto = new TimedBallShoot();
         }else if (whichOne==2){
             auto = new AutoSnowRemoval();
-        }else if (whichOne==2){
+        }else if (whichOne==3){
             auto = new AutoSnowThrower();
         }
         auto.initializeCommands();
