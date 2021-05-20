@@ -178,7 +178,7 @@ public class MultiPartPath extends CommandGroup {
     }
     /**
      * Set new values for the shooter to get to for shooting
-     * @param rpm target RPM of flwheel
+     * @param rpm target RPM of flywheel
      * @param hoodAngle angle from 25-45. 45 is shooting up as high as possible.
      * @return
      */
