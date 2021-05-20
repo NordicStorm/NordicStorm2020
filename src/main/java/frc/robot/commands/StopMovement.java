@@ -22,13 +22,18 @@ import frc.robot.subsystems.Drivetrain;
 public class StopMovement extends PathSection {
 
 
+    int waitTime=0;
     /**
      * Stops drive motors and waits until forward velocity and angular velocity have stopped.
+     * @param time time in milliseconds to wait
      */
-    public StopMovement() {
-
+    public StopMovement(int time) {
+        this.waitTime=time;
     }
-
+    public StopMovement(){
+        this(0);
+    }
+    long stopTime=0;
     @Override
     protected void initialize() {
         SmartDashboard.putString("currentCommand", "stopMovement()");
@@ -36,6 +41,9 @@ public class StopMovement extends PathSection {
         Robot.drivetrain.setEncMode(true);
         Robot.drivetrain.setOutsideControl(false);
         Robot.drivetrain.setSuperPMode(true);
+        
+        stopTime=System.currentTimeMillis()+waitTime;
+        
 
     }
     // Called repeatedly when this Command is scheduled to run
@@ -46,11 +54,12 @@ public class StopMovement extends PathSection {
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
-    protected boolean isFinished() {
-        System.out.println("rotvel:"+Robot.drivetrain.getRotationalVelocity());
+    protected boolean isFinished() {        
+        //System.out.println("rotvel:"+Robot.drivetrain.getRotationalVelocity());
         boolean done=Math.abs(Robot.drivetrain.getRotationalVelocity())<5
          && Math.abs(Robot.drivetrain.getLeftEncoderVelocity())<12
-         && Math.abs(Robot.drivetrain.getRightEncoderVelocity())<12;
+         && Math.abs(Robot.drivetrain.getRightEncoderVelocity())<12
+         && System.currentTimeMillis()>stopTime;
         return done;
     }
 

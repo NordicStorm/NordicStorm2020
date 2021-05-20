@@ -214,8 +214,21 @@ public class MultiPartPath extends CommandGroup {
         return this;
     }
 
+    /**
+     * Add a spot where it will wait to fully stop.
+     * @return
+     */
     public MultiPartPath addStop(){
         sections.add(new StopMovement());
+        return this;
+    }
+    /**
+     * Add a spot where it will wait to fully stop, and time has passed
+     * @param waitTime time to wait in milliseconds. 1000 = 1 second
+     * @return
+     */
+    public MultiPartPath addStop(int waitTime){
+        sections.add(new StopMovement(waitTime));
         return this;
     }
     /**
