@@ -94,7 +94,7 @@ public class Shooter extends Subsystem {
         flywheel.enableVoltageCompensation(12);
         flywheelVelocityControl = flywheel.getPIDController();
         flywheelVelocityControl.setP(0.0007);
-        flywheelVelocityControl.setI(0.0000009);
+        flywheelVelocityControl.setI(0.0000008);
         flywheelVelocityControl.setD(0.00);
         flywheelVelocityControl.setIZone(200);
         flywheelVelocityControl.setFF(0.00021);

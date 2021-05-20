@@ -26,18 +26,33 @@ public class AutoSnowThrower extends AutoWithInit {
     @Override
     protected void initialize() {
         //Robot.drivetrain.resetHeading();
-        //Robot.shooter.setAutoSeekHeading(true, 0);
-        //Robot.shooter.setAutoTargetSeek(true, 5);
+        Robot.shooter.setAutoSeekHeading(false, 0);
+        Robot.shooter.setAutoTargetSeek(false, 5);
     }
     @Override
     public void initializeCommands(){
         double startAng = 36;
         addSequential(new SetIntakeRunning(true));
         MultiPartPath path = new MultiPartPath(startAng);
+        path.addShooterSpeedSet(1830, 35);
         path.addStraight(8.5, false);
         path.addRawArc(-33, 0.051, 0.4025, false);
+        path.addShooterTargettingSet(true, 17, false, 0);
+        path.addBallGrab(); 
+        path.addRawArc(270, -0.02, 0.2325, false, true);
+        path.addStop();
+        path.addBallShoot(1);
+        path.addStop(500);
+        path.addShooterTargettingSet(false, 0, false, 0);
+        path.addPivot(200, 0.25, false, false);
+        path.addShooterSpeedSet(2200, 25);
+        path.addRawArc(105, 0.14, 0.4025, false);
+        path.addShooterTargettingSet(true, -17, false, 0);
         path.addBallGrab();
-       
+        path.addStop();
+        path.addRawArc(90, 0, 0.2325, false, true);
+        path.addStop();
+        path.addBallShoot(1);
 
 
 
