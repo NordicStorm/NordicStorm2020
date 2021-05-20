@@ -20,7 +20,7 @@ import frc.robot.subsystems.Drivetrain;
 /**
  *
  */
-public class SetShooterTargeting extends InstantCommand {
+public class SetShooterTargeting extends PathSection {
 
    
     
@@ -67,6 +67,30 @@ public class SetShooterTargeting extends InstantCommand {
     @Override
     protected void interrupted() {
         end();
+    }
+
+    @Override
+    public double getRequestedStartSpeed() {
+        return 0;
+    }
+
+    @Override
+    public double getProvidedEndSpeed() {
+        return 0;
+    }
+
+    @Override
+    public double modifyAngle(double oldAngle) {
+        return 0;
+    }
+
+    @Override
+    public void finalizeForPath(PathSection previous, PathSection next) {
+        
+    }
+    @Override
+    public boolean isPassive(){
+        return true;
     }
 
     

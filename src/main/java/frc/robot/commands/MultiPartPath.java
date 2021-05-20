@@ -163,10 +163,30 @@ public class MultiPartPath extends CommandGroup {
         sections.add(new ShootBalls(numShots));
         return this;
     }
-    public MultiPartPath addShooterAdjustment(int numShots){
-        sections.add(new ShootBalls(numShots));
+    /**
+     * Add a place where the shooter is set to certain angle or vision target spots. 
+     * Don't set both headingSeek and targetSeek to true, choose one.
+     * @param headingSeek true or false, if it should rely on the NavX to seek stuck to an angle
+     * @param headingVal the angle it should try to keep at if using navX
+     * @param visionSeek true or false, if it should try to use vision to align
+     * @param offset number of pixels offset it should be if using vision
+     * @return
+     */
+    public MultiPartPath addShooterTargettingSet(boolean headingSeek, double headingVal, boolean visionSeek, int offset){
+        sections.add(new SetShooterTargeting(headingSeek, headingVal, visionSeek, offset));
         return this;
     }
+    /**
+     * Set new values for the shooter to get to for shooting
+     * @param rpm target RPM of flwheel
+     * @param hoodAngle angle from 25-45. 45 is shooting up as high as possible.
+     * @return
+     */
+    public MultiPartPath addShooterSpeedSet(double rpm, double hoodAngle){
+        sections.add(new SetShooter(rpm, hoodAngle));
+        return this;
+    }
+
     /**
      * Mostly just like the arc, except it pivots in place
      * @param targetAngle
@@ -181,6 +201,7 @@ public class MultiPartPath extends CommandGroup {
         addRawArc(targetAngle, -turnSpeed, turnSpeed, turnRight);
         return this;
     }
+
     /**
      * Runs the previous and the next commands at max speed.
      */
