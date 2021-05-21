@@ -400,6 +400,7 @@ if __name__ == "__main__":
 
     pipeline=GripPipeline()
     start = time()
+    netOut.putNumber("frameID", random.randint(0,10000))
 
     # loop forever on vision program
     while True:
@@ -436,13 +437,7 @@ if __name__ == "__main__":
             dist+= 3.75 #shooter is behind cam
             print ("dist:",dist)
 
-
-            recentHeight=getAverageOverLastFew()
-            recentDist = heightToDistance(recentHeight)
-            
-            recentDist+= 3.75 #shooter is behind cam
-            print ("distRecent:",recentDist)
-            netOut.putNumber("distance", recentDist)
+            netOut.putNumber("distance", dist)
             
 
             dist= dist/39.37 # convert inches to meters
@@ -453,6 +448,8 @@ if __name__ == "__main__":
             if 0 not in previousSeenHeights:
                 netOut.putNumber("rpm", rpm)
                 netOut.putNumber("angle", angle)
+                netOut.putNumber("frameID", random.randint(0,10000))
+
                 print("going ", rpm)
             else:
                 netOut.putNumber("rpm", -1)

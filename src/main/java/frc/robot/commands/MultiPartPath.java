@@ -131,7 +131,7 @@ public class MultiPartPath extends CommandGroup {
     /**
      * Follow and pick up a single ball
      * @param handleOwnIntake if it should control starting and stopping the intake
-     * @param maxSpeed max speed to drive
+     * @param maxSpeed max speed to drive. 0.75 by default
      * @return this path for chaining
      */
     public MultiPartPath addBallGrab(boolean handleOwnIntake, double maxSpeed){
@@ -174,6 +174,14 @@ public class MultiPartPath extends CommandGroup {
      */
     public MultiPartPath addShooterTargettingSet(boolean headingSeek, double headingVal, boolean visionSeek, int offset){
         sections.add(new SetShooterTargeting(headingSeek, headingVal, visionSeek, offset));
+        return this;
+    }
+    /**
+     * Run a process to exactly center on the target
+     * @return
+     */
+    public MultiPartPath addShooterVisionCenter(){
+        sections.add(new RunVisionCenter(0));
         return this;
     }
     /**
