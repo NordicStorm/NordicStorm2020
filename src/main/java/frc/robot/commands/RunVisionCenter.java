@@ -34,14 +34,14 @@ public class RunVisionCenter extends PathSection {
     public RunVisionCenter(double offset, boolean canEnd) {
         this.targetOffset=offset;
         this.canEnd=canEnd;
-        targetX=(camWidth/2)-offset;
+        targetX=(camWidth/2);
     }
 
 
     @Override
     protected void initialize() {
         SmartDashboard.putString("currentCommand", "RunVisionCenter()");
-
+        SmartDashboard.putNumber("visOffset", 0);
         
     }
     double lastFrameID=0;
@@ -49,6 +49,9 @@ public class RunVisionCenter extends PathSection {
     @Override
     protected void execute() {
         double thisID=Robot.shooter.getVisionFrameID();
+        if(!canEnd){ // manual
+            //targetOffset=SmartDashboard.getNumber("visOffset", 0);
+        }
         if(thisID!=lastFrameID){
             lastFrameID=thisID;
             double error = (Robot.shooter.getVisionXValue()+targetOffset)-targetX;

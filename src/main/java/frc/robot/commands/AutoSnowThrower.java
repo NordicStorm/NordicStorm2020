@@ -32,43 +32,40 @@ public class AutoSnowThrower extends AutoWithInit {
     @Override
     public void initializeCommands(){
         double startAng = 36;
-        //addSequential(new SetIntakeRunning(true));
+        addSequential(new SetIntakeRunning(true));
         MultiPartPath path = new MultiPartPath(startAng);
-        path.addShooterVisionCenter(15);
-        /*path.addShooterSpeedSet(1830, 35);
+        path.addShooterSpeedSet(1870, 30);
         path.addStraight(8.5, false);
         path.addRawArc(-33, 0.051, 0.4025, false);
         path.addShooterTargettingSet(true, 19, false, 0);
         path.addBallGrab(false, 0.5);
+        path.addShooterVisionCenter(-30);
         path.addRawArc(272, -0.02, 0.2325, false, true);
         path.addStop();
         path.addBallShoot(1);
         path.addStop(500);
         path.addShooterTargettingSet(false, 0, false, 0);
         path.addPivot(200, 0.25, false, false);
-        path.addShooterSpeedSet(2200, 25);
+        path.addShooterSpeedSet(2090, 25);
         path.addRawArc(105, 0.13, 0.4025, false);
         path.addShooterTargettingSet(true, -15, false, 0);
         path.addBallGrab(false, 0.5);
+        path.addShooterVisionCenter(32);
         path.addStop();
-        path.addStraight(1, true, 90, 0.5);
+        path.addStraight(1.5, true, 90, 0.5);
         //path.addRawArc(100, 0.06, 0.2325, false, true);
         path.addStop();
         path.addBallShoot(1);
         path.addStop(500);
         path.addRawArc(40, 0.16, 0.4025, false, true);
         path.addShooterTargettingSet(true, -4, false, 0);
-        path.addShooterSpeedSet(2400, 25);
+        path.addShooterSpeedSet(2250, 25);
         path.addPivot(90, 0.25, true, false);
+        path.addShooterVisionCenter(19);
         path.addBallGrab(false, 0.5);
         path.addStraight(0.7, true, 90, 0.5);
         path.addStop();
-        path.addBallShoot(1);*/
-
-
-
-
-
+        path.addBallShoot(1);
         //addSequential(new SetIntakeRunning(true));
         addSequential(path.finalizePath());
 

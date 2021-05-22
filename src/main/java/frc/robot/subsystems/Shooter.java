@@ -110,6 +110,9 @@ public class Shooter extends Subsystem {
 
         pivotPID=new PIDController(0, 0, 0);
         flywheel.enableVoltageCompensation(11.5);
+        SmartDashboard.putNumber("setTargetRPM", 2500);
+        SmartDashboard.putNumber("setTargetHood", 30);
+
 
 
     }
@@ -131,7 +134,9 @@ public class Shooter extends Subsystem {
     // 4300
     @Override
     public void periodic() {
-
+        //setVelocity(SmartDashboard.getNumber("setTargetRPM", 0));
+        //setAngle(SmartDashboard.getNumber("setTargetHood", 0));
+        //autoAdjustValues=false;
         SmartDashboard.putNumber("angleShooter", navx.getAngle());
         long currTime = System.currentTimeMillis();
         if (timeLeftToMoveServo > 0) {
@@ -187,13 +192,13 @@ public class Shooter extends Subsystem {
             if (Math.abs(turnVal) < 0.1 ) {
                 turnVal = Math.copySign(0.1, turnVal);
             }
-            if(Math.abs(diff)<0.15){
+            if(Math.abs(diff)<0.25){
                 turnVal=0;
                 pivotIsAligned=true;
             }else{
                 pivotIsAligned=false;
             }
-            System.out.println("turnvalpivot:"+turnVal);
+            //System.out.println("turnvalpivot:"+turnVal);
             setPivotPower(turnVal);
 
 
@@ -266,6 +271,10 @@ public class Shooter extends Subsystem {
         targetRPM = rpm;
     }
 
+    /**
+     * Set the angle of the hood
+     * @param angle from 25 to 45, 25 is most flat
+     */
     public void setAngle(double angle) {
         // System.out.println("ang"+angle);
         angle = Math.min(Math.max(angle, 25), 45); // constrain from 25-45
