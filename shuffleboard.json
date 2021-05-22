@@ -330,6 +330,17 @@
               "_source0": "network_table:///SmartDashboard/LeftThrottle",
               "_title": "LeftThrottle"
             }
+          },
+          "10,4": {
+            "size": [
+              4,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///vision/frameID",
+              "_title": "/vision/frameID"
+            }
           }
         }
       }

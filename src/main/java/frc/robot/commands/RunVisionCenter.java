@@ -23,7 +23,7 @@ public class RunVisionCenter extends PathSection {
 
     double camWidth=320;
 
-    boolean done = false;
+    int goodFrames = 0;
     double targetOffset;
     double targetX;
     public RunVisionCenter(double offset) {
@@ -50,6 +50,11 @@ public class RunVisionCenter extends PathSection {
             Robot.shooter.setAutoSeekHeading(true, newVal);
             System.out.println("err:"+error);
             System.out.println("newval:"+newVal);
+            if(error<=1.5){
+                goodFrames+=1;
+            }else{
+                goodFrames=0;
+            }
         }
     }
 
@@ -57,7 +62,7 @@ public class RunVisionCenter extends PathSection {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return done;
+        return goodFrames>=3;
     }
 
     // Called once after isFinished returns true
