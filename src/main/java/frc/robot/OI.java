@@ -73,7 +73,7 @@ trigger.whileHeld(new FollowBall(true, false));
 //new JoystickButton(rightJoystick, 8).whenPressed(new StartAutoShooter(0));
 new JoystickButton(rightJoystick, 8).whenPressed(new StartAutoShooter(3));
 new JoystickButton(rightJoystick, 5).whenPressed(new ResetHeading());
-new JoystickButton(rightJoystick, 10).toggleWhenPressed(new RunVisionCenter(0));
+new JoystickButton(rightJoystick, 10).toggleWhenPressed(new RunVisionCenter(0, false));
 
         
     }

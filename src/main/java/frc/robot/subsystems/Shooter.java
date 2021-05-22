@@ -187,13 +187,13 @@ public class Shooter extends Subsystem {
             if (Math.abs(turnVal) < 0.1 ) {
                 turnVal = Math.copySign(0.1, turnVal);
             }
-            if(Math.abs(diff)<0.25){
+            if(Math.abs(diff)<0.15){
                 turnVal=0;
                 pivotIsAligned=true;
             }else{
                 pivotIsAligned=false;
             }
-            //System.out.println("turnvalpivot:"+turnVal);
+            System.out.println("turnvalpivot:"+turnVal);
             setPivotPower(turnVal);
 
 

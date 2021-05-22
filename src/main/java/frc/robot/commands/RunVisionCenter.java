@@ -22,12 +22,18 @@ import frc.robot.subsystems.Drivetrain;
 public class RunVisionCenter extends PathSection {
 
     double camWidth=320;
-
+    boolean canEnd;
     int goodFrames = 0;
     double targetOffset;
     double targetX;
-    public RunVisionCenter(double offset) {
+    /**
+     * 
+     * @param offset how much it will target to the right
+     * @param canEnd
+     */
+    public RunVisionCenter(double offset, boolean canEnd) {
         this.targetOffset=offset;
+        this.canEnd=canEnd;
         targetX=(camWidth/2)-offset;
     }
 
@@ -45,7 +51,7 @@ public class RunVisionCenter extends PathSection {
         double thisID=Robot.shooter.getVisionFrameID();
         if(thisID!=lastFrameID){
             lastFrameID=thisID;
-            double error = Robot.shooter.getVisionXValue()-targetX;
+            double error = (Robot.shooter.getVisionXValue()+targetOffset)-targetX;
             double newVal=Robot.shooter.getHeading()+error*0.1;
             Robot.shooter.setAutoSeekHeading(true, newVal);
             System.out.println("err:"+error);
@@ -62,7 +68,7 @@ public class RunVisionCenter extends PathSection {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return goodFrames>=3;
+        return goodFrames>=3 && canEnd;
     }
 
     // Called once after isFinished returns true

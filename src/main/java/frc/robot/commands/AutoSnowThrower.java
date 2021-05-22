@@ -34,7 +34,7 @@ public class AutoSnowThrower extends AutoWithInit {
         double startAng = 36;
         //addSequential(new SetIntakeRunning(true));
         MultiPartPath path = new MultiPartPath(startAng);
-        path.addShooterVisionCenter(0);
+        path.addShooterVisionCenter(15);
         /*path.addShooterSpeedSet(1830, 35);
         path.addStraight(8.5, false);
         path.addRawArc(-33, 0.051, 0.4025, false);
