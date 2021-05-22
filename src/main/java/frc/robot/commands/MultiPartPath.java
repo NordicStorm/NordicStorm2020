@@ -179,10 +179,11 @@ public class MultiPartPath extends CommandGroup {
     /**
      * Run a process to exactly center on the target
      * @param offset Number of pixels of offset. We will target x to the right of the target
+     * @param tolerance normally 1.5
      * @return
      */
-    public MultiPartPath addShooterVisionCenter(int offset){
-        sections.add(new RunVisionCenter(offset, true));
+    public MultiPartPath addShooterVisionCenter(int offset, double tolerance){
+        sections.add(new RunVisionCenter(offset, true, tolerance));
         return this;
     }
     /**

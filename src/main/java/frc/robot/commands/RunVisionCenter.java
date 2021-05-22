@@ -23,6 +23,7 @@ public class RunVisionCenter extends PathSection {
 
     double camWidth=320;
     boolean canEnd;
+    double tolerance;
     int goodFrames = 0;
     double targetOffset;
     double targetX;
@@ -31,10 +32,11 @@ public class RunVisionCenter extends PathSection {
      * @param offset how much it will target to the right
      * @param canEnd
      */
-    public RunVisionCenter(double offset, boolean canEnd) {
+    public RunVisionCenter(double offset, boolean canEnd, double tolerance) {
         this.targetOffset=offset;
         this.canEnd=canEnd;
         targetX=(camWidth/2);
+        this.tolerance=tolerance;
     }
 
 
@@ -59,7 +61,7 @@ public class RunVisionCenter extends PathSection {
             Robot.shooter.setAutoSeekHeading(true, newVal);
             System.out.println("err:"+error);
             System.out.println("newval:"+newVal);
-            if(error<=1.5){
+            if(error<=tolerance){
                 goodFrames+=1;
             }else{
                 goodFrames=0;
