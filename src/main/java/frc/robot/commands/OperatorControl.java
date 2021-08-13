@@ -77,7 +77,6 @@ public class OperatorControl extends Command {
 
         double throttle=rightJoystick.getThrottle();
         throttle=Util.map(throttle, 1, -1, 0.1, 1);
-        throttle=0.7;
         if(rightJoystick.getRawButton(2) && forwardPower>0){
             forwardPower*=3;
         }
