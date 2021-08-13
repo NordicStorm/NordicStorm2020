@@ -112,8 +112,8 @@ public class Shooter extends Subsystem {
         lastTime = System.currentTimeMillis();
         navx = new AHRS(Port.kUSB2); /* Alternatives: SPI.Port.kMXP, I2C.Port.kMXP or SerialPort.Port.kUSB */
 
-        light = new Relay(0, Relay.Direction.kForward);
-        light.set(Relay.Value.kForward);
+        light = new Relay(1, Relay.Direction.kForward);
+        light.set(Relay.Value.kOn);
         setAngle(45);
 
         pivotPID=new PIDController(0, 0, 0);
@@ -265,7 +265,7 @@ public class Shooter extends Subsystem {
         pivot.set(currentRequestedPivotPower);
 
         if(lightEnabled){
-            light.set(Relay.Value.kForward);
+            light.set(Relay.Value.kOn);
         }else{
             light.set(Relay.Value.kOff);
         }

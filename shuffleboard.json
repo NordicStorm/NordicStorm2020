@@ -375,6 +375,17 @@
               "Slider Settings/Block increment": 0.5,
               "Visuals/Display value": true
             }
+          },
+          "10,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Toggle Switch",
+              "_source0": "network_table:///SmartDashboard/Ringlight",
+              "_title": "Ringlight"
+            }
           }
         }
       }
@@ -836,6 +847,16 @@
                   "Visuals/Starting angle": 180.0,
                   "Visuals/Show tick mark ring": true,
                   "Visuals/Counter clockwise": false
+                },
+                {
+                  "_type": "Relay Widget",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Relay[0]",
+                  "_title": "Relay[0]"
+                },
+                {
+                  "_type": "Relay Widget",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Relay[1]",
+                  "_title": "Relay[1]"
                 }
               ]
             }
