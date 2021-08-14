@@ -242,8 +242,9 @@ def processFrame(frame):
         return False
 
 def getRPMAndAngle(distance, origInchesDist):
+    print ("origDist: ",origInchesDist)
     distance+=0.74 # account for distance to back hole from target
-
+    
     velocity, angle = getVelocityAndAngle(distance)
     
     #print("rpm3", rpm)
@@ -263,25 +264,21 @@ def getRPMAndAngle(distance, origInchesDist):
         print("long")
 
         angle=25
-        x=distance
-        y=1.47955 # vertical distance the ball needs to travel
-        velocity=getLongshotVelocity(distance, x, y)
-        rpm=convertVelocityToRPM(velocity)
-        rpm=applyRPMFudgeForLongshot(rpm)
-        rpm=1.5114219115073779e+003 +  3.8121729360648424e+000 * origInchesDist
+        rpm = 6.1939836823240230e+003 -4.8649057198059033e+001*origInchesDist + 1.5200366775589044e-001*origInchesDist*origInchesDist
+        #rpm = 6.4079401547895068e+003 - 5.0691675348074611e+001*origInchesDist + 1.5661658315760379e-001*origInchesDist*origInchesDist
+        """rpm = tuneRPM
         #rpm=
         if origInchesDist>178.47031876854825:
             print("reallylong")
-            x=distance-0.74 # aim for the middle of the big outer target, so move target 0.74m closer
-            velocity=getLongshotVelocity(distance, x, y)
-            rpm=convertVelocityToRPM(velocity)
-            rpm=applyRPMFudgeForVeryLongshot(rpm)
-
-
+            
             rpm=2.3973463633773163e+003 + -3.9206380581987790e+000 * origInchesDist +  1.5232575217969729e-002 * origInchesDist*origInchesDist
-        #rpm=applyRPMFudge(rpm)
+            rpm = tuneRPM
+        #rpm=applyRPMFudge(rpm)"""
         
-        
+    #rpm = tuneRPM
+
+    print(origInchesDist, rpm)
+    
     if debug:print("vel", velocity)
     if debug:print("rpm", rpm)
     #print("newang", angle)
@@ -296,6 +293,7 @@ def convertVelocityToRPM(velocity):
     rpm=rpm*60 # convert from rpsecond to rpminute
 
     return rpm
+
 def getLongshotVelocity(distance, x, y):
     radians25 = 0.436332
     c=math.cos(radians25)
@@ -360,15 +358,21 @@ def getAverageOverRecent():
 def getAverageOverLastFew():
     return statistics.mean(previousSeenHeights[0:10])
 averageIndex=0
-windowSize=5
+windowSize=40
 previousSeenHeights=[0 for i in range(windowSize)]
+ntinst = NetworkTablesInstance.getDefault()
+dashTable = None
+tuneRPM = 2000
 if __name__ == "__main__":
-    ntinst = NetworkTablesInstance.getDefault()
+    
 
   
     print("Setting up NetworkTables client for team {}".format(3018))
     ntinst.startClientTeam(3018)
     netOut=ntinst.getTable("vision")
+    dashTable = ntinst.getTable("SmartDashboard")
+    dashTable.putNumber("TuneRPM", 1000)
+    dashTable.putBoolean("EnterRPM", False)
 
     # get vision camera
     inst = CameraServer.getInstance()
@@ -404,6 +408,10 @@ if __name__ == "__main__":
 
     # loop forever on vision program
     while True:
+        
+        if dashTable.getBoolean("EnterRPM", False):
+            tuneRPM = dashTable.getNumber("TuneRPM", 1000)
+        
         t, frame = vidSource.grabFrame(frame)
         result=processFrame(frame)
         

@@ -118,13 +118,13 @@ public class Shooter extends Subsystem {
 
         pivotPID=new PIDController(0, 0, 0);
         flywheel.enableVoltageCompensation(11.5);
-        SmartDashboard.putNumber("setTargetRPM", 2500);
-        SmartDashboard.putNumber("setTargetHood", 30);
+        //SmartDashboard.putNumber("setTargetRPM", 2500);
+        //SmartDashboard.putNumber("setTargetHood", 30);
         SmartDashboard.putBoolean("Ringlight", true);
         //Below listens for changing of the ringlight toggle.
         //get a reference to the subtable
         NetworkTable table = NetworkTableInstance.getDefault().getTable("SmartDashboard");
-  
+        NetworkTableInstance.getDefault().startClientTeam(3018);
   
         //add an entry listener for changed values of "X", the lambda ("->" operator)
         //defines the code that should run when "X" changes

@@ -122,39 +122,6 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "3,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "ComboBox Chooser",
-              "_source0": "network_table:///SmartDashboard/Auto mode",
-              "_title": "Auto mode"
-            }
-          },
-          "4,0": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Autonomous Command",
-              "_title": "Autonomous Command"
-            }
-          },
-          "8,0": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/DriveForTime",
-              "_title": "DriveForTime"
-            }
-          },
           "4,3": {
             "size": [
               2,
@@ -175,17 +142,6 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/angleShooter",
               "_title": "angleShooter"
-            }
-          },
-          "12,0": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/WaitTime",
-              "_title": "WaitTime"
             }
           },
           "4,2": {
@@ -331,51 +287,6 @@
               "_title": "/vision/frameID"
             }
           },
-          "6,5": {
-            "size": [
-              5,
-              2
-            ],
-            "content": {
-              "_type": "Number Slider",
-              "_source0": "network_table:///SmartDashboard/visOffset",
-              "_title": "visOffset",
-              "Slider Settings/Min": -50.0,
-              "Slider Settings/Max": 50.0,
-              "Slider Settings/Block increment": 1.0,
-              "Visuals/Display value": true
-            }
-          },
-          "6,3": {
-            "size": [
-              4,
-              2
-            ],
-            "content": {
-              "_type": "Number Slider",
-              "_source0": "network_table:///SmartDashboard/setTargetRPM",
-              "_title": "setTargetRPM",
-              "Slider Settings/Min": 1000.0,
-              "Slider Settings/Max": 3000.0,
-              "Slider Settings/Block increment": 5.0,
-              "Visuals/Display value": true
-            }
-          },
-          "0,5": {
-            "size": [
-              4,
-              2
-            ],
-            "content": {
-              "_type": "Number Slider",
-              "_source0": "network_table:///SmartDashboard/setTargetHood",
-              "_title": "setTargetHood",
-              "Slider Settings/Min": 25.0,
-              "Slider Settings/Max": 45.0,
-              "Slider Settings/Block increment": 0.5,
-              "Visuals/Display value": true
-            }
-          },
           "10,0": {
             "size": [
               2,
@@ -385,6 +296,28 @@
               "_type": "Toggle Switch",
               "_source0": "network_table:///SmartDashboard/Ringlight",
               "_title": "Ringlight"
+            }
+          },
+          "0,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/TuneRPM",
+              "_title": "TuneRPM"
+            }
+          },
+          "0,5": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Toggle Button",
+              "_source0": "network_table:///SmartDashboard/EnterRPM",
+              "_title": "EnterRPM"
             }
           }
         }

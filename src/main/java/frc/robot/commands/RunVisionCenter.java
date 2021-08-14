@@ -43,7 +43,7 @@ public class RunVisionCenter extends PathSection {
     @Override
     protected void initialize() {
         SmartDashboard.putString("currentCommand", "RunVisionCenter()");
-        SmartDashboard.putNumber("visOffset", 0);
+        //SmartDashboard.putNumber("visOffset", 0);
         
     }
     double lastFrameID=0;
